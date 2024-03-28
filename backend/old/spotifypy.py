@@ -39,7 +39,7 @@ def getTrackNames(sp, playlist_link):
     except Exception:        
         print("Invalid url or private playlist")
 
-def main():
+def main(playlist_url=None):
     SPOTIPY_CLIENT_ID = os.environ["SPOTIPY_CLIENT_ID"]
     SPOTIPY_CLIENT_SECRET= os.environ["SPOTIPY_CLIENT_SECRET"]
     
@@ -48,7 +48,8 @@ def main():
     )
     sp = spotipy.Spotify(client_credentials_manager=CLIENT_CREDENTIALS_MANAGER)
 
-    playlist_url = input("Enter Spotify playlist url: ")
+    if playlist_url == None : playlist_url = input("Enter Spotify playlist url: ")
+    
     if playlist_url == "":
         playlist_url = None
 
