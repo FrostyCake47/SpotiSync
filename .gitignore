@@ -36,4 +36,4 @@ yarn-error.log*
 next-env.d.ts
 
 #client secret
-/backend/client_secrets.json
+/backend/old/client_secrets.json
