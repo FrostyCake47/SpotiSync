@@ -4,6 +4,7 @@ import TopWave from "./components/topwave";
 import PlaylistInfo from "./components/playlistinfo";
 
 import { GoogleLogin } from 'react-google-login';
+import SignInButton from "./components/signinbutton";
 
 
 
@@ -13,6 +14,7 @@ export default function Home() {
   const [playlistName, setPlaylistName] = useState("");
   const [playlistDesc, setPlaylistDesc] = useState("");
   const [songs, setSongs] = useState([]);
+  const [playlistInfo, setPlaylistInfo] = useState({});
 
   const [playlistFetched, setPlayListFetched] = useState(false);
   const [error, setError] = useState(false);
@@ -38,6 +40,7 @@ export default function Home() {
       const result = await response.json();
       console.log(result.message);
 
+      setPlaylistInfo(result.message);
       setPlaylistName(result.message.playlistName);
       setPlaylistDesc(result.message.playlistDesc);
       setSongs(result.message.songs);
@@ -74,6 +77,7 @@ export default function Home() {
           {playlistFetched && <div>
             <p>Login and convert to Youtube</p>
             <button onClick={handleOnConvert} className="w bg-red-500 px-3 py-2 rounded-2xl">Convert</button>
+            <SignInButton playlistInfo={playlistInfo}/>
           </div>}
         </div>
     </main>

@@ -40,10 +40,26 @@ def playlisturl():
         return jsonify({'message': 'Something happened. Try again ' + e})
 
 
-'''@app.route('/api/convert', method=['POST'])
+@app.route('/api/signin', methods=['POST'])
 def signin():
-    credentials = request.json.get('data')
-    youtubepy.main(playlist_name, playlist_desc, songs)'''
+    id_token = request.json.get('idToken')
+    playlistinfo = request.json.get('playlistInfo')
+
+    # Exchange ID token for OAuth 2.0 credentials
+    flow = InstalledAppFlow.from_client_secrets_file(
+        'client_secrets.json',
+        scopes=['https://www.googleapis.com/auth/youtube']
+    )
+    flow.fetch_token(id_token=id_token)
+
+    # Get credentials from flow
+    credentials = flow.credentials
+
+    status, youtubeurl = youtubepy.main(playlistinfo.playlist_name, playlistinfo.playlist_desc, playlistinfo.songs)
+    if status:
+        return jsonify({'message': {'status':status, 'youtubeurl':youtubeurl}})
+    else:
+        return jsonify({'message': {'status':status, 'youtubeurl':""}})
 
 if __name__ == '__main__':
     app.run(debug=True)

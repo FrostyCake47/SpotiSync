@@ -52,44 +52,27 @@ def add_song(youtube, playlist_id, song_id, song_name):
     response = request.execute()
 
 
-def main(playlist_name, playlist_desc, songs):
-  credentials = None
+def main(playlist_name, playlist_desc, songs, credentials = None):
+  try:
+    youtube = build("youtube", "v3", credentials=credentials)
 
-  if os.path.exists('token.pickle'):
-      print('Loading Credentials From File...')
-      with open('token.pickle', 'rb') as token:
-          credentials = pickle.load(token)
+    playlist_id = make_playlist(youtube, playlist_name, playlist_desc)
+    print("\nPlaylist created...\n")
 
-  if not credentials or not credentials.valid:
-      if credentials and credentials.expired and credentials.refresh_token:
-          print('Refreshing Access Token...')
-          credentials.refresh(Request())
-      else:
-          print('Fetching New Tokens...')
-          flow = InstalledAppFlow.from_client_secrets_file('client_secrets.json', 
-              scopes=['https://www.googleapis.com/auth/youtube']
-          )
+    count = 1
+    print("Adding songs...")
+    for track in songs:
+      song_id, song_name = search_song(youtube, track)
+      add_song(youtube, playlist_id, song_id, song_name)
+      print(f"{count} : {song_name}" )
+      count += 1
 
-          flow.run_local_server(port=8080, prompt='consent')
-          credentials = flow.credentials
-
-          with open('token.pickle', 'wb') as f:
-              print('Saving Credentials for Future Use...')
-              pickle.dump(credentials, f)
-
-  youtube = build("youtube", "v3", credentials=credentials)
-
-  playlist_id = make_playlist(youtube, playlist_name, playlist_desc)
-  print("\nPlaylist created...\n")
-
-  count = 1
-  print("Adding songs...")
-  for track in songs:
-    song_id, song_name = search_song(youtube, track)
-    add_song(youtube, playlist_id, song_id, song_name)
-    print(f"{count} : {song_name}" )
-    count += 1
-
-  print("\neverything successfully added.")
-  print(f"playlist URL: https://www.youtube.com/playlist?list={playlist_id}")
+    print("\neverything successfully added.")
+    print(f"playlist URL: https://www.youtube.com/playlist?list={playlist_id}")
+    return 0, "https://www.youtube.com/playlist?list=" + playlist_id
+  
+  except Exception as e:
+    return 1, ""
+    
+  
     
