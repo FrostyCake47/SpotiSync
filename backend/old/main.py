@@ -26,13 +26,11 @@ CORS(app)
 
 
 @app.route('/api/playlisturl', methods=['POST'])
-def signin():
+def playlisturl():
     url = request.json.get('data')
     try:
         playlist_name, playlist_desc, songs = spotifypy.main(url)
-        msg = 'Play list received: ' + playlist_name + '\nPlaylist desc: ' + playlist_desc + "\nSongs:\n"
-        for song in songs:
-            msg += song + '\n'
+        msg = {'playlistName':playlist_name, 'playlistDesc':playlist_desc, 'songs':songs}
 
         return jsonify({'message': msg})
     
@@ -41,7 +39,11 @@ def signin():
         print("script closed")
         return jsonify({'message': 'Something happened. Try again ' + e})
 
-    
+
+'''@app.route('/api/convert', method=['POST'])
+def signin():
+    credentials = request.json.get('data')
+    youtubepy.main(playlist_name, playlist_desc, songs)'''
 
 if __name__ == '__main__':
     app.run(debug=True)
