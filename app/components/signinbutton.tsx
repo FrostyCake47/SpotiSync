@@ -1,22 +1,19 @@
 import React from 'react';
-import { GoogleLogin } from 'react-google-login';
+import { GoogleLogin, GoogleLoginResponse, GoogleLoginResponseOffline } from 'react-google-login';
 
-function SignInButton(props: {playlistInfo:any}) {
+function SignInButton(props: any) {
     require('dotenv').config()
     const {playlistInfo} = props;
-    const client_ID = process.env.REACT_APP_CLIENT_ID;
+    const client_ID = process.env.NEXT_PUBLIC_CLIENT_ID
 
-    const responseGoogle = (response:any) => {
-        const idToken = response.tokenId;
-        // Send idToken to Flask backend for further processing
-        sendTokenToServer(idToken);
+    const responseGoogle = (response: GoogleLoginResponse | GoogleLoginResponseOffline) => {
+        console.log(response);
     };
-    console.log("clientID: " + client_ID);
-
+    
     const sendTokenToServer = async (idToken:String) => {
         try {
             if(playlistInfo){
-                console.log("idtoken: " + idToken);
+                
                 const response = await fetch('http://localhost:5000/api/signin', {
                     method: 'POST',
                     headers: {

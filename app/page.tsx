@@ -9,7 +9,7 @@ import SignInButton from "./components/signinbutton";
 
 
 export default function Home() {
-  const client_key = process.env.CLIENT_KEY;
+
   const [url, setUrl] = useState("");
   const [playlistName, setPlaylistName] = useState("");
   const [playlistDesc, setPlaylistDesc] = useState("");
