@@ -11,10 +11,15 @@ export default function Home() {
   const [songs, setSongs] = useState([]);
 
   const [playlistFetched, setPlayListFetched] = useState(false);
+  const [error, setError] = useState(false);
 
   const handleOnSubmit = (event:any) => {
     event.preventDefault();
     sendPlaylistUrl(url);
+  }
+
+  const handleOnConvert = (event:any) => {
+    event.preventDefault();
   }
 
   const sendPlaylistUrl = async (url: String) => {
@@ -32,14 +37,22 @@ export default function Home() {
       setPlaylistName(result.message.playlistName);
       setPlaylistDesc(result.message.playlistDesc);
       setSongs(result.message.songs);
+
       setPlayListFetched(true);
+      setError(false);
 
       console.log(playlistFetched);
 
     } catch (error) {
       console.log(error);
+      setError(true);
+      setPlayListFetched(false);
     }
   };
+
+  const authenticate = () => {
+
+  }
 
   return (
     <main className="flex flex-col items-center h-screen">
@@ -51,6 +64,13 @@ export default function Home() {
         </form>
         <div>
           {playlistFetched && <PlaylistInfo playlistName={playlistName} playlistDesc={playlistDesc} songs={songs}/>}
+          {error && <p>Error</p>}
+        </div>
+        <div>
+          {playlistFetched && <div>
+            <p>Login and convert to Youtube</p>
+            <button onClick={handleOnConvert} className="w bg-red-500 px-3 py-2 rounded-2xl">Convert</button>
+          </div>}
         </div>
     </main>
   );
