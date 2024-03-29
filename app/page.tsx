@@ -3,8 +3,12 @@ import { useState } from "react";
 import TopWave from "./components/topwave";
 import PlaylistInfo from "./components/playlistinfo";
 
+import { GoogleLogin } from 'react-google-login';
+
+
 
 export default function Home() {
+  const client_key = process.env.CLIENT_KEY;
   const [url, setUrl] = useState("");
   const [playlistName, setPlaylistName] = useState("");
   const [playlistDesc, setPlaylistDesc] = useState("");
@@ -51,7 +55,7 @@ export default function Home() {
   };
 
   const authenticate = () => {
-
+    
   }
 
   return (
