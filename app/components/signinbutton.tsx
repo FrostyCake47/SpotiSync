@@ -6,9 +6,18 @@ function SignInButton(props: any) {
     const {playlistInfo} = props;
     const client_ID = process.env.NEXT_PUBLIC_CLIENT_ID
 
-    const responseGoogle = (response: GoogleLoginResponse | GoogleLoginResponseOffline) => {
+    /*const responseGoogle = (response: GoogleLoginResponse | GoogleLoginResponseOffline) => {
         console.log(response);
+    };*/
+
+    const responseGoogle = (response:any) => {
+        if (response && response.tokenId) {
+            console.log(response.tokenId);
+        } else {
+            console.log();
+        }
     };
+
     
     const sendTokenToServer = async (idToken:String) => {
         try {
@@ -32,7 +41,7 @@ function SignInButton(props: any) {
     return (
         client_ID && <GoogleLogin
             clientId={client_ID}
-            buttonText="Sign In with Google"
+            buttonText="Google"
             onSuccess={responseGoogle}
             onFailure={responseGoogle}
             cookiePolicy={'single_host_origin'}
