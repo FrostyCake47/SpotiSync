@@ -1,52 +1,32 @@
-import React from 'react';
-import { GoogleLogin, GoogleLoginResponse, GoogleLoginResponseOffline } from 'react-google-login';
+'use client';
+import { signIn, signOut, useSession } from 'next-auth/react'
+import React from 'react'
+import jwt from 'jsonwebtoken'
 
-function SignInButton(props: any) {
-    require('dotenv').config()
-    const {playlistInfo} = props;
-    const client_ID = process.env.NEXT_PUBLIC_CLIENT_ID
+const SignInButton = () => {
+    const {data:session} = useSession();
 
-    /*const responseGoogle = (response: GoogleLoginResponse | GoogleLoginResponseOffline) => {
-        console.log(response);
-    };*/
+    const getUserIdFromToken = (token: string) => {
+        const decodedToken = jwt.decode(token);
+        return decodedToken ? (decodedToken as { sub: string }).sub : null;
+      };
 
-    const responseGoogle = (response:any) => {
-        if (response && response.tokenId) {
-            console.log(response.tokenId);
-        } else {
-            console.log();
-        }
-    };
-
-    
-    const sendTokenToServer = async (idToken:String) => {
-        try {
-            if(playlistInfo){
-                
-                const response = await fetch('http://localhost:5000/api/signin', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({idToken, playlistInfo}),
-                });
-                const result = await response.json();
-                console.log(result.message);
-            }
-        } catch (error) {
-            console.error('Error sending idToken to server:', error);
-        }
-    };
+    if(session && session.user){
+        return (
+            <div>
+                <p>{session.user.name}</p>
+                <p>{session.user.}</p>
+                <button onClick={() => signOut()}>Sign Out</button>
+            </div>
+        )
+    }
 
     return (
-        client_ID && <GoogleLogin
-            clientId={client_ID}
-            buttonText="Google"
-            onSuccess={responseGoogle}
-            onFailure={responseGoogle}
-            cookiePolicy={'single_host_origin'}
-        />
-    );
-}
+        <button onClick={() => signIn()}>Google</button>
+    )
 
-export default SignInButton;
+}
+    
+    
+
+export default SignInButton
