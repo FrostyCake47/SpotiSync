@@ -1,29 +1,40 @@
 'use client';
-import { signIn, signOut, useSession } from 'next-auth/react'
-import React from 'react'
-import jwt from 'jsonwebtoken'
+import { useGoogleLogin } from '@react-oauth/google';
 
-const SignInButton = () => {
-    const {data:session} = useSession();
+const SignInButton = (props: {playlistInfo : any}) => {
+  const {playlistInfo} = props;
 
-    const getUserIdFromToken = (token: string) => {
-        const decodedToken = jwt.decode(token);
-        return decodedToken ? (decodedToken as { sub: string }).sub : null;
-      };
+  const login = useGoogleLogin({
+    onSuccess: codeResponse => 
+      {
+        console.log(codeResponse);
+        sendTokenToServer(codeResponse.code, playlistInfo);
+      },
+    flow: 'auth-code',
+  });
 
-    if(session && session.user){
-        return (
-            <div>
-                <p>{session.user.name}</p>
-                <p>{session.user.}</p>
-                <button onClick={() => signOut()}>Sign Out</button>
-            </div>
-        )
+  
+
+  const sendTokenToServer = async (idToken:String, playlistInfo:any) => {
+    try {
+        if(playlistInfo){
+            
+            const response = await fetch('http://localhost:5000/api/signin', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({idToken, playlistInfo}),
+            });
+            const result = await response.json();
+            console.log(result.message);
+        }
+    } catch (error) {
+        console.error('Error sending idToken to server:', error);
     }
+};
 
-    return (
-        <button onClick={() => signIn()}>Google</button>
-    )
+  return <button onClick={() => login()}>Youtube Login</button>
 
 }
     

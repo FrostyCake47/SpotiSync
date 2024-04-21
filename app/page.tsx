@@ -3,8 +3,9 @@ import { useState } from "react";
 import TopWave from "./components/topwave";
 import PlaylistInfo from "./components/playlistinfo";
 
-/*import SignInButton from "./components/signinbutton";*/
+import { GoogleLogin } from '@react-oauth/google';
 import SignInButton from "./components/SignInButton";
+
 
 
 export default function Home() {
@@ -76,8 +77,17 @@ export default function Home() {
           {playlistFetched && <div>
             <p>Login and convert to Youtube</p>
             <button onClick={handleOnConvert} className="w bg-red-500 px-3 py-2 rounded-2xl">Convert</button>
-            {/*<SignInButton playlistInfo={playlistInfo}/>*/}
-            <SignInButton/>
+            {/*<SignInButton playlistInfo={playlistInfo}/>
+            <GoogleLogin
+                onSuccess={credentialResponse => {
+                  console.log(credentialResponse);
+                }}
+                onError={() => {
+                  console.log('Login Failed');
+                }}
+              />*/}
+
+            <SignInButton playlistInfo={playlistInfo}/>
           </div>}
         </div>
     </main>
