@@ -5,6 +5,7 @@ import PlaylistInfo from "./components/playlistinfo";
 
 import { GoogleLogin } from '@react-oauth/google';
 import SignInButton from "./components/SignInButton";
+import axios from "axios";
 
 
 
@@ -21,7 +22,7 @@ export default function Home() {
 
   const handleOnSubmit = (event:any) => {
     event.preventDefault();
-    sendPlaylistUrl(url);
+    sendPlaylistNew(url);
   }
 
   const handleOnConvert = (event:any) => {
@@ -60,6 +61,31 @@ export default function Home() {
   const authenticate = () => {
     
   }
+
+  const sendPlaylistNew = async (url:String) => {
+    try {
+
+      const result = await axios.post('http://localhost:5000/playlisturl', {data:url});
+      console.log('Response:', result.data);
+
+      setPlaylistInfo(result.data.message);
+      setPlaylistName(result.data.message.playlistName);
+      setPlaylistDesc(result.data.message.playlistDesc);
+      setSongs(result.data.message.songs);
+
+      setPlayListFetched(true);
+      setError(false);
+
+      console.log("playlistfetched" + playlistFetched);
+      
+    } catch (error) {
+      console.error('Error:', error);
+      setError(true);
+      setPlayListFetched(false);
+    }
+  }
+
+  
 
   return (
     <main className="flex flex-col items-center h-screen">
