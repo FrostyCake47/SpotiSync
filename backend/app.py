@@ -1,8 +1,10 @@
 from flask import Flask, request, jsonify
 import logging
 from flask_cors import CORS
+from google_auth_oauthlib.flow import InstalledAppFlow
 import spotifypy
 import youtubepy
+from sys import stderr
 
 app = Flask(__name__)
 CORS(app)
@@ -26,6 +28,8 @@ def playlisturl():
 def signin():
     id_token = request.json.get('idToken')
     playlistinfo = request.json.get('playlistInfo')
+
+    print("token " + id_token, file=stderr)
 
     #id_token = "4/0AeaYSHB3O0fL2mqo_ww53a6qeZo__5Gb5TBKkrG5SpR28_M2d4JgS_sLskvnVafO3_JgWw"
     #playlistinfo = {"playlist_name":"pretty playlist", "playlist_desc": "ayaya", "songs": ["if i dont like you Lily williams", "Young Love Ada LeAan"]}

@@ -17,7 +17,7 @@ const SignInButton = (props: {playlistInfo : any}) => {
   const sendLogin = async (idToken:String, playlistInfo:any) => {
     try {
       const response = await axios.post('http://localhost:5000/login', {idToken, playlistInfo});
-      console.log('Response:', response.data);
+      console.log('Response:', response.data.message);
       // Handle response data or update UI as needed
     } catch (error) {
       console.error('Error sending idToken to server:', error);
