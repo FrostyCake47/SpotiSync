@@ -29,22 +29,28 @@ def signin():
     id_token = request.json.get('idToken')
     playlistinfo = request.json.get('playlistInfo')
 
-    print("token " + id_token, file=stderr)
-
+    print(id_token, file=stderr)
+    
     #id_token = "4/0AeaYSHB3O0fL2mqo_ww53a6qeZo__5Gb5TBKkrG5SpR28_M2d4JgS_sLskvnVafO3_JgWw"
     #playlistinfo = {"playlist_name":"pretty playlist", "playlist_desc": "ayaya", "songs": ["if i dont like you Lily williams", "Young Love Ada LeAan"]}
 
     # Exchange ID token for OAuth 2.0 credentials
     flow = InstalledAppFlow.from_client_secrets_file(
         'client_secrets.json',
-        scopes=['https://www.googleapis.com/auth/youtube']
+        scopes=['https://www.googleapis.com/auth/youtube'],
+        redirect_uri='http://localhost:5000/'
     )
-    flow.fetch_token(id_token=id_token)
 
+    auth_url, _ = flow.authorization_url(prompt='consent')
+
+    print('Please go to this URL: {}'.format(auth_url))
+    #flow.fetch_token(id_token=id_token)
+    return jsonify({"message": id_token})
     # Get credentials from flow
     credentials = flow.credentials
+    
 
-    status, youtubeurl = youtubepy.main(playlistinfo.playlist_name, playlistinfo.playlist_desc, playlistinfo.songs)
+    status, youtubeurl = youtubepy.main(playlistinfo.playlist_name, playlistinfo.playlist_desc, playlistinfo.songs, credentials)
     if status:
         return jsonify({'message': {'status':status, 'youtubeurl':youtubeurl}})
     else:
