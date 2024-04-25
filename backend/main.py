@@ -16,9 +16,7 @@ flow = InstalledAppFlow.from_client_secrets_file(
 
 app = Flask(__name__)
 app.secret_key = 'cmon dawg'
-app.config["SESSION_TYPE"] = "filesystem"
-Session(app)
-CORS(app)
+CORS(app, supports_credentials=True)
 
 @app.route('/playlisturl', methods=['POST'])
 def playlisturl():
@@ -57,10 +55,13 @@ def callback():
     print("Login successful!", file=stderr)
     # Continue with credentials handling
 
-    playlist_name = "pretty"
-    playlist_desc = "weow it works"
-    songs = ["The longest goodbye rosie darling", "if i dont like you lily williams", "young love - ada leaan"]
+    #playlist_name = "pretty"
+    #playlist_desc = "weow it works"
+    #songs = ["The longest goodbye rosie darling", "if i dont like you lily williams", "young love - ada leaan"]
 
+    playlist_name = session["playlist_name"]
+    playlist_desc = session["playlist_desc"]
+    songs = session["songs"]
 
     status, youtubeurl = youtubepy.main(playlist_name, playlist_desc, songs, credentials)
     if status == 0:
