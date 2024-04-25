@@ -48,7 +48,10 @@ def getauthurl():
     authorization_url, state = flow.authorization_url()
     return jsonify({"url":authorization_url})
 
-
+@app.route('/getplaylistinfo', methods=['POST'])
+def getplaylistinfo():
+    playlistinfo = {'playlistName':session['playlist_name'], "playlistDesc":session['playlist_desc'], "songs":session["songs"], "youtubeurl":session["youtubeurl"]}
+    return jsonify({"playlistinfo":playlistinfo})
 
 @app.route('/', methods=['GET'])
 @cross_origin(supports_credentials=True)
@@ -69,11 +72,16 @@ def callback():
     songs = session["songs"]
 
     status, youtubeurl = youtubepy.main(playlist_name, playlist_desc, songs, credentials)
-    if status == 0:
+    session['youtubeurl'] = youtubeurl
+
+    '''if status == 0:
         return jsonify({'message': {'status':status, 'youtubeurl':youtubeurl}})
     else:
         return jsonify({'message': {'status':status, 'youtubeurl':""}})
-    
+    '''
+
+    redirect_url = 'http://localhost:3000/convert'  # Replace 'your-route' with the actual route in your React app
+    return f'<script>window.location.href = "{redirect_url}";</script>'
 
 
 if __name__ == '__main__':
