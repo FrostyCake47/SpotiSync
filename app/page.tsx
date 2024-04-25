@@ -87,7 +87,7 @@ export default function Home() {
 
   const newAuth = async () => {
       try{
-        const result = await axios.post('http://localhost:5000/getauthurl');
+        const result = await axios.post('http://localhost:5000/getauthurl', {data:playlistInfo});
         const authorization_url = result.data.url;
 
         const newWindow = window.open(authorization_url, '_blank');
