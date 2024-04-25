@@ -15,7 +15,7 @@ flow = InstalledAppFlow.from_client_secrets_file(
 
 
 app = Flask(__name__)
-app.secret_key = 'your_secret_key'
+app.secret_key = 'cmon dawg'
 app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 CORS(app)
@@ -55,12 +55,15 @@ def callback():
     flow.fetch_token(code=code)
     credentials = flow.credentials
     print("Login successful!", file=stderr)
-    print("session: ", session["playlist_name"], file=stderr)
     # Continue with credentials handling
 
+    playlist_name = "pretty"
+    playlist_desc = "weow it works"
+    songs = ["The longest goodbye rosie darling", "if i dont like you lily williams", "young love - ada leaan"]
 
-    status, youtubeurl = youtubepy.main(session['playlist_name'], session['playlist_desc'], session['songs'], credentials)
-    if status:
+
+    status, youtubeurl = youtubepy.main(playlist_name, playlist_desc, songs, credentials)
+    if status == 0:
         return jsonify({'message': {'status':status, 'youtubeurl':youtubeurl}})
     else:
         return jsonify({'message': {'status':status, 'youtubeurl':""}})

@@ -67,9 +67,10 @@ def main(playlist_name, playlist_desc, songs, credentials = None):
       print(f"{count} : {song_name}" )
       count += 1
 
+    youtube_url = "https://www.youtube.com/playlist?list=" + playlist_id
     print("\neverything successfully added.")
-    print(f"playlist URL: https://www.youtube.com/playlist?list={playlist_id}")
-    return 0, "https://www.youtube.com/playlist?list=" + playlist_id
+    print(f"playlist URL: {youtube_url}")
+    return 0, youtube_url
   
   except Exception as e:
     return 1, ""
