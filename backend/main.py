@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify, session
 from flask_session import Session
 import logging
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
 from google_auth_oauthlib.flow import InstalledAppFlow
 import spotifypy
 import youtubepy
@@ -16,9 +16,13 @@ flow = InstalledAppFlow.from_client_secrets_file(
 
 app = Flask(__name__)
 app.secret_key = 'cmon dawg'
+SESSION_TYPE = 'filesystem'
+app.config.from_object(__name__)
+Session(app)
 CORS(app, supports_credentials=True)
 
 @app.route('/playlisturl', methods=['POST'])
+@cross_origin(supports_credentials=True)
 def playlisturl():
     data = request.json  # Assuming data is sent as JSON
     url = data.get('data')
@@ -47,6 +51,7 @@ def getauthurl():
 
 
 @app.route('/', methods=['GET'])
+@cross_origin(supports_credentials=True)
 def callback():
     code = request.args.get('code')
     print("got the code " + code, file=stderr)
