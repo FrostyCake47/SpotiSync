@@ -6,6 +6,14 @@ import spotifypy
 import youtubepy
 from sys import stderr
 
+
+flow = InstalledAppFlow.from_client_secrets_file(
+        'client_secrets.json',
+        scopes=['https://www.googleapis.com/auth/youtube'],
+        redirect_uri='http://localhost:5000/'
+    )
+
+
 app = Flask(__name__)
 CORS(app)
 
@@ -24,6 +32,26 @@ def playlisturl():
         print("script closed")
         return jsonify({'message': 'Something happened. Try again ' + e})
 
+
+@app.route('/getauthurl', methods=['POST'])
+def getauthurl():
+    authorization_url, state = flow.authorization_url()
+    return jsonify({"url":authorization_url})
+
+
+
+@app.route('/', methods=['GET'])
+def callback():
+    code = request.args.get('code')
+    print("got the code " + code, file=stderr)
+    flow.fetch_token(code=code)
+    credentials = flow.credentials
+    print("Login successful!", file=stderr)
+    # Continue with credentials handling
+    return jsonify({"message":'Login successful!'})
+
+
+
 @app.route('/login', methods=['POST'])
 def signin():
     id_token = request.json.get('idToken')
@@ -35,11 +63,6 @@ def signin():
     #playlistinfo = {"playlist_name":"pretty playlist", "playlist_desc": "ayaya", "songs": ["if i dont like you Lily williams", "Young Love Ada LeAan"]}
 
     # Exchange ID token for OAuth 2.0 credentials
-    flow = InstalledAppFlow.from_client_secrets_file(
-        'client_secrets.json',
-        scopes=['https://www.googleapis.com/auth/youtube'],
-        redirect_uri='http://localhost:5000/'
-    )
 
     auth_url, _ = flow.authorization_url(prompt='consent')
 

@@ -85,7 +85,24 @@ export default function Home() {
     }
   }
 
-  
+  const newAuth = async () => {
+      try{
+        const result = await axios.post('http://localhost:5000/getauthurl');
+        const authorization_url = result.data.url;
+
+        const newWindow = window.open(authorization_url, '_blank');
+        // Optionally, you can focus the new window
+        if (newWindow) {
+          newWindow.focus();
+        } else {
+          // Handle popup blocker or other issues
+          console.error('Failed to open new window');
+        }
+
+      } catch (err) {
+        console.log("new auth error " + err)
+      }
+  }
 
   return (
     <main className="flex flex-col items-center h-screen">
@@ -114,6 +131,7 @@ export default function Home() {
               />*/}
 
             <SignInButton playlistInfo={playlistInfo}/>
+            <button onClick={() => {newAuth()}}>New Auth</button>
           </div>}
         </div>
     </main>

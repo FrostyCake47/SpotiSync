@@ -5,7 +5,7 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 flow = InstalledAppFlow.from_client_secrets_file(
         'client_secrets.json',
         scopes=['https://www.googleapis.com/auth/youtube'],
-        redirect_uri='http://localhost:5000/'
+        redirect_uri='http://localhost:3000/'
     )
 
 # Tell the user to go to the authorization URL.

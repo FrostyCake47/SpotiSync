@@ -9,12 +9,12 @@ const SignInButton = (props: {playlistInfo : any}) => {
     onSuccess: codeResponse => 
       {
         console.log(codeResponse);
-        sendLogin(codeResponse.code, playlistInfo);
+        sendLogin(codeResponse, playlistInfo);
       },
-    flow: 'auth-code',
+    //flow: 'auth-code',
   });
 
-  const sendLogin = async (idToken:String, playlistInfo:any) => {
+  const sendLogin = async (idToken:any, playlistInfo:any) => {
     try {
       const response = await axios.post('http://localhost:5000/login', {idToken, playlistInfo});
       console.log('Response:', response.data.message);
