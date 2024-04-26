@@ -71,23 +71,25 @@ export default function Home() {
       <Navbar/>
       <div className="flex flex-col bg-gradient-to-b from-neutral-900 to-neutral-800 my-8 mx-5 rounded-lg items-start">
         <div>
-          <div className="mx-5 md:px-10 pt-8 md:pt-10">
-            <div className="text-[25px] md:text-[50px] font-medium">Convert Spotify playlists to YouTube easily!</div>
-            <p className="text-[15px] md:text-[25px]">Fetch songs from playlist and display for conversion.</p>
+          <div className="mx-5 sm:px-10 pt-8 sm:pt-10">
+            <div className="text-[25px] sm:text-[50px] font-medium">Convert Spotify playlists to YouTube easily!</div>
+            <p className="text-[15px] sm:text-[25px]">Fetch songs from playlist and display for conversion.</p>
           </div>
         </div>
-        <div className="md:px-10">
+        <div className="sm:px-10">
           <button className="rounded-lg text-[15px] px-4 py-2 my-8 mx-5 bg-amber-500 transition-colors duration-300 ease-in-out hover:bg-amber-600">Get Started</button>
         </div>
       </div>
 
-      <div className="flex flex-col md:flex-row  bg-gradient-to-b from-neutral-800 to-neutral-950">
-        <form action="" className="flex flex-col px-20 py-10 rounded-[20px] items-center">
-          <label htmlFor="">Enter a playlist URL</label>
-          <input className="text-black rounded-md" value={url} type="text" onChange={(e) => setUrl(e.target.value)}/>
-          <button className="flex bg-green-600 px-5 py-2 my-2  rounded-xl" onClick={handleOnSubmit}>Submit</button>
+      <div className="flex flex-col sm:flex-row mx-5 px-5 rounded-lg bg-gradient-to-b from-neutral-800 to-neutral-950">
+
+        <form action="" className="flex flex-col flex-1 sm:px-10 py-10 rounded-[20px] items-start">
+          <label htmlFor="" className="text-[25px] my-1">Enter a playlist URL</label>
+          <input className="text-neutral-200 px-2 py-2 my-1 rounded-md w-full sm:w-[80%] bg-neutral-800 border-amber-500 border-2" value={url} type="text" onChange={(e) => setUrl(e.target.value)}/>
+          <button className="flex bg-green-600 px-5 py-2 my-3  rounded-xl" onClick={handleOnSubmit}>Submit</button>
         </form>
-        <div>
+
+        <div className="flex-1">
           {playlistInfo && <PlaylistInfo playlistName={playlistInfo.playlistName} playlistDesc={playlistInfo.playlistDesc} songs={playlistInfo.songs}/>}
           {error && <p>Error</p>}
         </div>
