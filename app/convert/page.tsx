@@ -3,12 +3,17 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 
 interface PlaylistInfo {
-    playlistName: string;
-    playlistDesc: string;
-    youtubeurl: string;
-    songs: string[];
-}
-
+    playlist_name: string;
+    playlist_desc: string;
+    youtube_url: string;
+    playlist_icon_url: string;
+    songs: [{
+      song_name: string;
+      artist_name: string;
+      song_icon_url: string;
+      song_info: string
+    }];
+  }
 
 const Convert = () => {
     const [playlistinfo, setPlaylistinfo] = useState<PlaylistInfo | null>(null);
@@ -39,10 +44,10 @@ const Convert = () => {
             <div>Convert</div>
             {playlistinfo && (
                 <div className='flex flex-col'>
-                    <div>{playlistinfo.playlistName}</div>
-                    <div>{playlistinfo.playlistDesc}</div>
+                    <div>{playlistinfo.playlist_name}</div>
+                    <div>{playlistinfo.playlist_desc}</div>
                     <div className='flex flex-col'>{playlistinfo.songs.map((song) => {
-                        return <div>{song}</div>
+                        return <div>{song.song_name}</div>
                     })}</div>
 
                     <button onClick={() => {convertToYoutube()}}>Convert</button>

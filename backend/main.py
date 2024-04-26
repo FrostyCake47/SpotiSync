@@ -27,15 +27,16 @@ def playlisturl():
     data = request.json  # Assuming data is sent as JSON
     url = data.get('data')
     try:
-        playlist_name, playlist_desc, songs = spotifypy.main(url)
+        playlist_name, playlist_desc, songs, playlist_icon_url = spotifypy.main(url)
         session['playlist_name'] = playlist_name
         session['playlist_desc'] = playlist_desc
         session['songs'] = songs
+        session['playlist_icon_url'] = playlist_icon_url
 
-        msg = {'playlistName':playlist_name, 'playlistDesc':playlist_desc, 'songs':songs}
+        playlistinfo = {'playlist_name':playlist_name, 'playlist_desc':playlist_desc, 'songs':songs, 'playlist_icon_url': playlist_icon_url}
         print("session: ", session["playlist_name"], file=stderr)
 
-        return jsonify({'message': msg})
+        return jsonify({'message': playlistinfo})
     
     except Exception as e:
         print(e)

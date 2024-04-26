@@ -16,6 +16,9 @@ def getTrackNames(sp, playlist_link):
         playlist_name = sp.user_playlist(user=None, playlist_id=playlist_URI, fields="name")
         playlist_desc = sp.user_playlist(user=None, playlist_id=playlist_URI, fields="description")
 
+        playlist_info = sp.playlist(playlist_URI, fields="name, description, images")
+        playlist_icon_url = playlist_info["images"][0]["url"] if playlist_info["images"] else None
+
         user = results["items"][0]["added_by"]["external_urls"]["spotify"].split("/")[-1].split("?")[0]
 
         user_name = sp.user(user=user)["display_name"]
@@ -31,10 +34,16 @@ def getTrackNames(sp, playlist_link):
             track_list.extend(results['items'])
 
         for track in track_list:
-            song = track["track"]["name"] + " by " + track["track"]["artists"][0]["name"]
-            songs.append(song)
+            #song = track["track"]["name"] + " by " + track["track"]["artists"][0]["name"]
+
+            song_name = track["track"]["name"]
+            artist_name = track["track"]["artists"][0]["name"]
+            song_icon_url = track["track"]["album"]["images"][0]["url"] if track["track"]["album"]["images"] else None
+            song_info = {"song_name": song_name, "artist_name": artist_name, "song_icon_url": song_icon_url}
+            
+            songs.append({"song_name": song_name, "artist_name": artist_name, "song_icon_url": song_icon_url, "song_info": song_info})
         
-        return playlist_name["name"], playlist_desc["description"], songs
+        return playlist_name["name"], playlist_desc["description"], songs, playlist_icon_url
     
     except Exception:        
         print("Invalid url or private playlist")

@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import SongCard from './songcard';
 
-const PlaylistInfo = (props : {playlistName:String, playlistDesc:String, songs:String[]}) => {
+const PlaylistInfo = (props : {playlistName:String, playlistDesc:String, songs:[{
+    song_name: string;
+    artist_name: string;
+    song_icon_url: string;
+    song_info: string
+  }];}) => {
     const {playlistName, playlistDesc, songs} = props;
 
     return (
@@ -12,7 +17,7 @@ const PlaylistInfo = (props : {playlistName:String, playlistDesc:String, songs:S
                 {songs.length > 0 && songs.map((song, index) => {
                     console.log(song);
                     return <div key={index}>
-                        <p>{song}</p>
+                        <p>{song.song_name}</p>
                     </div>;
                 })}
             </div>
