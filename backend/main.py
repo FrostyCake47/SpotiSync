@@ -61,27 +61,32 @@ def callback():
     flow.fetch_token(code=code)
     credentials = flow.credentials
     print("Login successful!", file=stderr)
-    # Continue with credentials handling
+    session['credentials'] = credentials
 
     #playlist_name = "pretty"
     #playlist_desc = "weow it works"
     #songs = ["The longest goodbye rosie darling", "if i dont like you lily williams", "young love - ada leaan"]
 
+    redirect_url = 'http://localhost:3000/convert'  # Replace 'your-route' with the actual route in your React app
+    return f'<script>window.location.href = "{redirect_url}";</script>'
+
+
+@app.route('/convert', methods=['POST'])
+@cross_origin(supports_credentials=True)
+def convert():
     playlist_name = session["playlist_name"]
     playlist_desc = session["playlist_desc"]
     songs = session["songs"]
+    credentials =  session['credentials']
 
     status, youtubeurl = youtubepy.main(playlist_name, playlist_desc, songs, credentials)
     session['youtubeurl'] = youtubeurl
 
-    '''if status == 0:
+    if status == 0:
         return jsonify({'message': {'status':status, 'youtubeurl':youtubeurl}})
     else:
         return jsonify({'message': {'status':status, 'youtubeurl':""}})
-    '''
-
-    redirect_url = 'http://localhost:3000/convert'  # Replace 'your-route' with the actual route in your React app
-    return f'<script>window.location.href = "{redirect_url}";</script>'
+    
 
 
 if __name__ == '__main__':

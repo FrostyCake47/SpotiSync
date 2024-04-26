@@ -25,43 +25,6 @@ export default function Home() {
     sendPlaylistNew(url);
   }
 
-  const handleOnConvert = (event:any) => {
-    event.preventDefault();
-  }
-
-  const sendPlaylistUrl = async (url: String) => {
-    try{
-      const response = await fetch('http://localhost:5000/api/playlisturl', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({data:url})
-      });
-      const result = await response.json();
-      console.log(result.message);
-
-      setPlaylistInfo(result.message);
-      setPlaylistName(result.message.playlistName);
-      setPlaylistDesc(result.message.playlistDesc);
-      setSongs(result.message.songs);
-
-      setPlayListFetched(true);
-      setError(false);
-
-      console.log(playlistFetched);
-
-    } catch (error) {
-      console.log(error);
-      setError(true);
-      setPlayListFetched(false);
-    }
-  };
-
-  const authenticate = () => {
-    
-  }
-
   const sendPlaylistNew = async (url:String) => {
     try {
 
@@ -89,15 +52,7 @@ export default function Home() {
       try{
         const result = await axios.post('http://localhost:5000/getauthurl', {data:playlistInfo}, { withCredentials: true });
         const authorization_url = result.data.url;
-
-        const newWindow = window.open(authorization_url, '_blank');
-        // Optionally, you can focus the new window
-        if (newWindow) {
-          newWindow.focus();
-        } else {
-          // Handle popup blocker or other issues
-          console.error('Failed to open new window');
-        }
+        window.location.href = authorization_url;
 
       } catch (err) {
         console.log("new auth error " + err)
@@ -119,19 +74,7 @@ export default function Home() {
         <div>
           {playlistFetched && <div>
             <p>Login and convert to Youtube</p>
-            <button onClick={handleOnConvert} className="w bg-red-500 px-3 py-2 rounded-2xl">Convert</button>
-            {/*<SignInButton playlistInfo={playlistInfo}/>
-            <GoogleLogin
-                onSuccess={credentialResponse => {
-                  console.log(credentialResponse);
-                }}
-                onError={() => {
-                  console.log('Login Failed');
-                }}
-              />*/}
-
-            <SignInButton playlistInfo={playlistInfo}/>
-            <button onClick={() => {newAuth()}}>New Auth</button>
+            <button onClick={() => {newAuth()}} className="w bg-red-500 px-3 py-2 rounded-2xl">New Auth</button>
           </div>}
         </div>
     </main>
