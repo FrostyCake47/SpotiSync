@@ -2,10 +2,8 @@
 import { useState } from "react";
 import TopWave from "./components/topwave";
 import PlaylistInfo from "./components/playlistinfo";
-
-import { GoogleLogin } from '@react-oauth/google';
-import SignInButton from "./components/SignInButton";
 import axios from "axios";
+import Navbar from "./components/navbar";
 
 
 
@@ -61,10 +59,11 @@ export default function Home() {
 
   return (
     <main className="flex flex-col items-center h-screen">
+      <Navbar/>
       <div className="flex py-5 px-5 my-10 text-[30px]">Spoti2Youtube</div>
         <form action="" className="flex flex-col bg-neutral-900 px-20 py-10 rounded-[20px] items-center">
           <label htmlFor="">Enter a playlist URL</label>
-          <input className="text-black" value={url} type="text" onChange={(e) => setUrl(e.target.value)}/>
+          <input className="text-black rounded-md" value={url} type="text" onChange={(e) => setUrl(e.target.value)}/>
           <button className="flex bg-green-600 px-5 py-2 my-2  rounded-xl" onClick={handleOnSubmit}>Submit</button>
         </form>
         <div>
