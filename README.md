@@ -1,4 +1,4 @@
-#SpotiSync
+# SpotiSync
 
 ## Getting Started
 
