@@ -9,6 +9,7 @@ import { IoMdMusicalNote } from "react-icons/io";
 import { IoIosMusicalNote } from "react-icons/io";
 import { IoMusicalNotes } from "react-icons/io5";
 
+
 interface PlaylistInfo {
   playlistName: string;
   playlistDesc: string;
@@ -69,11 +70,12 @@ export default function Home() {
   return (
     <main className="flex flex-col h-screen">
       <Navbar/>
-      <div className="flex flex-col bg-gradient-to-b from-neutral-900 to-neutral-800 my-8 mx-5 rounded-lg items-start">
+      <div className="flex flex-col bg-gradient-to-b from-black to-neutral-800 my-0 mx-0 rounded-lg items-start">
         <div>
           <div className="mx-5 sm:px-10 pt-8 sm:pt-10">
-            <div className="text-[25px] sm:text-[50px] font-medium">Convert Spotify playlists to YouTube easily!</div>
-            <p className="text-[15px] sm:text-[25px]">Fetch songs from playlist and display for conversion.</p>
+            <div className="text-[7vw] sm:text-[50px] font-medium my-10">Welcome to Spotysync!</div>
+            <p className="mt-2 text-[20px] sm:text-lg text-slate-700 dark:text-neutral-400">Spotysync is your ultimate tool for seamlessly converting Spotify playlists to your YouTube main account with just one click. Whether you're curating the perfect playlist for a road trip or sharing your music discoveries with friends, Spotysync makes the process fast, easy, and hassle-free.</p>
+            <p className="mt-2 text-[20px] sm:text-lg text-slate-700 dark:text-neutral-400">Experience the convenience of Spotysync today and elevate your music streaming experience to a whole new level!</p>
           </div>
         </div>
         <div className="sm:px-10">
