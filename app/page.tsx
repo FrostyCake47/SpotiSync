@@ -11,8 +11,8 @@ import { IoMusicalNotes } from "react-icons/io5";
 
 
 interface PlaylistInfo {
-  playlistName: string;
-  playlistDesc: string;
+  playlist_name: string;
+  playlist_desc: string;
   youtubeurl: string;
   playlist_icon_url: string;
   songs: [{
@@ -32,6 +32,9 @@ export default function Home() {
   const [playlistFetched, setPlayListFetched] = useState(false);
   const [error, setError] = useState(false);
 
+  const [playlist_name, setPlaylistName] = useState("");
+  const [playlist_desc, setPlaylistDesc] = useState("");
+
   const [selectedMethod, setSelectedMethod] = useState("");
 
   const handleOnSubmit = (event:any) => {
@@ -48,6 +51,7 @@ export default function Home() {
       setPlaylistInfo(result.data.message);
       setPlayListFetched(true);
       setError(false);
+
 
       console.log("playlistfetched" + playlistFetched);
       
@@ -85,27 +89,26 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="bg-gradient-to-b from-neutral-800 to-neutral-900 min-h-[100px]"></div>
+      <div className="bg-gradient-to-b from-neutral-800 to-neutral-900 min-h-[20px] sm:min-h-[100px]"></div>
       <div className="bg-neutral-950 min-h-[10px]"></div>
 
       <div className="bg-neutral-900">
         <div className="flex flex-col sm:flex-row mx-10 my-10 px-5 rounded-lg bg-gradient-to-b from-neutral-800 to-neutral-950">
           <div className="flex flex-col my-4 sm:min-w-[40%]">
-            <button onClick={() => {setSelectedMethod("Spotify")}} className="bg-green-500 rounded-lg my-2 py-3">Login with Spotify</button>
-            <button onClick={() => {setSelectedMethod("URL")}} className={`bg-amber-500 rounded-lg my-2 py-3 ${selectedMethod == "URL" ? 'hidden' : ''}`}>Enter URL</button>
+            <button onClick={() => {setSelectedMethod("Spotify")}} className="bg-green-500 rounded-lg my-2 py-3 hover:bg-green-600 duration-300">Login with Spotify</button>
+            <button onClick={() => {setSelectedMethod("URL")}} className={`bg-amber-500 rounded-lg my-2 py-3 hover:bg-amber-600 duration-300 ${selectedMethod == "URL" ? 'hidden' : ''}`}>Enter URL</button>
 
             {(selectedMethod == "URL") && 
             <form action="" className={`flex flex-row rounded-[20px] items-center justify-between ${selectedMethod == "URL" ? '' : 'hidden'}`}>
                 <input className=" text-neutral-200 sm:min-w-[70%] px-2 py-2 mr-3 my-1 rounded-md w-full  bg-neutral-800 border-amber-500 border-2" value={url} type="text" onChange={(e) => setUrl(e.target.value)}/>
-                <button className="flex-1 bg-amber-500 px-5 py-2 my-3 rounded-xl" onClick={handleOnSubmit}>Submit</button>
+                <button className="flex-1 bg-amber-500 px-5 py-2 my-3 rounded-xl hover:bg-amber-600 duration-300" onClick={handleOnSubmit}>Submit</button>
             </form>}
 
           </div>
 
           
-        
           <div className="flex-1">
-            {playlistInfo && <PlaylistInfo playlistName={playlistInfo.playlistName} playlistDesc={playlistInfo.playlistDesc} songs={playlistInfo.songs}/>}
+            {playlistInfo && <PlaylistInfo playlist_name={playlistInfo.playlist_name} playlist_desc={playlistInfo.playlist_desc} songs={playlistInfo.songs} playlist_icon_url={playlistInfo.playlist_icon_url} />}
             {error && <p>Error</p>}
             <div className="flex justify-center items-center h-[100%] mb-5">
             {!playlistInfo && !error && 
@@ -114,12 +117,12 @@ export default function Home() {
           </div>
         </div>
         
-        <div>
+        {/*<div>
           {playlistFetched && <div>
             <p>Login and convert to Youtube</p>
             <button onClick={() => {newAuth()}} className="w bg-red-500 px-3 py-2 rounded-2xl">New Auth</button>
           </div>}
-        </div>
+          </div>*/}
       </div>
     </main>
   );
