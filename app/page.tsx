@@ -73,7 +73,7 @@ export default function Home() {
       <div className="flex flex-col bg-gradient-to-b from-black to-neutral-800 my-0 mx-0 items-start">
         <div>
           <div className="mx-5 sm:px-10 pt-8 sm:pt-10">
-            <div className="text-[7vw] sm:text-[50px] font-medium mb-8 sm:my-10">Welcome to Spotysync!</div>
+            <div className="text-[7vw] sm:text-[50px] font-medium mb-8 sm:my-10">Welcome to Spotisync!</div>
             <p className="mt-2 text-[16px] mb-5 sm:text-lg text-slate-700 dark:text-neutral-400">Spotysync is your ultimate tool for seamlessly converting Spotify playlists to your YouTube main account with just one click. Whether you're curating the perfect playlist for a road trip or sharing your music discoveries with friends, Spotysync makes the process fast, easy, and hassle-free.</p>
             <p className="mt-2 text-[16px] sm:text-lg text-slate-700 dark:text-neutral-400">Experience the convenience of Spotysync today and elevate your music streaming experience to a whole new level!</p>
           </div>
@@ -84,28 +84,38 @@ export default function Home() {
       </div>
 
       <div className="bg-gradient-to-b from-neutral-800 to-neutral-900 min-h-[100px]"></div>
-      {/*<div className="bg-gradient-to-b from-neutral-900 to-amber-600 min-h-[50px]"></div>*/}
+      <div className="bg-neutral-950 min-h-[10px]"></div>
 
-      <div className="bg-neutral-200">
+      <div className="bg-neutral-900">
         <div className="flex flex-col sm:flex-row mx-10 my-10 px-5 rounded-lg bg-gradient-to-b from-neutral-800 to-neutral-950">
-          <form action="" className="flex flex-col flex-1 sm:px-10 py-10 rounded-[20px] items-start">
-            <label htmlFor="" className="text-[25px] my-1">Enter a playlist URL</label>
-            <input className="text-neutral-200 px-2 py-2 my-1 rounded-md w-full sm:w-[80%] bg-neutral-800 border-amber-500 border-2" value={url} type="text" onChange={(e) => setUrl(e.target.value)}/>
-            <button className="flex bg-green-600 px-5 py-2 my-3  rounded-xl" onClick={handleOnSubmit}>Submit</button>
-          </form>
+          <div className="flex flex-col">
+            <button className="bg-amber-500 rounded-lg">Login with Spotify</button>
+            <button>Enter URL</button>
+          </div>
+          {/*<form action="" className="flex flex-col flex-1 sm:px-10 py-10 rounded-[20px] items-start">
+            <label htmlFor="" className="text-[25px] font-sans my-1">Enter a playlist URL</label>
+            <div className="flex justify-between items-center">
+              <input className="flex-1 text-neutral-200 px-2 py-2 my-1 rounded-md w-full  bg-neutral-800 border-amber-500 border-2" value={url} type="text" onChange={(e) => setUrl(e.target.value)}/>
+              <button className="bg-green-600 px-5 py-2 mx-5 my-3 rounded-xl" onClick={handleOnSubmit}>Submit</button>
+            </div>
+          </form>*/}
         
           <div className="flex-1">
             {playlistInfo && <PlaylistInfo playlistName={playlistInfo.playlistName} playlistDesc={playlistInfo.playlistDesc} songs={playlistInfo.songs}/>}
             {error && <p>Error</p>}
+            <div className="flex justify-center items-center h-[100%] mb-5">
+            {!playlistInfo && !error && 
+              <p className="text-center text-lg text-amber-500">Login to your Spotify account<br/>Or enter a url and select your playlist</p>}
+            </div>
           </div>
         </div>
         
-        {/*<div>
+        <div>
           {playlistFetched && <div>
             <p>Login and convert to Youtube</p>
             <button onClick={() => {newAuth()}} className="w bg-red-500 px-3 py-2 rounded-2xl">New Auth</button>
           </div>}
-          </div>*/}
+        </div>
       </div>
     </main>
   );
