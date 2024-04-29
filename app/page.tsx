@@ -110,9 +110,9 @@ export default function Home() {
           <div className="flex-1">
             {playlistInfo && <PlaylistInfo playlist_name={playlistInfo.playlist_name} playlist_desc={playlistInfo.playlist_desc} songs={playlistInfo.songs} playlist_icon_url={playlistInfo.playlist_icon_url} />}
             {error && <p>Error</p>}
-            <div className="flex justify-center items-center h-[100%] mb-5">
-            {!playlistInfo && !error && 
-              <p className="text-center text-md text-amber-500">Login to your Spotify account<br/>Or enter a url and select your playlist</p>}
+            <div className={`flex justify-center items-center h-[100%] mb-5 ${!playlistInfo && !error ? '' : 'hidden'}`}>
+              {
+                <p className="text-center text-md text-amber-500">Login to your Spotify account<br/>Or enter a url and select your playlist</p>}
             </div>
           </div>
         </div>

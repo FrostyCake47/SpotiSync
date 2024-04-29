@@ -15,10 +15,12 @@ const PlaylistInfo = (props : {playlist_name:string, playlist_desc:string, playl
     return (
         <div className='flex flex-col'>
             <div className='flex'>
-                <Image src={playlist_icon_url} alt="Playlist icon" width={20} height={20}/>
+                <div className='w-[20vw] sm:w-[200px] aspect-square relative'>
+                    <Image className='' src={playlist_icon_url} alt="Playlist icon"  layout={'fill'} objectFit={'contain'}/>
+                </div>
                 <div>
-                    <p className='text-white'>{playlist_name}</p>
-                    <p className='text-white'>{playlist_desc}</p>
+                    <p className='text-white px-2'>{playlist_name}</p>
+                    <p className='text-white px-2'>{playlist_desc}</p>
                 </div>
             </div>
 
