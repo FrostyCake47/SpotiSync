@@ -54,7 +54,7 @@ def getTrackNames(sp, playlist_link):
             duration_ms = track['track']["duration_ms"]
             duration_sec = duration_ms / 1000
             duration_min = int(duration_sec // 60)
-            duration_sec %= 60
+            duration_sec = int(duration_sec % 60)
             
             songs.append({"song_name": song_name, "artist_name": artist_name, 'album_name':album_name , "song_icon_url": song_icon_url, "duration":[duration_min, duration_sec]})
         

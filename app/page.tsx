@@ -110,7 +110,9 @@ export default function Home() {
                 <input className=" text-neutral-200 sm:min-w-[70%] px-2 py-2 mr-3 my-1 rounded-md w-full  bg-neutral-800 border-amber-500 border-2" value={url} type="text" onChange={(e) => setUrl(e.target.value)}/>
                 <button className="flex-1 bg-amber-500 px-5 py-2 my-3 rounded-xl hover:bg-amber-600 duration-300" onClick={handleOnSubmit}>Submit</button>
             </form>}
-
+            <div className="flex justify-center items-center h-[100%]">
+              <p className={`hidden text-center text-md text-amber-500 ${playlistInfo ? 'sm:block' : 'hidden'}`}>Login with your spotify to<br/>directly access your personal playlists</p>
+            </div>
           </div>
 
           
@@ -119,7 +121,7 @@ export default function Home() {
             {error && <p>Error</p>}
             <div className={`flex justify-center items-center h-[100%] mb-5 ${!playlistInfo && !error ? '' : 'hidden'}`}>
               {
-                <p className="text-center text-md text-amber-500">Login to your Spotify account<br/>Or enter a url and select your playlist</p>}
+                <p className={`text-center text-md text-amber-500`}>Login to your Spotify account<br/>Or enter a url and select your playlist</p>}
             </div>
           </div>
         </div>

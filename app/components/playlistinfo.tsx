@@ -16,14 +16,12 @@ const PlaylistInfo = (props : {playlist_name:string, playlist_desc:string, playl
     duration: number[];
   };}) => {
     const {playlist_name, playlist_desc, songs, playlist_icon_url, info} = props;
-    console.log("consolling name");
-    console.log(playlist_name, playlist_desc);
 
     return (
         <div className='flex flex-col'>
             <div className='flex mb-6'>
                 <div className='w-[20vw] sm:w-[200px] aspect-square relative'>
-                    <Image className='' src={playlist_icon_url} alt="Playlist icon"  layout={'fill'} objectFit={'contain'}/>
+                    <Image className='rounded-lg' src={playlist_icon_url} alt="Playlist icon"  layout={'fill'} objectFit={'contain'}/>
                 </div>
                 <div className='flex flex-col justify-center items-start sm:px-5'>
                     <p className='px-4 text-neutral-300text-xs font-light'>Playlist</p>
@@ -37,13 +35,19 @@ const PlaylistInfo = (props : {playlist_name:string, playlist_desc:string, playl
                 </div>
             </div>
 
-            <div className='flex flex-col pb-4'>
+            <div className='flex flex-col pb-4 overflow-y-scroll max-h-[300px]'>
                 {songs.length > 0 && songs.map((song, index) => {
-                    return <div className='flex my-1 bg-neutral-900 justify-start items-center' key={index}>
-                        <div className='w-[48px] aspect-square relative rounded-lg'>
-                            <Image src={song.song_icon_url} alt='' layout={'fill'} objectFit={'contain'}/>
+                    return <div className='flex my-1 px-2 bg-neutral-900 justify-between items-center py-2 rounded-lg hover:bg-neutral-800 duration-300' key={index}>
+                        <div className='flex justify-start items-center'>
+                            <div className='w-[48px] aspect-square relative'>
+                                <Image className='rounded-lg' src={song.song_icon_url} alt='' layout={'fill'} objectFit={'contain'}/>
+                            </div>
+                            <div className='flex flex-col items-start justify-center'>
+                                <p className='ml-5 text-lg'>{song.song_name}</p>
+                                <p className='ml-5 text-md font-light'>{song.artist_name}</p>
+                            </div>  
                         </div>
-                        <p className='ml-5'>{song.song_name}</p>
+                        <p className='px-6'>{song.duration[0] + ":" + song.duration[1]}</p>
                     </div>;
                 })}
             </div>
