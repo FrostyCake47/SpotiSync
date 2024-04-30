@@ -13,13 +13,20 @@ import { IoMusicalNotes } from "react-icons/io5";
 interface PlaylistInfo {
   playlist_name: string;
   playlist_desc: string;
-  youtubeurl: string;
+  youtube_url: string;
   playlist_icon_url: string;
+  info: {
+      user_name: string;
+      num_songs: string;
+      duration: number[];
+  }
   songs: [{
     song_name: string;
     artist_name: string;
+    album_name: string
     song_icon_url: string;
-    song_info: string
+    song_info: string;
+    duration: number[];
   }];
 }
 
@@ -108,7 +115,7 @@ export default function Home() {
 
           
           <div className="flex-1 sm:px-6 sm:py-6">
-            {playlistInfo && <PlaylistInfo playlist_name={playlistInfo.playlist_name} playlist_desc={playlistInfo.playlist_desc} songs={playlistInfo.songs} playlist_icon_url={playlistInfo.playlist_icon_url} />}
+            {playlistInfo && <PlaylistInfo playlist_name={playlistInfo.playlist_name} playlist_desc={playlistInfo.playlist_desc} songs={playlistInfo.songs} playlist_icon_url={playlistInfo.playlist_icon_url} info={playlistInfo.info}/>}
             {error && <p>Error</p>}
             <div className={`flex justify-center items-center h-[100%] mb-5 ${!playlistInfo && !error ? '' : 'hidden'}`}>
               {

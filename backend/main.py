@@ -19,7 +19,7 @@ app.secret_key = 'cmon dawg'
 SESSION_TYPE = 'filesystem'
 app.config.from_object(__name__)
 Session(app)
-CORS(app, supports_credentials=True)
+
 
 @app.route('/playlisturl', methods=['POST'])
 @cross_origin(supports_credentials=True)
@@ -27,13 +27,14 @@ def playlisturl():
     data = request.json  # Assuming data is sent as JSON
     url = data.get('data')
     try:
-        playlist_name, playlist_desc, songs, playlist_icon_url = spotifypy.main(url)
+        playlist_name, playlist_desc, songs, playlist_icon_url, info = spotifypy.main(url)
         session['playlist_name'] = playlist_name
         session['playlist_desc'] = playlist_desc
         session['songs'] = songs
         session['playlist_icon_url'] = playlist_icon_url
+        session['info'] = info
 
-        playlistinfo = {'playlist_name':playlist_name, 'playlist_desc':playlist_desc, 'songs':songs, 'playlist_icon_url': playlist_icon_url}
+        playlistinfo = {'playlist_name':playlist_name, 'playlist_desc':playlist_desc, 'songs':songs, 'playlist_icon_url': playlist_icon_url, 'info':info}
         print("session: ", session["playlist_name"], file=stderr)
 
         return jsonify({'message': playlistinfo})
@@ -41,7 +42,7 @@ def playlisturl():
     except Exception as e:
         print(e)
         print("script closed")
-        return jsonify({'message': 'Something happened. Try again ' + e})
+        return jsonify({'message': f'Something happened. Try again {e}'})
     
 
 @app.route('/getauthurl', methods=['POST'])
