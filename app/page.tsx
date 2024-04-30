@@ -100,7 +100,7 @@ export default function Home() {
       <div className="bg-neutral-950 min-h-[10px]"></div>
 
       <div className="bg-neutral-900">
-        <div className="flex flex-col sm:flex-row mx-10 my-10 px-5 rounded-lg bg-gradient-to-b from-neutral-800 to-neutral-950">
+        <div className="flex flex-col sm:flex-row mx-0 sm:mx-10 pb-6 sm:my-10 px-5 sm:rounded-lg bg-gradient-to-b from-neutral-800 to-neutral-950">
           <div className="flex flex-col my-4 sm:min-w-[40%]">
             <button onClick={() => {setSelectedMethod("Spotify")}} className="bg-green-500 rounded-lg my-2 py-3 hover:bg-green-600 duration-300">Login with Spotify</button>
             <button onClick={() => {setSelectedMethod("URL")}} className={`bg-amber-500 rounded-lg my-2 py-3 hover:bg-amber-600 duration-300 ${selectedMethod == "URL" ? 'hidden' : ''}`}>Enter URL</button>
