@@ -11,6 +11,7 @@ import { signIn, signOut, useSession } from 'next-auth/react';
 import { IoMdMusicalNote } from "react-icons/io";
 import { IoIosMusicalNote } from "react-icons/io";
 import { IoMusicalNotes } from "react-icons/io5";
+import { PlaylistCard } from './components/playlistCard';
 
 
 interface PlaylistInfo {
@@ -34,7 +35,10 @@ interface PlaylistInfo {
 }
 
 interface Playlist{
-  name:string
+  name:string;
+  external_urls:{
+    spotify:string;
+  }
 }
 
 export default function Home() {
@@ -158,11 +162,7 @@ export default function Home() {
             </form>}
             <div className="flex justify-center items-center h-[100%]">
               {!session && <p className={`hidden text-center text-md text-amber-500 ${playlistInfo ? 'sm:block' : 'hidden'}`}>Login with your spotify to<br/>directly access your personal playlists</p>}
-              {session && <div>
-                {playlistList && (playlistList.map((playlist:Playlist) => {
-                  return <p>{playlist.name}</p>
-                }))}
-              </div>}
+              {session && playlistList && <PlaylistCard playlistList={playlistList} sendPlaylistNew={sendPlaylistNew}/>}
             </div>
           </div>
 
