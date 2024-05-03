@@ -1,9 +1,12 @@
 'use client';
+import './types';
 import { useState } from "react";
 import TopWave from "./components/topwave";
 import PlaylistInfo from "./components/playlistinfo";
 import axios from "axios";
 import Navbar from "./components/navbar";
+
+import { signIn, useSession } from 'next-auth/react';
 
 import { IoMdMusicalNote } from "react-icons/io";
 import { IoIosMusicalNote } from "react-icons/io";
@@ -43,10 +46,19 @@ export default function Home() {
   const [playlist_desc, setPlaylistDesc] = useState("");
 
   const [selectedMethod, setSelectedMethod] = useState("");
+  const { data: session } = useSession();
 
   const handleOnSubmit = (event:any) => {
     event.preventDefault();
     sendPlaylistNew(url);
+  }
+
+  const handleSpotifyLogin = (event:any) => {
+    event.preventDefault();
+    setSelectedMethod("Spotify");
+
+    if(!session) signIn('spotify'); 
+    else spotifyAuthPlaylist();
   }
 
   const sendPlaylistNew = async (url:String) => {
@@ -80,6 +92,17 @@ export default function Home() {
       }
   }
 
+  const spotifyAuthPlaylist = async () => {
+    try{
+      if(session){
+        const accessToken = session?.user?.access_token;
+        console.log(accessToken);
+      }
+    } catch (err) {
+      console.log("Spotify login error: " + err);
+    }
+  }
+
   return (
     <main className="flex flex-col h-screen">
       <Navbar/>
@@ -102,7 +125,7 @@ export default function Home() {
       <div className="bg-neutral-900">
         <div className="flex flex-col sm:flex-row mx-0 sm:mx-10 pb-6 sm:my-10 px-5 sm:rounded-lg bg-gradient-to-b from-neutral-800 to-neutral-950">
           <div className="flex flex-col my-4 sm:min-w-[40%]">
-            <button onClick={() => {setSelectedMethod("Spotify")}} className="bg-green-500 rounded-lg my-2 py-3 hover:bg-green-600 duration-300">Login with Spotify</button>
+            <button onClick={handleSpotifyLogin} className="bg-green-500 rounded-lg my-2 py-3 hover:bg-green-600 duration-300">Login with Spotify</button>
             <button onClick={() => {setSelectedMethod("URL")}} className={`bg-amber-500 rounded-lg my-2 py-3 hover:bg-amber-600 duration-300 ${selectedMethod == "URL" ? 'hidden' : ''}`}>Enter URL</button>
 
             {(selectedMethod == "URL") && 
@@ -111,7 +134,8 @@ export default function Home() {
                 <button className="flex-1 bg-amber-500 px-5 py-2 my-3 rounded-xl hover:bg-amber-600 duration-300" onClick={handleOnSubmit}>Submit</button>
             </form>}
             <div className="flex justify-center items-center h-[100%]">
-              <p className={`hidden text-center text-md text-amber-500 ${playlistInfo ? 'sm:block' : 'hidden'}`}>Login with your spotify to<br/>directly access your personal playlists</p>
+              {!session && <p className={`hidden text-center text-md text-amber-500 ${playlistInfo ? 'sm:block' : 'hidden'}`}>Login with your spotify to<br/>directly access your personal playlists</p>}
+              {session && <p>{session.user?.name}</p>}
             </div>
           </div>
 
