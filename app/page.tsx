@@ -1,12 +1,12 @@
 'use client';
 import './types';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import TopWave from "./components/topwave";
 import PlaylistInfo from "./components/playlistinfo";
 import axios from "axios";
 import Navbar from "./components/navbar";
 
-import { signIn, useSession } from 'next-auth/react';
+import { signIn, signOut, useSession } from 'next-auth/react';
 
 import { IoMdMusicalNote } from "react-icons/io";
 import { IoIosMusicalNote } from "react-icons/io";
@@ -33,8 +33,12 @@ interface PlaylistInfo {
   }];
 }
 
+interface Playlist{
+  name:string
+}
 
 export default function Home() {
+  const { data: session } = useSession();
 
   const [url, setUrl] = useState("");
   const [playlistInfo, setPlaylistInfo] = useState<PlaylistInfo | null>(null);
@@ -46,20 +50,31 @@ export default function Home() {
   const [playlist_desc, setPlaylistDesc] = useState("");
 
   const [selectedMethod, setSelectedMethod] = useState("");
-  const { data: session } = useSession();
+  const [playlistList, setPlaylistList] = useState<Playlist[] | null>(null);
 
   const handleOnSubmit = (event:any) => {
     event.preventDefault();
     sendPlaylistNew(url);
   }
 
-  const handleSpotifyLogin = (event:any) => {
+  const handleSpotifyLogin = async (event:any) => {
     event.preventDefault();
     setSelectedMethod("Spotify");
 
-    if(!session) signIn('spotify'); 
-    else spotifyAuthPlaylist();
+    if(!session){
+      await signIn('spotify');
+    } 
   }
+
+  useEffect(() => {
+    if(session){
+      (async () => {
+          const newplaylistList = await spotifyAuthPlaylist();
+          setPlaylistList(newplaylistList);
+          console.log("setPlaylistList");
+      })();
+    }
+  }, [session])
 
   const sendPlaylistNew = async (url:String) => {
     try {
@@ -70,7 +85,6 @@ export default function Home() {
       setPlaylistInfo(result.data.message);
       setPlayListFetched(true);
       setError(false);
-
 
       console.log("playlistfetched" + playlistFetched);
       
@@ -95,8 +109,16 @@ export default function Home() {
   const spotifyAuthPlaylist = async () => {
     try{
       if(session){
-        const accessToken = session?.user?.access_token;
+        const accessToken = session?.access_token;
         console.log(accessToken);
+        const result = await axios.get('https://api.spotify.com/v1/me/playlists', {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        });
+
+        console.log(result.data);
+        return result.data.items;
       }
     } catch (err) {
       console.log("Spotify login error: " + err);
@@ -125,7 +147,8 @@ export default function Home() {
       <div className="bg-neutral-900">
         <div className="flex flex-col sm:flex-row mx-0 sm:mx-10 pb-6 sm:my-10 px-5 sm:rounded-lg bg-gradient-to-b from-neutral-800 to-neutral-950">
           <div className="flex flex-col my-4 sm:min-w-[40%]">
-            <button onClick={handleSpotifyLogin} className="bg-green-500 rounded-lg my-2 py-3 hover:bg-green-600 duration-300">Login with Spotify</button>
+            {!session && <button onClick={handleSpotifyLogin} className="bg-green-500 rounded-lg my-2 py-3 hover:bg-green-600 duration-300">Login with Spotify</button>}
+            {session && <button onClick={() => signOut()} className="bg-green-500 rounded-lg my-2 py-3 hover:bg-green-600 duration-300">Logout of Spotify</button>}
             <button onClick={() => {setSelectedMethod("URL")}} className={`bg-amber-500 rounded-lg my-2 py-3 hover:bg-amber-600 duration-300 ${selectedMethod == "URL" ? 'hidden' : ''}`}>Enter URL</button>
 
             {(selectedMethod == "URL") && 
@@ -135,7 +158,11 @@ export default function Home() {
             </form>}
             <div className="flex justify-center items-center h-[100%]">
               {!session && <p className={`hidden text-center text-md text-amber-500 ${playlistInfo ? 'sm:block' : 'hidden'}`}>Login with your spotify to<br/>directly access your personal playlists</p>}
-              {session && <p>{session.user?.name}</p>}
+              {session && <div>
+                {playlistList && (playlistList.map((playlist:Playlist) => {
+                  return <p>{playlist.name}</p>
+                }))}
+              </div>}
             </div>
           </div>
 
