@@ -1,6 +1,8 @@
 'use client';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
+import Navbar from '../components/navbar';
+import PlaylistInfo from '../components/playlistinfo';
 
 interface PlaylistInfo {
     playlist_name: string;
@@ -10,7 +12,7 @@ interface PlaylistInfo {
     info: {
         user_name: string;
         num_songs: string;
-        duration: number;
+        duration: number[];
     }
     songs: [{
       song_name: string;
@@ -18,12 +20,12 @@ interface PlaylistInfo {
       album_name: string
       song_icon_url: string;
       song_info: string;
-      duration: []
+      duration: number[];
     }];
   }
 
 const Convert = () => {
-    const [playlistinfo, setPlaylistinfo] = useState<PlaylistInfo | null>(null);
+    const [playlistInfo, setPlaylistInfo] = useState<PlaylistInfo | null>(null);
     const [youtubeurl, setYoutubeurl] = useState("");
 
     const convertToYoutube = async () => {
@@ -39,7 +41,7 @@ const Convert = () => {
         try{
             (async () => {
                 const result = await axios.post("http://localhost:5000/getplaylistinfo", null, {withCredentials: true });
-                setPlaylistinfo(result.data.playlistinfo);
+                setPlaylistInfo(result.data.playlistinfo);
               })();
         } catch (error) {
             console.log(error);
@@ -47,13 +49,31 @@ const Convert = () => {
     }, [])
 
     return (
+        <main className="flex flex-col h-screen">
+            <Navbar/>
+            <div className='flex flex-row'>
+                <div className='flex flex-col mx-10 my-5 justify-center'>
+                    <div>
+                        {playlistInfo && <PlaylistInfo playlist_name={playlistInfo.playlist_name} playlist_desc={playlistInfo.playlist_desc} songs={playlistInfo.songs} playlist_icon_url={playlistInfo.playlist_icon_url} info={playlistInfo.info}/>}
+                    </div>
+                    <button onClick={() => {convertToYoutube()}} className='bg-red-500 hover:bg-red-600 duration-300 px-3 py-2 mx-5 rounded-2xl'>Convert</button>
+                </div> 
+                <div>
+                    <p>Click the convert button</p>
+                </div>
+            </div>          
+            
+        </main>
+    )
+
+    {/*return (
         <div>
             <div>Convert</div>
-            {playlistinfo && (
+            {playlistInfo && (
                 <div className='flex flex-col'>
-                    <div>{playlistinfo.playlist_name}</div>
-                    <div>{playlistinfo.playlist_desc}</div>
-                    <div className='flex flex-col'>{playlistinfo.songs.map((song) => {
+                    <div>{playlistInfo.playlist_name}</div>
+                    <div>{playlistInfo.playlist_desc}</div>
+                    <div className='flex flex-col'>{playlistInfo.songs.map((song) => {
                         return <div>{song.song_name}</div>
                     })}</div>
 
@@ -62,7 +82,7 @@ const Convert = () => {
                 </div>
             )}
         </div>
-    )
+    )*/}
 }
 
 export default Convert

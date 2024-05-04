@@ -63,7 +63,7 @@ def getauthurl():
 
 @app.route('/getplaylistinfo', methods=['POST'])
 def getplaylistinfo():
-    playlistinfo = {'playlistName':session['playlist_name'], "playlistDesc":session['playlist_desc'], "songs":session["songs"], "youtubeurl":session["youtubeurl"]}
+    playlistinfo = {'playlist_name':session['playlist_name'], "playlist_desc":session['playlist_desc'], 'playlist_icon_url': session['playlist_icon_url'], 'info':session['info'], "songs":session["songs"], "youtubeurl":session["youtubeurl"]}
     return jsonify({"playlistinfo":playlistinfo})
 
 @app.route('/', methods=['GET'])
