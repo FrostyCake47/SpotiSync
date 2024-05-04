@@ -26,16 +26,6 @@ interface PlaylistInfo {
 
 const Convert = () => {
     const [playlistInfo, setPlaylistInfo] = useState<PlaylistInfo | null>(null);
-    const [youtubeurl, setYoutubeurl] = useState("");
-
-    const convertToYoutube = async () => {
-        try{
-            const result = await axios.post("http://localhost:5000/convert", null, {withCredentials:true})
-            setYoutubeurl(result.data.message.youtubeurl)
-        } catch (error) {
-            console.log('Error while converting: ' + error);
-        }
-    }
 
     useEffect(() => {
         try{
@@ -54,29 +44,8 @@ const Convert = () => {
             <div className='flex flex-row py-5 bg-gradient-to-b from-black to-neutral-800'>
                 {playlistInfo && <ConvertPlaylistInfo playlist_name={playlistInfo.playlist_name} playlist_desc={playlistInfo.playlist_desc} songs={playlistInfo.songs} playlist_icon_url={playlistInfo.playlist_icon_url} info={playlistInfo.info}/>}
             </div>          
-            
         </main>
     )
-
-    {/*<button onClick={() => {convertToYoutube()}} className='bg-red-500 hover:bg-red-600 duration-300 px-3 py-2 mx-5 rounded-2xl'>Convert</button>*/}
-
-    {/*return (
-        <div>
-            <div>Convert</div>
-            {playlistInfo && (
-                <div className='flex flex-col'>
-                    <div>{playlistInfo.playlist_name}</div>
-                    <div>{playlistInfo.playlist_desc}</div>
-                    <div className='flex flex-col'>{playlistInfo.songs.map((song) => {
-                        return <div>{song.song_name}</div>
-                    })}</div>
-
-                    <button onClick={() => {convertToYoutube()}}>Convert</button>
-                    {youtubeurl && <div>{youtubeurl}</div>}
-                </div>
-            )}
-        </div>
-    )*/}
 }
 
 export default Convert
