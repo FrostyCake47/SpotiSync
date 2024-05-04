@@ -26,7 +26,7 @@ def search_song(youtube, track):
     search_request = youtube.search().list(
             part= "snippet",
             maxResults= 1,
-            q= track,
+            q= track['song_name'] + ' by ' + track['artist_name'],
             type= "video"
         )
 
@@ -61,6 +61,7 @@ def main(playlist_name, playlist_desc, songs, credentials = None):
 
     count = 1
     print("Adding songs...")
+    print(songs)
     for track in songs:
       song_id, song_name = search_song(youtube, track)
       add_song(youtube, playlist_id, song_id, song_name)

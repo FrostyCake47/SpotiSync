@@ -1,8 +1,16 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     reactStrictMode: true,
-    images: {
+    /*images: {
         domains: ["i.scdn.co", "image-cdn-ak.spotifycdn.com", "mosaic.scdn.co"],
+    },*/
+    images: {
+        remotePatterns: [
+          {
+            protocol: "https",
+            hostname: "**",
+          },
+        ],
     },
 };
 

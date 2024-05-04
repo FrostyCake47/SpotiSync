@@ -38,7 +38,18 @@ interface Playlist{
   name:string;
   external_urls:{
     spotify:string;
-  }
+  };
+  images: [{
+    height: number | null;
+    url: string;
+    width: number | null;
+  }];
+  owner: {
+    display_name: string;
+  };
+  tracks: {
+    total: number;
+  };
 }
 
 export default function Home() {
@@ -160,7 +171,7 @@ export default function Home() {
                 <input className=" text-neutral-200 sm:min-w-[70%] px-2 py-2 mr-3 my-1 rounded-md w-full  bg-neutral-800 border-amber-500 border-2" value={url} type="text" onChange={(e) => setUrl(e.target.value)}/>
                 <button className="flex-1 bg-amber-500 px-5 py-2 my-3 rounded-xl hover:bg-amber-600 duration-300" onClick={handleOnSubmit}>Submit</button>
             </form>}
-            <div className="flex justify-center items-center h-[100%]">
+            <div className={`flex justify-center ${session ? 'item-start my-4' : 'items-center'} h-[100%]`}>
               {!session && <p className={`hidden text-center text-md text-amber-500 ${playlistInfo ? 'sm:block' : 'hidden'}`}>Login with your spotify to<br/>directly access your personal playlists</p>}
               {session && playlistList && <PlaylistCard playlistList={playlistList} sendPlaylistNew={sendPlaylistNew}/>}
             </div>
@@ -174,15 +185,14 @@ export default function Home() {
               {
                 <p className={`text-center text-md text-amber-500`}>Login to your Spotify account<br/>Or enter a url and select your playlist</p>}
             </div>
+
+            {playlistFetched && <div className='flex flex-1 py-5 my-1 items-center justify-end'>
+              <p>Login and convert to Youtube</p>
+              <button onClick={() => {newAuth()}} className="bg-red-500 hover:bg-red-600 duration-300 px-3 py-2 mx-5 rounded-2xl">Youtube login</button>
+            </div>}
+
           </div>
         </div>
-        
-        {/*<div>
-          {playlistFetched && <div>
-            <p>Login and convert to Youtube</p>
-            <button onClick={() => {newAuth()}} className="w bg-red-500 px-3 py-2 rounded-2xl">New Auth</button>
-          </div>}
-          </div>*/}
       </div>
     </main>
   );

@@ -20,7 +20,15 @@ SESSION_TYPE = 'filesystem'
 app.config.from_object(__name__)
 Session(app)
 
-
+CORS(app, resources={ r'/*': {'origins': 'http://localhost:3000'}}, supports_credentials=True)
+'''
+@app.after_request
+def after_request(response):
+  response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
+  response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
+  response.headers.add('Access-Control-Allow-Credentials', 'true')
+  return response
+'''
 @app.route('/playlisturl', methods=['POST'])
 @cross_origin(supports_credentials=True)
 def playlisturl():
@@ -33,6 +41,9 @@ def playlisturl():
         session['songs'] = songs
         session['playlist_icon_url'] = playlist_icon_url
         session['info'] = info
+
+        print("new session songs")
+        print(session["songs"], file=stderr)
 
         playlistinfo = {'playlist_name':playlist_name, 'playlist_desc':playlist_desc, 'songs':songs, 'playlist_icon_url': playlist_icon_url, 'info':info}
         print("session: ", session["playlist_name"], file=stderr)
@@ -80,6 +91,9 @@ def convert():
     playlist_desc = session["playlist_desc"]
     songs = session["songs"]
     credentials =  session['credentials']
+
+    print("conversion songs")
+    print(songs, file=stderr)
 
     status, youtubeurl = youtubepy.main(playlist_name, playlist_desc, songs, credentials)
     session['youtubeurl'] = youtubeurl
