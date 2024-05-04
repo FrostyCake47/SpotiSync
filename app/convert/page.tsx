@@ -2,7 +2,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import Navbar from '../components/navbar';
-import PlaylistInfo from '../components/playlistinfo';
+import ConvertPlaylistInfo from '../components/convertplaylistinfo';
 
 interface PlaylistInfo {
     playlist_name: string;
@@ -51,20 +51,14 @@ const Convert = () => {
     return (
         <main className="flex flex-col h-screen">
             <Navbar/>
-            <div className='flex flex-row'>
-                <div className='flex flex-col mx-10 my-5 justify-center'>
-                    <div>
-                        {playlistInfo && <PlaylistInfo playlist_name={playlistInfo.playlist_name} playlist_desc={playlistInfo.playlist_desc} songs={playlistInfo.songs} playlist_icon_url={playlistInfo.playlist_icon_url} info={playlistInfo.info}/>}
-                    </div>
-                    <button onClick={() => {convertToYoutube()}} className='bg-red-500 hover:bg-red-600 duration-300 px-3 py-2 mx-5 rounded-2xl'>Convert</button>
-                </div> 
-                <div>
-                    <p>Click the convert button</p>
-                </div>
+            <div className='flex flex-row py-5 bg-gradient-to-b from-black to-neutral-800'>
+                {playlistInfo && <ConvertPlaylistInfo playlist_name={playlistInfo.playlist_name} playlist_desc={playlistInfo.playlist_desc} songs={playlistInfo.songs} playlist_icon_url={playlistInfo.playlist_icon_url} info={playlistInfo.info}/>}
             </div>          
             
         </main>
     )
+
+    {/*<button onClick={() => {convertToYoutube()}} className='bg-red-500 hover:bg-red-600 duration-300 px-3 py-2 mx-5 rounded-2xl'>Convert</button>*/}
 
     {/*return (
         <div>

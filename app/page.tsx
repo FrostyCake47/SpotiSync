@@ -39,6 +39,7 @@ interface Playlist{
   external_urls:{
     spotify:string;
   };
+  href:string;
   images: [{
     height: number | null;
     url: string;

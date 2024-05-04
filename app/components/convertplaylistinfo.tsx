@@ -3,7 +3,7 @@ import SongCard from './songcard';
 import Image from 'next/image';
 import someting from 'next-auth/providers/spotify'
 
-const PlaylistInfo = (props : {playlist_name:string, playlist_desc:string, playlist_icon_url:string, songs:[{
+const ConvertPlaylistInfo = (props : {playlist_name:string, playlist_desc:string, playlist_icon_url:string, songs:[{
     song_name: string;
     artist_name: string;
     album_name: string
@@ -19,7 +19,7 @@ const PlaylistInfo = (props : {playlist_name:string, playlist_desc:string, playl
     const {playlist_name, playlist_desc, songs, playlist_icon_url, info} = props;
 
     return (
-        <div className='flex flex-col'>
+        <div className='flex flex-row mx-8 items-center justify-between w-screen'>
             <div className='flex mb-6'>
                 <div className='w-[104px] sm:w-[200px] aspect-square relative'>
                     <Image className='rounded-lg' src={playlist_icon_url} alt="Playlist icon"  layout={'fill'} objectFit={'contain'}/>
@@ -37,7 +37,7 @@ const PlaylistInfo = (props : {playlist_name:string, playlist_desc:string, playl
                 </div>
             </div>
 
-            <div className='flex flex-col sm:pb-4 overflow-y-scroll max-h-[360px]'>
+            <div className='flex flex-col sm:pb-4 w-[50%] overflow-y-scroll max-h-[360px]'>
                 {songs.length > 0 && songs.map((song, index) => {
                     return <div className='flex my-1 px-0 py-0 sm:px-2 sm:py-2 bg-neutral-900 justify-between items-center rounded-lg hover:bg-neutral-800 duration-300' key={index}>
                         <div className='flex justify-start items-center'>
@@ -57,4 +57,4 @@ const PlaylistInfo = (props : {playlist_name:string, playlist_desc:string, playl
     )
 }
 
-export default PlaylistInfo
+export default ConvertPlaylistInfo
