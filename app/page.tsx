@@ -8,10 +8,9 @@ import Navbar from "./components/navbar";
 
 import { signIn, signOut, useSession } from 'next-auth/react';
 
-import { IoMdMusicalNote } from "react-icons/io";
-import { IoIosMusicalNote } from "react-icons/io";
-import { IoMusicalNotes } from "react-icons/io5";
+import { FaSpotify } from "react-icons/fa";
 import { PlaylistCard } from './components/playlistCard';
+import { FaYoutube } from "react-icons/fa6";
 
 
 interface PlaylistInfo {
@@ -163,8 +162,15 @@ export default function Home() {
       <div className="bg-neutral-900">
         <div className="flex flex-col sm:flex-row mx-0 sm:mx-10 pb-6 sm:my-10 px-5 sm:rounded-lg bg-gradient-to-b from-neutral-800 to-neutral-950">
           <div className="flex flex-col my-4 sm:min-w-[40%]">
-            {!session && <button onClick={handleSpotifyLogin} className="bg-green-500 rounded-lg my-2 py-3 hover:bg-green-600 duration-300">Login with Spotify</button>}
-            {session && <button onClick={() => signOut()} className="bg-green-500 rounded-lg my-2 py-3 hover:bg-green-600 duration-300">Logout of Spotify</button>}
+            {!session && <button onClick={handleSpotifyLogin} className="bg-green-500 rounded-lg my-2 py-3 flex items-center justify-center hover:bg-green-600 duration-300">
+              <FaSpotify size={30}/>
+              <p className='px-3'>Login to Spotify</p>
+            </button>}
+            {session && <button onClick={() => signOut()} className="bg-green-500 rounded-lg my-2 py-3 flex items-center justify-center hover:bg-green-600 duration-300">
+              <FaSpotify size={30}/>
+
+              <p className='px-3'>Logout of Spotify</p>  
+            </button>}
             <button onClick={() => {setSelectedMethod("URL")}} className={`bg-amber-500 rounded-lg my-2 py-3 hover:bg-amber-600 duration-300 ${selectedMethod == "URL" ? 'hidden' : ''}`}>Enter URL</button>
 
             {(selectedMethod == "URL") && 
@@ -189,7 +195,10 @@ export default function Home() {
 
             {playlistFetched && <div className='flex flex-1 py-5 my-1 items-center justify-end'>
               <p>Login and convert to Youtube</p>
-              <button onClick={() => {newAuth()}} className="bg-red-500 hover:bg-red-600 duration-300 px-3 py-2 mx-5 rounded-2xl">Youtube login</button>
+              <button onClick={() => {newAuth()}} className="flex justify-center items-center bg-red-500 hover:bg-red-600 duration-300 px-3 py-2 mx-5 rounded-2xl">
+                <FaYoutube size={30}/>
+                <p className='px-3'>Youtube Login</p>
+              </button>
             </div>}
 
           </div>

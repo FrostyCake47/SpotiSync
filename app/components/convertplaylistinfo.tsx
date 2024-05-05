@@ -3,6 +3,7 @@ import SongCard from './songcard';
 import Image from 'next/image';
 import someting from 'next-auth/providers/spotify'
 import axios from 'axios';
+import { FaYoutube } from "react-icons/fa6";
 
 const ConvertPlaylistInfo = (props : {playlist_name:string, playlist_desc:string, playlist_icon_url:string, songs:[{
     song_name: string;
@@ -54,9 +55,12 @@ const ConvertPlaylistInfo = (props : {playlist_name:string, playlist_desc:string
                     </div>
                 </div>
                 <button onClick={() => {convertToYoutube()}} className='bg-red-500 hover:bg-red-600 duration-300 px-3 py-2 mx-5 rounded-2xl'>Convert</button>
-                <div className='flex flex-col sm:flex-row'>
-                    <p className=''>{convertStatus}</p>
-                    <p className=''>{youtubeurl}</p>
+                <div className='flex mt-5 flex-col justify-center items-center'>
+                    <p className={`${convertStatus.endsWith('started') || convertStatus.endsWith('...') ? 'text-amber-500' : 'text-green-500'}`}>{convertStatus}</p>
+                    <a href={youtubeurl} className={`${youtubeurl ? 'flex flex-row items-center bg-neutral-700 hover:bg-neutral-900 duration-300 px-4 py-2 my-2 rounded-xl' : 'hidden'}`}>
+                        <FaYoutube />
+                        <p className='px-3'>{playlist_name}</p>
+                    </a>
                 </div>
             </div>
 

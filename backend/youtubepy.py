@@ -6,6 +6,7 @@ import pickle
 
 
 def make_playlist(youtube, playlist_name, playlist_desc):
+    print("before req to create playlist")
     request = youtube.playlists().insert(
         part="snippet,status",
         body={
@@ -54,8 +55,11 @@ def add_song(youtube, playlist_id, song_id, song_name):
 
 def main(playlist_name, playlist_desc, songs, credentials = None):
   try:
+    print("youtubepy main")
     youtube = build("youtube", "v3", credentials=credentials)
+    print("created youtube obj")
 
+    print(f"playlist name {playlist_name}, playlist_desc {playlist_desc}")
     playlist_id = make_playlist(youtube, playlist_name, playlist_desc)
     print("\nPlaylist created...\n")
 
@@ -74,6 +78,7 @@ def main(playlist_name, playlist_desc, songs, credentials = None):
     return 0, youtube_url
   
   except Exception as e:
+    print(f"error in youtube main: {e}")
     return 1, ""
     
   
