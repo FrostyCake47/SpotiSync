@@ -1,7 +1,6 @@
 'use client';
 import './types';
 import { useEffect, useState } from "react";
-import TopWave from "./components/topwave";
 import PlaylistInfo from "./components/playlistinfo";
 import axios from "axios";
 import Navbar from "./components/navbar";
@@ -78,19 +77,6 @@ export default function Home() {
     } 
   }
 
-  useEffect(() => {
-    if(session){
-      (async () => {
-          const newplaylistList = await spotifyAuthPlaylist();
-          if(newplaylistList !== "error"){
-            setPlaylistList(newplaylistList);
-            console.log("setPlaylistList ");
-          }
-          
-      })();
-    }
-  }, [session])
-
   const sendPlaylistNew = async (url:String) => {
     try {
 
@@ -141,6 +127,19 @@ export default function Home() {
       return "error";
     }
   }
+
+  useEffect(() => {
+    if(session){
+      (async () => {
+          const newplaylistList = await spotifyAuthPlaylist();
+          if(newplaylistList !== "error"){
+            setPlaylistList(newplaylistList);
+            console.log("setPlaylistList ");
+          }
+          
+      })();
+    }
+  }, [session])
 
   return (
     <main className="flex flex-col h-screen">
