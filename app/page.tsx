@@ -61,9 +61,6 @@ export default function Home() {
   const [playlistFetched, setPlayListFetched] = useState(false);
   const [error, setError] = useState(false);
 
-  const [playlist_name, setPlaylistName] = useState("");
-  const [playlist_desc, setPlaylistDesc] = useState("");
-
   const [selectedMethod, setSelectedMethod] = useState("");
   const [playlistList, setPlaylistList] = useState<Playlist[] | null>(null);
 
@@ -85,8 +82,11 @@ export default function Home() {
     if(session){
       (async () => {
           const newplaylistList = await spotifyAuthPlaylist();
-          setPlaylistList(newplaylistList);
-          console.log("setPlaylistList");
+          if(newplaylistList !== "error"){
+            setPlaylistList(newplaylistList);
+            console.log("setPlaylistList ");
+          }
+          
       })();
     }
   }, [session])
@@ -137,6 +137,8 @@ export default function Home() {
       }
     } catch (err) {
       console.log("Spotify login error: " + err);
+      setPlaylistList(null);
+      return "error";
     }
   }
 

@@ -43,7 +43,6 @@ def getauthurl():
     return jsonify({"url":authorization_url})
 
 
-
 @app.route('/', methods=['GET'])
 def callback():
     code = request.args.get('code')
@@ -52,7 +51,6 @@ def callback():
     credentials = flow.credentials
     print("Login successful!", file=stderr)
     # Continue with credentials handling
-
 
     status, youtubeurl = youtubepy.main(session['playlistinfo'].playlist_name, session['playlistinfo'].playlist_desc, session['playlistinfo'].songs, credentials)
     if status:

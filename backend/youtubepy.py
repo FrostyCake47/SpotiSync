@@ -22,6 +22,14 @@ def make_playlist(youtube, playlist_name, playlist_desc):
     response = request.execute()
     return response["id"]
 
+def delete_playlist(youtube, playlist_id):
+    print("Before request to delete playlist")
+    request = youtube.playlists().delete(
+        id=playlist_id
+    )
+    response = request.execute()
+    print("Playlist deleted successfully")
+    return response
 
 def search_song(youtube, track):
     search_request = youtube.search().list(
@@ -79,6 +87,7 @@ def main(playlist_name, playlist_desc, songs, credentials = None):
   
   except Exception as e:
     print(f"error in youtube main: {e}")
+    delete_playlist(youtube, playlist_id)
     return 1, ""
     
   
