@@ -20,7 +20,8 @@ SESSION_TYPE = 'filesystem'
 app.config.from_object(__name__)
 Session(app)
 
-CORS(app, resources={ r'/*': {'origins': 'http://localhost:3000'}}, supports_credentials=True)
+CORS(app, resources={ r'/*': {'origins': ['http://localhost:3000', 'https://spotisync-frost.vercel.app']}}, supports_credentials=True)
+#CORS(app, resources={ r'/*': {'origins': 'http://localhost:3000'}}, supports_credentials=True)
 '''
 @app.after_request
 def after_request(response):
