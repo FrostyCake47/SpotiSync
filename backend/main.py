@@ -59,7 +59,10 @@ def playlisturl():
 
 @app.route('/getauthurl', methods=['POST'])
 def getauthurl():
+    print(request.url_root)
     authorization_url, state = flow.authorization_url()
+    isLoggedin = False
+    session['isLoggedin'] = isLoggedin
     return jsonify({"url":authorization_url})
 
 @app.route('/getplaylistinfo', methods=['POST'])
@@ -70,19 +73,31 @@ def getplaylistinfo():
 @app.route('/', methods=['GET'])
 @cross_origin(supports_credentials=True)
 def callback():
-    code = request.args.get('code')
-    print("got the code " + code, file=stderr)
-    flow.fetch_token(code=code)
-    credentials = flow.credentials
-    print("Login successful!", file=stderr)
-    session['credentials'] = credentials
+    try:
+        print(request.headers.get('host'))
+        #redirect_url = request.headers.get('host')  # Replace 'your-route' with the actual route in your React app
+        redirect_url = 'https://spotisync-frost.vercel.app'
+        
+        code = request.args.get('code')
+        if(session['isLoggedin']):
+            print("already logged in", file=stderr)
+            return f'<script>window.location.href = "{redirect_url}/convert";</script>'
+        
+        print("got the code " + code, file=stderr)
+        flow.fetch_token(code=code)
+        credentials = flow.credentials
+        print("Login successful!", file=stderr)
+        session['isLoggedin'] = True
+        session['credentials'] = credentials
 
-    #playlist_name = "pretty"
-    #playlist_desc = "weow it works"
-    #songs = ["The longest goodbye rosie darling", "if i dont like you lily williams", "young love - ada leaan"]
+        #playlist_name = "pretty"
+        #playlist_desc = "weow it works"
+        #songs = ["The longest goodbye rosie darling", "if i dont like you lily williams", "young love - ada leaan"]
 
-    redirect_url = 'http://localhost:3000/convert'  # Replace 'your-route' with the actual route in your React app
-    return f'<script>window.location.href = "{redirect_url}";</script>'
+        return f'<script>window.location.href = "{redirect_url}/convert";</script>'
+    except Exception as e:
+        print(f"error at credential: {e}")
+        return f'<script>window.location.href = "{redirect_url}/";</script>'
 
 
 @app.route('/convert', methods=['POST'])
