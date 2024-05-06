@@ -30,16 +30,15 @@ const PlaylistInfo = (props : {playlist_name:string, playlist_desc:string, playl
                     <p className='px-4 text-neutral-400 text-md font-light'>{playlist_desc}</p>
                     <div className='px-4 pt-3 flex'>
                         {info?.user_name && <p className='mr-2'>{info?.user_name ?? ""}</p>}
-                            <p className='mr-2 text-neutral-400'>• {`${info?.duration[0] / 60 < 1 ? info?.duration[0] + ' min' : Math.floor(info?.duration[0]/60) + ' hr ' + (info?.duration[0]%60) + ' min'}`}</p>
-                            <p className='mr-2 text-neutral-400'>• {info.num_songs} songs</p>
-
+                        <p className='mr-2 text-neutral-400'>• {`${info?.duration[0] / 60 < 1 ? info?.duration[0] + ' min' : Math.floor(info?.duration[0]/60) + ' hr ' + (info?.duration[0]%60) + ' min'}`}</p>
+                        <p className='mr-2 text-neutral-400'>• {info.num_songs} songs</p>
                     </div>
                 </div>
             </div>
 
             <div className='flex flex-col sm:pb-4 overflow-y-scroll max-h-[360px]'>
                 {songs.length > 0 && songs.map((song, index) => {
-                    return <div className='flex my-1 px-0 py-0 sm:px-2 sm:py-2 bg-neutral-900 justify-between items-center rounded-lg hover:bg-neutral-800 duration-300' key={index}>
+                    return <div className='flex my-1 px-0 py-2 sm:px-2 sm:py-2 bg-neutral-900 justify-between items-center rounded-lg hover:bg-neutral-800 duration-300' key={index}>
                         <div className='flex justify-start items-center'>
                             <div className='w-[48px] aspect-square relative'>
                                 <Image className='rounded-lg' src={song.song_icon_url} alt='' layout={'fill'} objectFit={'contain'}/>
@@ -49,7 +48,11 @@ const PlaylistInfo = (props : {playlist_name:string, playlist_desc:string, playl
                                 <p className='ml-5 text-xs sm:text-md font-light'>{song.artist_name}</p>
                             </div>  
                         </div>
-                        <p className='px-6 text-sm'>{song.duration[0] + ":" + (song.duration[1].toString().length == 1 ? "0" : '') + song.duration[1]}</p>
+                        
+                        <div className='flex flex-1 justify-end items-center'>
+                            <p className='mx-10 text-sm font-light text-neutral-400'>{song.album_name}</p>
+                            <p className='px-6 text-sm'>{song.duration[0] + ":" + (song.duration[1].toString().length == 1 ? "0" : '') + song.duration[1]}</p>
+                        </div>
                     </div>;
                 })}
             </div>

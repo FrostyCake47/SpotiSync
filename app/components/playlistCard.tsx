@@ -23,19 +23,25 @@ interface Playlist{
 export const PlaylistCard = (props : {playlistList : Playlist[], sendPlaylistNew: Function}) => {
     const {playlistList, sendPlaylistNew} = props;
     return (
-        <div className='flex flex-col overflow-y-scroll max-h-[505px] w-[100%] '>
-            {playlistList.map((playlist, index) => {
-                if (playlist.owner.display_name === "Spotify") return;
-                return <div key={index} className='flex my-1 px-0 py-0 sm:px-2 sm:py-2 bg-neutral-900 justify-between items-center rounded-lg hover:bg-neutral-800 duration-300' onClick={() => {sendPlaylistNew(playlist.href)}}>
-                    <div className='flex justify- items-center'>
-                        <div className='w-[48px] aspect-square relative'>
-                            <Image className='rounded-lg' src={playlist.images[0].url} alt='' layout={'fill'} objectFit={'contain'}/>
+            <div className='w-[100%]'>
+            <div className='flex justify-between my-2'>
+                <p className='ml-16'>Playlist</p>
+                <p className='mr-4'>songs</p>
+            </div>
+            <div className='flex flex-col overflow-y-scroll max-h-[505px] w-[100%] '>
+                {playlistList.map((playlist, index) => {
+                    if (playlist.owner.display_name === "Spotify") return;
+                    return <div key={index} className='flex my-1 px-0 py-2 sm:px-2 sm:py-2 bg-neutral-900 justify-between items-center rounded-lg hover:bg-neutral-800 duration-300' onClick={() => {sendPlaylistNew(playlist.href)}}>
+                        <div className='flex justify- items-center'>
+                            <div className='w-[48px] aspect-square relative'>
+                                <Image className='rounded-lg' src={playlist.images[0].url} alt='' layout={'fill'} objectFit={'contain'}/>
+                            </div>
+                            <p className='px-5'>{playlist.name}</p>
                         </div>
-                        <p className='px-5'>{playlist.name}</p>
+                        <p className='px-5'>{playlist.tracks.total}</p>
                     </div>
-                    <p className='px-5'>{playlist.tracks.total}</p>
-                </div>
-            })}
+                })}
+            </div>
         </div>
     )
 }
