@@ -20,8 +20,8 @@ SESSION_TYPE = 'filesystem'
 app.config.from_object(__name__)
 Session(app)
 
-CORS(app, resources={ r'/*': {'origins': ['http://localhost:3000', 'https://spotisync-frost.vercel.app']}}, supports_credentials=True)
-#CORS(app, resources={ r'/*': {'origins': 'http://localhost:3000'}}, supports_credentials=True)
+#CORS(app, resources={ r'/*': {'origins': ['http://localhost:3000', 'https://spotisync-frost.vercel.app']}}, supports_credentials=True)
+CORS(app, resources={ r'/*': {'origins': 'http://localhost:3000'}}, supports_credentials=True)
 '''
 @app.after_request
 def after_request(response):
@@ -30,6 +30,8 @@ def after_request(response):
   response.headers.add('Access-Control-Allow-Credentials', 'true')
   return response
 '''
+
+
 @app.route('/playlisturl', methods=['POST'])
 @cross_origin(supports_credentials=True)
 def playlisturl():
@@ -43,8 +45,8 @@ def playlisturl():
         session['playlist_icon_url'] = playlist_icon_url
         session['info'] = info
 
-        print("new session songs")
-        print(session["songs"], file=stderr)
+        print("new items to session")
+        print(session.keys(), session.values(), file=stderr)
 
         playlistinfo = {'playlist_name':playlist_name, 'playlist_desc':playlist_desc, 'songs':songs, 'playlist_icon_url': playlist_icon_url, 'info':info}
         print("session: ", session["playlist_name"], file=stderr)
@@ -58,17 +60,23 @@ def playlisturl():
     
 
 @app.route('/getauthurl', methods=['POST'])
+@cross_origin(supports_credentials=True)
 def getauthurl():
-    print(request.url_root)
     authorization_url, state = flow.authorization_url()
     isLoggedin = False
     session['isLoggedin'] = isLoggedin
     return jsonify({"url":authorization_url})
 
+
 @app.route('/getplaylistinfo', methods=['POST'])
+@cross_origin(supports_credentials=True)
 def getplaylistinfo():
-    playlistinfo = {'playlist_name':session['playlist_name'], "playlist_desc":session['playlist_desc'], 'playlist_icon_url': session['playlist_icon_url'], 'info':session['info'], "songs":session["songs"], "youtubeurl":session["youtubeurl"]}
+    print("acessing session items")
+    print(session.keys(), session.values(), file=stderr)
+    
+    playlistinfo = {'playlist_name':session['playlist_name'], "playlist_desc":session['playlist_desc'], 'playlist_icon_url': session['playlist_icon_url'], 'info':session['info'], "songs":session["songs"],}
     return jsonify({"playlistinfo":playlistinfo})
+
 
 @app.route('/', methods=['GET'])
 @cross_origin(supports_credentials=True)
@@ -76,7 +84,8 @@ def callback():
     try:
         print(request.headers.get('host'))
         #redirect_url = request.headers.get('host')  # Replace 'your-route' with the actual route in your React app
-        redirect_url = 'https://spotisync-frost.vercel.app'
+        #redirect_url = 'https://spotisync-frost.vercel.app'
+        redirect_url = 'http://localhost:3000'
         
         code = request.args.get('code')
         if(session['isLoggedin']):
