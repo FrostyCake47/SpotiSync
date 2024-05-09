@@ -1,20 +1,10 @@
 import axios from "axios";
-import { Account, Profile, Session, User } from "next-auth";
-import { AdapterUser } from "next-auth/adapters";
-import { JWT } from "next-auth/jwt";
 import NextAuth from "next-auth/next";
-import GoogleProvider from "next-auth/providers/google"
 import Spotify from "next-auth/providers/spotify";
 
 
 const handler = NextAuth({
     providers:[
-        GoogleProvider({
-            clientId: process.env.NEXT_PUBLIC_CLIENT_ID ?? "id",
-            clientSecret: process.env.NEXT_PUBLIC_CLIENT_SECRET ?? "secret"
-            
-        }),
-
         Spotify({
             clientId: process.env.NEXT_PUBLIC_SPOTIFY_CLIENT_ID ?? '',
             clientSecret: process.env.NEXT_PUBLIC_SPOTIFY_SECRET ?? "",
