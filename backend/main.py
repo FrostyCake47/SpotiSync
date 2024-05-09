@@ -20,8 +20,10 @@ SESSION_TYPE = 'filesystem'
 app.config.from_object(__name__)
 Session(app)
 
-#CORS(app, resources={ r'/*': {'origins': ['http://localhost:3000', 'https://spotisync-frost.vercel.app']}}, supports_credentials=True)
-CORS(app, resources={ r'/*': {'origins': 'http://localhost:3000'}}, supports_credentials=True)
+app.config.update(SESSION_COOKIE_SAMESITE="None", SESSION_COOKIE_SECURE=True)
+
+CORS(app, resources={ r'/*': {'origins': ['http://localhost:3000', 'https://spotisync-frost.vercel.app']}}, supports_credentials=True)
+#CORS(app, resources={ r'/*': {'origins': 'http://localhost:3000'}}, supports_credentials=True)
 '''
 @app.after_request
 def after_request(response):
@@ -71,7 +73,7 @@ def getauthurl():
 @app.route('/getplaylistinfo', methods=['POST'])
 @cross_origin(supports_credentials=True)
 def getplaylistinfo():
-    print("acessing session items")
+    print("acessing session items in /getplaylistinfo")
     print(session.keys(), session.values(), file=stderr)
     
     playlistinfo = {'playlist_name':session['playlist_name'], "playlist_desc":session['playlist_desc'], 'playlist_icon_url': session['playlist_icon_url'], 'info':session['info'], "songs":session["songs"],}
@@ -82,10 +84,12 @@ def getplaylistinfo():
 @cross_origin(supports_credentials=True)
 def callback():
     try:
+        print("acessing session items in /")
+        print(session.keys(), session.values(), file=stderr)
         print(request.headers.get('host'))
         #redirect_url = request.headers.get('host')  # Replace 'your-route' with the actual route in your React app
-        #redirect_url = 'https://spotisync-frost.vercel.app'
-        redirect_url = 'http://localhost:3000'
+        redirect_url = 'https://spotisync-frost.vercel.app'
+        #redirect_url = 'http://localhost:3000'
         
         code = request.args.get('code')
         if(session['isLoggedin']):
@@ -102,16 +106,21 @@ def callback():
         #playlist_name = "pretty"
         #playlist_desc = "weow it works"
         #songs = ["The longest goodbye rosie darling", "if i dont like you lily williams", "young love - ada leaan"]
+        session.modified = True
 
         return f'<script>window.location.href = "{redirect_url}/convert";</script>'
     except Exception as e:
         print(f"error at credential: {e}")
+        session.modified = True
         return f'<script>window.location.href = "{redirect_url}/";</script>'
 
 
 @app.route('/convert', methods=['POST'])
 @cross_origin(supports_credentials=True)
 def convert():
+    print("acessing session items in /convert")
+    print(session.keys(), session.values(), file=stderr)
+
     playlist_name = session["playlist_name"]
     playlist_desc = session["playlist_desc"]
     songs = session["songs"]
