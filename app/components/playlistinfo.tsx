@@ -15,8 +15,11 @@ const PlaylistInfo = (props : {playlist_name:string, playlist_desc:string, playl
     user_name: string;
     num_songs: string;
     duration: number[];
-  };}) => {
-    const {playlist_name, playlist_desc, songs, playlist_icon_url, info} = props;
+  },
+  selectedSongsIndex:boolean[],
+  selectSong:Function,
+  selectDeselect:Function;}) => {
+    const {playlist_name, playlist_desc, songs, playlist_icon_url, info, selectedSongsIndex, selectSong, selectDeselect} = props;
 
     return (
         <div className='flex flex-col'>

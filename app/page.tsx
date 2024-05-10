@@ -63,6 +63,8 @@ export default function Home() {
   const [selectedMethod, setSelectedMethod] = useState("");
   const [playlistList, setPlaylistList] = useState<Playlist[] | null>(null);
 
+  const [selectedSongsIndex, setSelectedSongsIndex] = useState<boolean[]>([true]);
+
   const handleOnSubmit = (event:any) => {
     event.preventDefault();
     sendPlaylistNew(url);
@@ -126,6 +128,17 @@ export default function Home() {
       setPlaylistList(null);
       return "error";
     }
+  }
+
+  const selectSong = (index:number) => {
+    const newSelectedSongsIndex =  [...selectedSongsIndex]
+    newSelectedSongsIndex[index] = !selectedSongsIndex[index]
+    setSelectedSongsIndex(newSelectedSongsIndex);
+  }
+
+  const selectDeselectAll = (length:number, select:boolean) => {
+    const array = Array.from({ length: length }, () => select);
+    setSelectedSongsIndex(array);
   }
 
   useEffect(() => {
