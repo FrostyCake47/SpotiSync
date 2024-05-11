@@ -16,6 +16,7 @@ Mail me at akashp4769@gmail.com if you wanna give it a go
 * Project was built upon NEXT.js and tailwind CSS
 * Flask is used for backend
 * API's used are Spotipy and official Youtube API
+* Currently web is deployed at Vercel and backend is hosted at pythonanywhere.com
 
 ## How to run
 * Clone this repository and set it up in your local machine
