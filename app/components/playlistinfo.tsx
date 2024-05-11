@@ -15,11 +15,12 @@ const PlaylistInfo = (props : {playlist_name:string, playlist_desc:string, playl
     user_name: string;
     num_songs: string;
     duration: number[];
-  },
-  selectedSongsIndex:boolean[],
+  }
+  /*,selectedSongsIndex:boolean[],
   selectSong:Function,
-  selectDeselect:Function;}) => {
-    const {playlist_name, playlist_desc, songs, playlist_icon_url, info, selectedSongsIndex, selectSong, selectDeselect} = props;
+  selectDeselectAll:Function*/;}) => {
+    const {playlist_name, playlist_desc, songs, playlist_icon_url, info /*, selectedSongsIndex, selectSong, selectDeselectAll*/} = props;
+    //selectDeselectAll(info.num_songs, true);
 
     return (
         <div className='flex flex-col'>
@@ -40,8 +41,9 @@ const PlaylistInfo = (props : {playlist_name:string, playlist_desc:string, playl
             </div>
 
             <div className='flex flex-col sm:pb-4 overflow-y-scroll max-h-[360px]'>
-                {songs.length > 0 && songs.map((song, index) => {
-                    return <div className='flex my-1 px-0 py-2 sm:px-2 sm:py-2 bg-neutral-900 justify-between items-center rounded-lg hover:bg-neutral-800 duration-300' key={index}>
+                {songs.length > 0 && songs.map((song, index:number) => {
+                    return <div className={`flex my-1 px-0 py-2 sm:px-2 sm:py-2 bg-neutral-900 justify-between items-center rounded-lg hover:bg-neutral-800 duration-300`} key={index} onClick={() => {/*selectSong(index)*/}}>
+                        {/*${selectSong(index) ? ' bg-gradient-to-r from-neutral-900 to-green-950' : 'bg-neutral-900'}*/}
                         <div className='flex justify-start items-center'>
                             <div className='w-[48px] aspect-square relative'>
                                 <Image className='rounded-lg' src={song.song_icon_url} alt='' layout={'fill'} objectFit={'contain'}/>

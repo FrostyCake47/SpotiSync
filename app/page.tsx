@@ -90,6 +90,8 @@ export default function Home() {
       setError(false);
 
       console.log("playlistfetched" + playlistFetched);
+
+      
       
     } catch (error) {
       console.error('Error:', error);
@@ -200,7 +202,7 @@ export default function Home() {
 
           
           <div className="flex-1 sm:px-6 sm:py-6">
-            {playlistInfo && <PlaylistInfo playlist_name={playlistInfo.playlist_name} playlist_desc={playlistInfo.playlist_desc} songs={playlistInfo.songs} playlist_icon_url={playlistInfo.playlist_icon_url} info={playlistInfo.info}/>}
+            {playlistInfo && <PlaylistInfo playlist_name={playlistInfo.playlist_name} playlist_desc={playlistInfo.playlist_desc} songs={playlistInfo.songs} playlist_icon_url={playlistInfo.playlist_icon_url} info={playlistInfo.info} /*selectedSongsIndex={selectedSongsIndex} selectSong={selectSong} selectDeselectAll={selectDeselectAll}*//>}
             {error && <p>Error</p>}
             <div className={`flex justify-center items-center h-[100%] mb-5 ${!playlistInfo && !error ? '' : 'hidden'}`}>
               {
