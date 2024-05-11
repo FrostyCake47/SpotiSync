@@ -1,6 +1,7 @@
 # SpotiSync
 
 Spotysync is your ultimate tool for seamlessly converting Spotify playlists to your YouTube main account with just one click. Say goodbye to manual transfers and hello to instant synchronization of your favorite tunes. Whether you're curating the perfect playlist for a road trip or sharing your music discoveries with friends, Spotysync makes the process fast, easy, and hassle-free.
+### Try it out - [SpotiSync]('spotisync-frost.vercel.app')
 
 ## Features
 * Spotify auth enables you to access private playlist directly
