@@ -1,5 +1,6 @@
 import React from 'react'
 import {Roboto_Slab} from "next/font/google";
+import "../globals.css";
 
 import { FaGooglePlus } from "react-icons/fa";
 import { FaGooglePlusG } from "react-icons/fa";
@@ -8,6 +9,8 @@ import { FaGithub } from "react-icons/fa";
 import { CiLinkedin } from "react-icons/ci";
 import { FaDiscord } from "react-icons/fa";
 import { RxDividerHorizontal } from "react-icons/rx";
+
+import { IconContext } from "react-icons";
 
 const RobotoSlab = Roboto_Slab({weight: "400", subsets: ["latin"]});
 
@@ -27,11 +30,21 @@ const Footer = () => {
             </div>
 
             <div className='sm-hidden justify-evenly py-4 flex'>
-                <FaGooglePlusG size={26} className='mx-3'/>
-                <FaInstagram size={26} className='mx-3'/>
-                <FaGithub size={26} className='mx-3'/>
-                <CiLinkedin size={26} className='mx-3'/>
-                <FaDiscord size={26} className='mx-3' />
+                <IconContext.Provider value={{className: "gmailicon"}}>
+                    <FaGooglePlusG size={26} className='mx-3'/>
+                </IconContext.Provider>
+                <IconContext.Provider value={{className: "instaicon"}}>
+                    <FaInstagram size={26} className='mx-3'/>
+                </IconContext.Provider>
+                <IconContext.Provider value={{className: "githubicon"}}>
+                    <FaGithub size={26} className='mx-3'/>
+                </IconContext.Provider>
+                <IconContext.Provider value={{className: "linkedinicon"}}>
+                    <CiLinkedin size={26} className='mx-3'/>
+                </IconContext.Provider>
+                <IconContext.Provider value={{className: "discordicon"}}>
+                    <FaDiscord size={26} className='mx-3' />
+                </IconContext.Provider>
             </div>
     </div>
   )

@@ -53,3 +53,60 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: #111;
 }
+
+
+/*icons*/
+
+.gmailicon{
+  color: white;
+  transition-duration: 200ms;
+}
+
+.gmailicon:hover{
+  color: #ef4444;
+  transition-duration: 300ms;
+}
+
+.instaicon{
+  color: white;
+  transition-duration: 200ms;
+}
+
+.instaicon:hover{
+  background: #F09433;
+  background: linear-gradient(to top right, #F09433 0%, #E6683C 25%, #DC2743 50%, #CC2366 75%, #BC1888 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  transition-duration: 300ms;
+}
+
+.githubicon{
+  color: white;
+  transition-duration: 200ms;
+}
+
+.githubicon:hover{
+  color: grey;
+  transition-duration: 300ms;
+}
+
+.linkedinicon{
+  color: white;
+  transition-duration: 200ms;
+}
+
+.linkedinicon:hover{
+  color: #0A66C2;
+  transition-duration: 300ms;
+}
+
+.discordicon{
+  color: white;
+  transition-duration: 200ms;
+}
+
+.discordicon:hover{
+  color: #6c67ea;
+  transition-duration: 300ms;
+}
