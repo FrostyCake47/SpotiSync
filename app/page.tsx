@@ -10,6 +10,7 @@ import { signIn, signOut, useSession } from 'next-auth/react';
 import { FaSpotify } from "react-icons/fa";
 import { PlaylistCard } from './components/playlistCard';
 import { FaYoutube } from "react-icons/fa6";
+import Footer from './components/footer';
 
 
 interface PlaylistInfo {
@@ -220,6 +221,10 @@ export default function Home() {
           </div>
         </div>
       </div>
+
+  
+      <div className='flex-1 w-[100%] bg-neutral-900 sm:bg-neutral-950 min-h-1'></div>
+      <Footer/>
     </main>
   );
 }
