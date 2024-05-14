@@ -42,9 +42,7 @@ const Footer = () => {
 
             <div className='sm-hidden justify-evenly py-4 flex'>
                 <IconContext.Provider value={{className: "gmailicon"}}>
-                    <FaGooglePlusG size={26} className='mx-3'>
-                        <a href="mailto:abc@gmail.com"></a>
-                    </FaGooglePlusG>
+                    <FaGooglePlusG size={26} className='mx-3' onClick={() => {}}></FaGooglePlusG>
                 </IconContext.Provider>
                 <IconContext.Provider value={{className: "instaicon"}}>
                     <FaInstagram size={26} className='mx-3'/>
