@@ -22,40 +22,64 @@ const Footer = () => {
             </div>
             <p className='text-[14px] sm:text-[15px] px-2 text-center py-3 text-neutral-300'>Crafted with passion by Akash, music enthusiast and developer.</p>
             <div className='sm-flex justify-evenly py-4 hidden'>
-            <IconContext.Provider value={{className: "gmailicon"}}>
-                    <FaGooglePlusG size={36} className='mx-3'>
-                    </FaGooglePlusG>
-                </IconContext.Provider>
+            <a href="mailto:akashp4769@gmail.com">
+                    <IconContext.Provider value={{className: "gmailicon"}}>
+                        <FaGooglePlusG size={36} className='mx-3'></FaGooglePlusG>
+                    </IconContext.Provider>
+                </a>
+                
                 <IconContext.Provider value={{className: "instaicon"}}>
                     <FaInstagram size={36} className='mx-3'/>
                 </IconContext.Provider>
-                <IconContext.Provider value={{className: "githubicon"}}>
-                    <FaGithub size={36} className='mx-3'/>
-                </IconContext.Provider>
-                <IconContext.Provider value={{className: "linkedinicon"}}>
-                    <CiLinkedin size={36} className='mx-3'/>
-                </IconContext.Provider>
-                <IconContext.Provider value={{className: "discordicon"}}>
-                    <FaDiscord size={36} className='mx-3' />
-                </IconContext.Provider>
+
+                <a href="https://github.com/FrostyCake47">
+                    <IconContext.Provider value={{className: "githubicon"}}>
+                        <FaGithub size={36} className='mx-3'/>
+                    </IconContext.Provider>
+                </a>
+                
+                <a href="https://www.linkedin.com/in/akash-p-a9164a294/">
+                    <IconContext.Provider value={{className: "linkedinicon"}}>
+                        <CiLinkedin size={36} className='mx-3'/>
+                    </IconContext.Provider>
+                </a>
+                
+                <a href="https://discordapp.com/users/422220140499697675">
+                    <IconContext.Provider value={{className: "discordicon"}}>
+                        <FaDiscord size={36} className='mx-3' />
+                    </IconContext.Provider>
+                </a>
             </div>
 
             <div className='sm-hidden justify-evenly py-4 flex'>
-                <IconContext.Provider value={{className: "gmailicon"}}>
-                    <FaGooglePlusG size={26} className='mx-3' onClick={() => {}}></FaGooglePlusG>
-                </IconContext.Provider>
+                <a href="mailto:akashp4769@gmail.com">
+                    <IconContext.Provider value={{className: "gmailicon"}}>
+                        <FaGooglePlusG size={26} className='mx-3'></FaGooglePlusG>
+                    </IconContext.Provider>
+                </a>
+                
                 <IconContext.Provider value={{className: "instaicon"}}>
                     <FaInstagram size={26} className='mx-3'/>
                 </IconContext.Provider>
-                <IconContext.Provider value={{className: "githubicon"}}>
-                    <FaGithub size={26} className='mx-3'/>
-                </IconContext.Provider>
-                <IconContext.Provider value={{className: "linkedinicon"}}>
-                    <CiLinkedin size={26} className='mx-3'/>
-                </IconContext.Provider>
-                <IconContext.Provider value={{className: "discordicon"}}>
-                    <FaDiscord size={26} className='mx-3' />
-                </IconContext.Provider>
+
+                <a href="https://github.com/FrostyCake47">
+                    <IconContext.Provider value={{className: "githubicon"}}>
+                        <FaGithub size={26} className='mx-3'/>
+                    </IconContext.Provider>
+                </a>
+                
+                <a href="https://www.linkedin.com/in/akash-p-a9164a294/">
+                    <IconContext.Provider value={{className: "linkedinicon"}}>
+                        <CiLinkedin size={26} className='mx-3'/>
+                    </IconContext.Provider>
+                </a>
+                
+                <a href="https://discordapp.com/users/422220140499697675">
+                    <IconContext.Provider value={{className: "discordicon"}}>
+                        <FaDiscord size={26} className='mx-3' />
+                    </IconContext.Provider>
+                </a>
+                
             </div>
     </div>
   )
