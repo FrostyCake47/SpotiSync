@@ -1,7 +1,7 @@
 'use client';
 import './types';
 import { useEffect, useState } from "react";
-import PlaylistInfo from "./components/playlistinfo";
+import PlaylistInfoBlock from "./components/playlistinfo";
 import axios from "axios";
 import Navbar from "./components/navbar";
 
@@ -11,46 +11,9 @@ import { FaSpotify } from "react-icons/fa";
 import { PlaylistCard } from './components/playlistCard';
 import { FaYoutube } from "react-icons/fa6";
 import Footer from './components/footer';
+import Playlist from './model/playlist';
+import PlaylistInfo from './model/playlistinfoInterface';
 
-
-interface PlaylistInfo {
-  playlist_name: string;
-  playlist_desc: string;
-  youtube_url: string;
-  playlist_icon_url: string;
-  info: {
-      user_name: string;
-      num_songs: string;
-      duration: number[];
-  }
-  songs: [{
-    song_name: string;
-    artist_name: string;
-    album_name: string
-    song_icon_url: string;
-    song_info: string;
-    duration: number[];
-  }];
-}
-
-interface Playlist{
-  name:string;
-  external_urls:{
-    spotify:string;
-  };
-  href:string;
-  images: [{
-    height: number | null;
-    url: string;
-    width: number | null;
-  }];
-  owner: {
-    display_name: string;
-  };
-  tracks: {
-    total: number;
-  };
-}
 
 export default function Home() {
   const { data: session } = useSession();
@@ -204,7 +167,7 @@ export default function Home() {
           </div>
 
           <div className="flex-1 sm:px-6 sm:py-6">
-            {playlistInfo && <PlaylistInfo playlist_name={playlistInfo.playlist_name} playlist_desc={playlistInfo.playlist_desc} songs={playlistInfo.songs} playlist_icon_url={playlistInfo.playlist_icon_url} info={playlistInfo.info} /*selectedSongsIndex={selectedSongsIndex} selectSong={selectSong} selectDeselectAll={selectDeselectAll}*//>}
+            {playlistInfo && <PlaylistInfoBlock playlist_name={playlistInfo.playlist_name} playlist_desc={playlistInfo.playlist_desc} songs={playlistInfo.songs} playlist_icon_url={playlistInfo.playlist_icon_url} info={playlistInfo.info} /*selectedSongsIndex={selectedSongsIndex} selectSong={selectSong} selectDeselectAll={selectDeselectAll}*//>}
             {error && <p>Error</p>}
             <div className={`flex justify-center items-center h-[100%] mb-5 ${!playlistInfo && !error ? '' : 'hidden'}`}>
               {

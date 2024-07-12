@@ -3,7 +3,7 @@ import SongCard from './songcard';
 import Image from 'next/image';
 import someting from 'next-auth/providers/spotify'
 
-const PlaylistInfo = (props : {playlist_name:string, playlist_desc:string, playlist_icon_url:string, songs:[{
+const PlaylistInfoBlock = (props : {playlist_name:string, playlist_desc:string, playlist_icon_url:string, songs:[{
     song_name: string;
     artist_name: string;
     album_name: string
@@ -65,4 +65,4 @@ const PlaylistInfo = (props : {playlist_name:string, playlist_desc:string, playl
     )
 }
 
-export default PlaylistInfo
+export default PlaylistInfoBlock
