@@ -15,13 +15,14 @@ flow = InstalledAppFlow.from_client_secrets_file(
 
 
 app = Flask(__name__)
-CORS(app)
+#CORS(app)
 
 @app.route('/playlisturl', methods=['POST'])
 def playlisturl():
-    data = request.json  # Assuming data is sent as JSON
-    url = data.get('data')
     try:
+        data = request.json  # Assuming data is sent as JSON
+        url = data.get('data')
+    
         playlist_name, playlist_desc, songs = spotifypy.main(url)
         msg = {'playlistName':playlist_name, 'playlistDesc':playlist_desc, 'songs':songs}
 

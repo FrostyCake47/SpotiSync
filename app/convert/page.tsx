@@ -30,7 +30,8 @@ const Convert = () => {
     useEffect(() => {
         try{
             (async () => {
-                const result = await axios.post("https://FrostyCake47.pythonanywhere.com/getplaylistinfo", null, {withCredentials: true });
+                //const result = await axios.post("https://FrostyCake47.pythonanywhere.com/getplaylistinfo", null, {withCredentials: true });
+                const result = await axios.post("http://localhost:5000/getplaylistinfo", null, {withCredentials: true });
                 setPlaylistInfo(result.data.playlistinfo);
               })();
         } catch (error) {
