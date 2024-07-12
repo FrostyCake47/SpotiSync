@@ -201,7 +201,6 @@ export default function Home() {
             </div>
           </div>
 
-          
           <div className="flex-1 sm:px-6 sm:py-6">
             {playlistInfo && <PlaylistInfo playlist_name={playlistInfo.playlist_name} playlist_desc={playlistInfo.playlist_desc} songs={playlistInfo.songs} playlist_icon_url={playlistInfo.playlist_icon_url} info={playlistInfo.info} /*selectedSongsIndex={selectedSongsIndex} selectSong={selectSong} selectDeselectAll={selectDeselectAll}*//>}
             {error && <p>Error</p>}
@@ -221,6 +220,7 @@ export default function Home() {
           </div>
         </div>
       </div>
+
 
       <div className='flex-1 w-[100%] bg-neutral-900 sm:bg-neutral-950 min-h-1'></div>
       <Footer/>
