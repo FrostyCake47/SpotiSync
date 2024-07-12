@@ -216,7 +216,6 @@ export default function Home() {
                 <p className='px-3'>Youtube Login</p>
               </button>
             </div>}
-
           </div>
         </div>
       </div>
