@@ -222,7 +222,6 @@ export default function Home() {
         </div>
       </div>
 
-  
       <div className='flex-1 w-[100%] bg-neutral-900 sm:bg-neutral-950 min-h-1'></div>
       <Footer/>
     </main>
