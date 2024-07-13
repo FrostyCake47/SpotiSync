@@ -13,13 +13,16 @@ import { FaYoutube } from "react-icons/fa6";
 import Footer from './components/footer';
 import Playlist from './model/playlist';
 import PlaylistInfo from './model/playlistinfoInterface';
+import usePlaylistInfoStore from './store/playlistinfoStore';
 
 
 export default function Home() {
   const { data: session } = useSession();
 
   const [url, setUrl] = useState("");
-  const [playlistInfo, setPlaylistInfo] = useState<PlaylistInfo | null>(null);
+  //const [playlistInfo, setPlaylistInfo] = useState<PlaylistInfo | null>(null);
+  const playlistInfo = usePlaylistInfoStore((state) => state.playlistInfo);
+  const setPlaylistInfo = usePlaylistInfoStore((state) => state.selectPlaylistInfo);
 
   const [playlistFetched, setPlayListFetched] = useState(false);
   const [error, setError] = useState(false);
@@ -51,13 +54,12 @@ export default function Home() {
       console.log('Response:', result.data);
 
       setPlaylistInfo(result.data.message);
+
+
       setPlayListFetched(true);
       setError(false);
 
       console.log("playlistfetched" + playlistFetched);
-
-      
-      
     } catch (error) {
       console.error('Error:', error);
       setError(true);

@@ -1,7 +1,7 @@
 import {create} from "zustand";
 
 
-export interface PlaylistInfo {
+export default interface PlaylistInfo {
     playlist_name: string;
     playlist_desc: string;
     youtube_url: string;
@@ -21,14 +21,5 @@ export interface PlaylistInfo {
     }];
 }
 
-interface PlaylistInfoState{
-  playlistInfo: PlaylistInfo;
-  selectPlaylistInfo : (playlistInfo: PlaylistInfo) => void;
-}
 
-
-const usePlaylistInfoStore = create<PlaylistInfoState>((set) => ({
-  playlistInfo: <PlaylistInfo>({}),
-  selectPlaylistInfo: (playlistInfo: PlaylistInfo) => set((state) => ({playlistInfo : playlistInfo}))
-}))
 
