@@ -5,6 +5,7 @@ import someting from 'next-auth/providers/spotify'
 import axios from 'axios';
 import { FaYoutube } from "react-icons/fa6";
 import Link from 'next/link';
+import usePlaylistInfoStore from '../store/playlistinfoStore';
 
 const ConvertPlaylistInfo = (props : {playlist_name:string, playlist_desc:string, playlist_icon_url:string, songs:[{
     song_name: string;
@@ -23,6 +24,8 @@ const ConvertPlaylistInfo = (props : {playlist_name:string, playlist_desc:string
     const {playlist_name, playlist_desc, songs, playlist_icon_url, info} = props;
     const [youtubeurl, setYoutubeurl] = useState("");
     const [convertStatus, setConvertStatus] = useState("Conversion is not started");
+
+    const selectedSongs = usePlaylistInfoStore((state) => state.selectedSongs);
     
     const convertToYoutube = async () => {
         try{
@@ -78,7 +81,7 @@ const ConvertPlaylistInfo = (props : {playlist_name:string, playlist_desc:string
 
             <div className='flex flex-col sm:pb-0 w-[100%] sm:w-[70%] overflow-y-scroll max-h-[360px] my-5 sm:my-0'>
                 {songs.length > 0 && songs.map((song, index) => {
-                    return <div className='flex my-1 px-0 py-0 sm:px-2 sm:py-2 bg-neutral-900 justify-between items-center rounded-lg hover:bg-neutral-800 duration-300' key={index}>
+                    return selectedSongs[index] && <div className='flex my-1 px-0 py-0 sm:px-2 sm:py-2 bg-neutral-900 justify-between items-center rounded-lg hover:bg-neutral-800 duration-300' key={index}>
                         <div className='flex justify-start items-center'>
                             <div className='w-[48px] aspect-square relative'>
                                 <Image className='rounded-lg' src={song.song_icon_url} alt='' layout={'fill'} objectFit={'contain'}/>
