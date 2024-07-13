@@ -27,6 +27,14 @@ const PlaylistInfoBlock = (props : {playlist_name:string, playlist_desc:string, 
     const setCustomSelect = usePlaylistInfoStore((state) => state.setCustomSelect);
 
     const selectedSongs = usePlaylistInfoStore((state) => state.selectedSongs);
+    const setSelectedSongs = usePlaylistInfoStore((state) => state.setSelectSongs);
+
+    const handleSelectSong = (index: number) => {
+        let newSelectedSongs = [...selectedSongs]
+        newSelectedSongs[index] = !newSelectedSongs[index]
+        setSelectedSongs(newSelectedSongs);
+        console.log(newSelectedSongs);
+    }
 
     return (
         <div className='flex flex-col'>
@@ -73,7 +81,7 @@ const PlaylistInfoBlock = (props : {playlist_name:string, playlist_desc:string, 
                             <p className='px-6 text-sm'>{song.duration[0] + ":" + (song.duration[1].toString().length == 1 ? "0" : '') + song.duration[1]}</p>
                         </div>
                         {customSelect && <div>
-                            <input type="checkbox" className="shrink-0 mt-0.5 border-gray-200 rounded text-blue-600 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800" id="hs-default-checkbox"/>  
+                            <input type="checkbox" onChange={() => handleSelectSong(index)} className="shrink-0 mt-0.5 border-gray-200 rounded text-blue-600 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800" id="hs-default-checkbox"/>  
                         </div>}
                     </div>;
                 })}
