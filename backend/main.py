@@ -88,8 +88,8 @@ def callback():
         print(session.keys(), session.values(), file=stderr)
         print(request.headers.get('host'))
         #redirect_url = request.headers.get('host')  # Replace 'your-route' with the actual route in your React app
-        redirect_url = 'https://spotisync-frost.vercel.app'
-        #redirect_url = 'http://localhost:3000'
+        #redirect_url = 'https://spotisync-frost.vercel.app'
+        redirect_url = 'http://localhost:3000'
         
         code = request.args.get('code')
         if(session['isLoggedin']):

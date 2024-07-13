@@ -23,6 +23,7 @@ export default function Home() {
   //const [playlistInfo, setPlaylistInfo] = useState<PlaylistInfo | null>(null);
   const playlistInfo = usePlaylistInfoStore((state) => state.playlistInfo);
   const setPlaylistInfo = usePlaylistInfoStore((state) => state.selectPlaylistInfo);
+  const removePlaylistInfo = usePlaylistInfoStore((state) => state.removePlaylistInfo);
 
   const [playlistFetched, setPlayListFetched] = useState(false);
   const [error, setError] = useState(false);
@@ -30,7 +31,7 @@ export default function Home() {
   const [selectedMethod, setSelectedMethod] = useState("");
   const [playlistList, setPlaylistList] = useState<Playlist[] | null>(null);
 
-  const [selectedSongsIndex, setSelectedSongsIndex] = useState<boolean[]>([true]);
+  //const [selectedSongsIndex, setSelectedSongsIndex] = useState<boolean[]>([true]);
 
   const handleOnSubmit = (event:any) => {
     event.preventDefault();
@@ -100,20 +101,21 @@ export default function Home() {
     }
   }
 
-  const selectSong = (index:number) => {
+  /*const selectSong = (index:number) => {
     const newSelectedSongsIndex =  [...selectedSongsIndex]
     newSelectedSongsIndex[index] = !selectedSongsIndex[index]
     setSelectedSongsIndex(newSelectedSongsIndex);
-  }
+  }*/
 
-  const selectDeselectAll = (length:number, select:boolean) => {
+  /*const selectDeselectAll = (length:number, select:boolean) => {
     const array = Array.from({ length: length }, () => select);
     setSelectedSongsIndex(array);
-  }
+  }*/
 
   useEffect(() => {
     if(session){
-      (async () => {
+      removePlaylistInfo();
+      (async () => {       
           const newplaylistList = await spotifyAuthPlaylist();
           if(newplaylistList !== "error"){
             setPlaylistList(newplaylistList);
@@ -124,6 +126,7 @@ export default function Home() {
     }
   }, [session])
 
+  
   return (
     <main className="flex flex-col h-screen">
       <Navbar/>

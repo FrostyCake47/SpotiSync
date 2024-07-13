@@ -4,13 +4,16 @@ import React, { useEffect, useState } from 'react'
 import Navbar from '../components/navbar';
 import ConvertPlaylistInfo from '../components/convertplaylistinfo';
 import PlaylistInfo from '../model/playlistinfoInterface';
+import usePlaylistInfoStore from '../store/playlistinfoStore';
 
 
 
 const Convert = () => {
-    const [playlistInfo, setPlaylistInfo] = useState<PlaylistInfo | null>(null);
+    const playlistInfo = usePlaylistInfoStore((state) => state.playlistInfo);
 
-    useEffect(() => {
+    console.log(playlistInfo);
+
+    /*useEffect(() => {
         try{
             (async () => {
                 //const result = await axios.post("https://FrostyCake47.pythonanywhere.com/getplaylistinfo", null, {withCredentials: true });
@@ -20,7 +23,7 @@ const Convert = () => {
         } catch (error) {
             console.log(error);
         }
-    }, [])
+    }, [])*/
 
     return (
         <main className="flex flex-col h-screen">
