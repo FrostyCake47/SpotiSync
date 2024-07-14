@@ -56,13 +56,13 @@ const ConvertPlaylistInfo = (props : {playlist_name:string, playlist_desc:string
     }
 
     return (
-        <div className='flex flex-col sm:flex-row mx-8 items-start justify-between w-screen'>
+        <div className='flex flex-col md:flex-row mx-8 items-center md:items-start justify-between w-screen'>
             <div className='flex flex-col flex-1'>
-                <div className='flex mb-6'>
-                    <div className='w-[204px] sm:w-[200px] aspect-square relative'>
+                <div className='flex mb-6 w-100 justify-between md:justify-start'>
+                    <div className='w-[204px] md:w-[200px] aspect-square relative'>
                         <Image className='rounded-lg' src={playlist_icon_url} alt="Playlist icon"  layout={'fill'} objectFit={'contain'}/>
                     </div>
-                    <div className='flex flex-col justify-center items-start sm:px-5'>
+                    <div className='flex flex-col justify-center items-start md:px-5'>
                         <p className='px-4 text-neutral-300text-xs font-light'>Playlist</p>
                         <p className='px-4 text-white text-3xl font-semibold'>{playlist_name}</p>
                         <p className='px-4 text-neutral-400 text-md font-light'>{playlist_desc}</p>
@@ -77,7 +77,7 @@ const ConvertPlaylistInfo = (props : {playlist_name:string, playlist_desc:string
                         </div>
                     </div>
                 </div>
-                <button onClick={() => {convertToYoutube()}} className='bg-red-500 hover:bg-red-600 duration-300 px-3 py-2 mx-5 rounded-2xl'>Convert</button>
+                <button onClick={() => {convertToYoutube()}} className='bg-red-500 hover:bg-red-600 duration-300 px-3 py-2 mx-0 mr-4 rounded-2xl'>Convert</button>
                 <div className='flex mt-5 flex-col justify-center items-center'>
                     <p className={`${convertStatus.endsWith('started') || convertStatus.endsWith('...') ? 'text-amber-500' : 'text-green-500'}`}>{convertStatus}</p>
                     <div className='flex'>
@@ -89,18 +89,19 @@ const ConvertPlaylistInfo = (props : {playlist_name:string, playlist_desc:string
                 </div>
             </div>
 
-            <div className='flex flex-col sm:pb-0 w-[100%] sm:w-[70%] overflow-y-scroll max-h-[360px] my-5 sm:my-0'>
+            <div className='flex flex-col md:pb-0 w-[100%] md:w-[70%] overflow-y-scroll max-h-[360px] my-5 md:my-0'>
                 {songs.length > 0 && songs.map((song, index) => {
-                    return selectedSongs[index] && <div className='flex my-1 px-0 py-0 sm:px-2 sm:py-2 bg-neutral-900 justify-between items-center rounded-lg hover:bg-neutral-800 duration-300' key={index}>
-                        <div className='flex justify-start items-center'>
+                    return selectedSongs[index] && <div className='flex my-1 px-2 py-2 bg-neutral-900 justify-between items-center rounded-lg hover:bg-neutral-800 duration-300' key={index}>
+                        <div className='flex justify-end items-between'>
                             <div className='w-[48px] aspect-square relative'>
                                 <Image className='rounded-lg' src={song.song_icon_url} alt='' layout={'fill'} objectFit={'contain'}/>
                             </div>
                             <div className='flex flex-col items-start justify-center'>
-                                <p className='ml-5 text-sm sm:text-lg font-semibold'>{song.song_name}</p>
-                                <p className='ml-5 text-xs sm:text-md font-light'>{song.artist_name}</p>
-                            </div>  
+                                <p className='ml-5 text-sm md:text-lg font-semibold'>{song.song_name}</p>
+                                <p className='ml-5 text-xs md:text-md font-light'>{song.artist_name}</p>
+                            </div> 
                         </div>
+                        <p className='mx-10 text-sm font-light text-neutral-400'>{song.album_name}</p>
                         <p className='px-6 text-sm'>{song.duration[0] + ":" + (song.duration[1].toString().length == 1 ? "0" : '') + song.duration[1]}</p>
                     </div>;
                 })}
