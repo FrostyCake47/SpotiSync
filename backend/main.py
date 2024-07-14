@@ -67,7 +67,7 @@ def getauthurl():
     authorization_url, state = flow.authorization_url()
     isLoggedin = False
     session['isLoggedin'] = isLoggedin
-    return jsonify({"url":authorization_url})
+    return jsonify({"url":authorization_url, "status":isLoggedin})
 
 
 @app.route('/getplaylistinfo', methods=['POST'])

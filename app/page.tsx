@@ -73,8 +73,11 @@ export default function Home() {
       try{
         //const result = await axios.post('https://FrostyCake47.pythonanywhere.com/getauthurl', {data:playlistInfo}, { withCredentials: true });
         const result = await axios.post('http://localhost:5000/getauthurl', {data:playlistInfo}, { withCredentials: true });
-        const authorization_url = result.data.url;
-        window.location.href = authorization_url;
+        if(result.data.status) window.location.href = 'http://localhost:5000/convert'
+        else {
+          const authorization_url = result.data.url;
+          window.location.href = authorization_url;
+        }
 
       } catch (err) {
         console.log("new auth error " + err)

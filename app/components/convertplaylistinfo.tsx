@@ -26,6 +26,7 @@ const ConvertPlaylistInfo = (props : {playlist_name:string, playlist_desc:string
     const [convertStatus, setConvertStatus] = useState("Conversion is not started");
 
     const selectedSongs = usePlaylistInfoStore((state) => state.selectedSongs);
+    const customSelect = usePlaylistInfoStore((state) => state.customSelect);
     
     let count = 0;
     let time = 0;
@@ -69,8 +70,8 @@ const ConvertPlaylistInfo = (props : {playlist_name:string, playlist_desc:string
                         <div className='px-4 pt-3 flex flex-col'>
                             {info?.user_name && <p className='mr-2'>{info?.user_name ?? ""}</p>}
                             <div className='flex flex-row'>
-                                {/*<p className='mr-2 text-neutral-400'>• {`${info?.duration[0] / 60 < 1 ? info?.duration[0] + ' min' : Math.floor(info?.duration[0]/60) + ' hr ' + (info?.duration[0]%60) + ' min'}`}</p>*/}
-                                <p className='mr-2 text-neutral-400'>• {`${time / 60 < 1 ? time + ' min' : Math.floor(time/60) + ' hr ' + (time%60) + ' min'}`}</p>
+                                {!customSelect && <p className='mr-2 text-neutral-400'>• {`${info?.duration[0] / 60 < 1 ? info?.duration[0] + ' min' : Math.floor(info?.duration[0]/60) + ' hr ' + (info?.duration[0]%60) + ' min'}`}</p>}
+                                {customSelect && <p className='mr-2 text-neutral-400'>• {`${time / 60 < 1 ? time + ' min' : Math.floor(time/60) + ' hr ' + (time%60) + ' min'}`}</p>}
                                 <p className='mr-2 text-neutral-400'>• {count} songs</p>
                             </div>
                 
@@ -91,7 +92,7 @@ const ConvertPlaylistInfo = (props : {playlist_name:string, playlist_desc:string
 
             <div className='flex flex-col md:pb-0 w-[100%] md:w-[70%] overflow-y-scroll max-h-[360px] my-5 md:my-0'>
                 {songs.length > 0 && songs.map((song, index) => {
-                    return selectedSongs[index] && <div className='flex my-1 px-2 py-2 bg-neutral-900 justify-between items-center rounded-lg hover:bg-neutral-800 duration-300' key={index}>
+                    return ((!customSelect) || (customSelect && selectedSongs[index])) && <div className='flex my-1 px-2 py-2 bg-neutral-900 justify-between items-center rounded-lg hover:bg-neutral-800 duration-300' key={index}>
                         <div className='flex justify-end items-between'>
                             <div className='w-[48px] aspect-square relative'>
                                 <Image className='rounded-lg' src={song.song_icon_url} alt='' layout={'fill'} objectFit={'contain'}/>
