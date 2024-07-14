@@ -41,7 +41,7 @@ const ConvertPlaylistInfo = (props : {playlist_name:string, playlist_desc:string
         try{
             setConvertStatus("Conversion have started...")
             //const result = await axios.post("https://FrostyCake47.pythonanywhere.com/convert", null, {withCredentials:true})
-            const result = await axios.post("http://localhost:5000/convert", {selectedSongs:selectedSongs}, {withCredentials:true})
+            const result = await axios.post("http://localhost:5000/convert", {selectedSongs: customSelect ? selectedSongs : null}, {withCredentials:true})
             if(result.data.message.youtubeurl){
                 setConvertStatus("Conversion has Finished");
                 setYoutubeurl(result.data.message.youtubeurl);

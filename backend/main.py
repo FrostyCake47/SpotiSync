@@ -136,7 +136,8 @@ def convert():
         for index, item in enumerate(selectedSongs):
             if item :
                 songs.append(oldsongs[index])
-
+    else:
+        songs = oldsongs
 
     print("conversion songs")
     print(songs, file=stderr)
