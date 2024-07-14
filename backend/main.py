@@ -65,9 +65,11 @@ def playlisturl():
 @cross_origin(supports_credentials=True)
 def getauthurl():
     authorization_url, state = flow.authorization_url()
+    #if session.get('isLoggedin') == None:
+    #   session['isLoggedin'] = False
     isLoggedin = False
     session['isLoggedin'] = isLoggedin
-    return jsonify({"url":authorization_url, "status":isLoggedin})
+    return jsonify({"url":authorization_url, "status":session['isLoggedin']})
 
 
 @app.route('/getplaylistinfo', methods=['POST'])
@@ -118,13 +120,23 @@ def callback():
 @app.route('/convert', methods=['POST'])
 @cross_origin(supports_credentials=True)
 def convert():
+    data = request.json  # Assuming data is sent as JSON
+
     print("acessing session items in /convert")
     print(session.keys(), session.values(), file=stderr)
 
     playlist_name = session["playlist_name"]
     playlist_desc = session["playlist_desc"]
-    songs = session["songs"]
+    oldsongs = session["songs"]
     credentials =  session['credentials']
+    selectedSongs = data.get('selectedSongs')
+    songs = []
+
+    if(selectedSongs != None):
+        for index, item in enumerate(selectedSongs):
+            if item :
+                songs.append(oldsongs[index])
+
 
     print("conversion songs")
     print(songs, file=stderr)
@@ -138,5 +150,7 @@ def convert():
         return jsonify({'message': {'status':status, 'youtubeurl':""}})
 
 
+
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
+    
