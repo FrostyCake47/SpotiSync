@@ -20,7 +20,7 @@ export default function Home() {
   const { data: session } = useSession();
 
   const [url, setUrl] = useState("");
-  //const [playlistInfo, setPlaylistInfo] = useState<PlaylistInfo | null>(null);
+  
   const playlistInfo = usePlaylistInfoStore((state) => state.playlistInfo);
   const setPlaylistInfo = usePlaylistInfoStore((state) => state.selectPlaylistInfo);
   const removePlaylistInfo = usePlaylistInfoStore((state) => state.removePlaylistInfo);
@@ -31,7 +31,6 @@ export default function Home() {
   const [selectedMethod, setSelectedMethod] = useState("");
   const [playlistList, setPlaylistList] = useState<Playlist[] | null>(null);
 
-  const setSelectedSong = usePlaylistInfoStore((state) => state.setSelectSongs);
   const setCustomSelect = usePlaylistInfoStore((state) => state.setCustomSelect);
 
   const handleOnSubmit = (event:any) => {
@@ -181,7 +180,7 @@ export default function Home() {
                 <p className={`text-center text-md text-amber-500`}>Login to your Spotify account<br/>Or enter a url and select your playlist</p>}
             </div>
 
-            {playlistFetched && <div className='flex flex-1 py-5 my-1 items-center justify-end'>
+            {playlistInfo && <div className='flex flex-1 py-5 my-1 items-center justify-end'>
               <p>Login and convert to Youtube</p>
               <button onClick={() => {newAuth()}} className="flex justify-center items-center bg-red-500 hover:bg-red-600 duration-300 px-3 py-2 mx-5 rounded-2xl">
                 <FaYoutube size={30}/>

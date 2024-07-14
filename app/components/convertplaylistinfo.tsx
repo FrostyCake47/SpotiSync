@@ -27,6 +27,15 @@ const ConvertPlaylistInfo = (props : {playlist_name:string, playlist_desc:string
 
     const selectedSongs = usePlaylistInfoStore((state) => state.selectedSongs);
     
+    let count = 0;
+    let time = 0;
+    songs.forEach((song, index) => {
+        if(selectedSongs[index]) {
+            count++;
+            time += song.duration[0];
+        }
+    })
+    
     const convertToYoutube = async () => {
         try{
             setConvertStatus("Conversion have started...")
@@ -60,8 +69,9 @@ const ConvertPlaylistInfo = (props : {playlist_name:string, playlist_desc:string
                         <div className='px-4 pt-3 flex flex-col'>
                             {info?.user_name && <p className='mr-2'>{info?.user_name ?? ""}</p>}
                             <div className='flex flex-row'>
-                                <p className='mr-2 text-neutral-400'>• {`${info?.duration[0] / 60 < 1 ? info?.duration[0] + ' min' : Math.floor(info?.duration[0]/60) + ' hr ' + (info?.duration[0]%60) + ' min'}`}</p>
-                                <p className='mr-2 text-neutral-400'>• {info.num_songs} songs</p>
+                                {/*<p className='mr-2 text-neutral-400'>• {`${info?.duration[0] / 60 < 1 ? info?.duration[0] + ' min' : Math.floor(info?.duration[0]/60) + ' hr ' + (info?.duration[0]%60) + ' min'}`}</p>*/}
+                                <p className='mr-2 text-neutral-400'>• {`${time / 60 < 1 ? time + ' min' : Math.floor(time/60) + ' hr ' + (time%60) + ' min'}`}</p>
+                                <p className='mr-2 text-neutral-400'>• {count} songs</p>
                             </div>
                 
                         </div>
