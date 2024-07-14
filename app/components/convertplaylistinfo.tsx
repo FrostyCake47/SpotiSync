@@ -72,7 +72,7 @@ const ConvertPlaylistInfo = (props : {playlist_name:string, playlist_desc:string
                             <div className='flex flex-row'>
                                 {!customSelect && <p className='mr-2 text-neutral-400'>• {`${info?.duration[0] / 60 < 1 ? info?.duration[0] + ' min' : Math.floor(info?.duration[0]/60) + ' hr ' + (info?.duration[0]%60) + ' min'}`}</p>}
                                 {customSelect && <p className='mr-2 text-neutral-400'>• {`${time / 60 < 1 ? time + ' min' : Math.floor(time/60) + ' hr ' + (time%60) + ' min'}`}</p>}
-                                <p className='mr-2 text-neutral-400'>• {count} songs</p>
+                                <p className='mr-2 text-neutral-400'>• {customSelect ? count : songs?.length} songs</p>
                             </div>
                 
                         </div>
