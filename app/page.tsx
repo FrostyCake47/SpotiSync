@@ -31,7 +31,8 @@ export default function Home() {
   const [selectedMethod, setSelectedMethod] = useState("");
   const [playlistList, setPlaylistList] = useState<Playlist[] | null>(null);
 
-  //const [selectedSongsIndex, setSelectedSongsIndex] = useState<boolean[]>([true]);
+  const setSelectedSong = usePlaylistInfoStore((state) => state.setSelectSongs);
+  const setCustomSelect = usePlaylistInfoStore((state) => state.setCustomSelect);
 
   const handleOnSubmit = (event:any) => {
     event.preventDefault();
@@ -54,8 +55,9 @@ export default function Home() {
       const result = await axios.post('http://localhost:5000/playlisturl', {data:url}, { withCredentials: true });
       console.log('Response:', result.data);
 
+      
       setPlaylistInfo(result.data.message);
-
+      setCustomSelect(false);
 
       setPlayListFetched(true);
       setError(false);

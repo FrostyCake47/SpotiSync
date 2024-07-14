@@ -49,7 +49,7 @@ const PlaylistInfoBlock = (props : {playlist_name:string, playlist_desc:string, 
                     <div className='px-4 pt-3 flex'>
                         {info?.user_name && <p className='mr-2'>{info?.user_name ?? ""}</p>}
                         <p className='mr-2 text-neutral-400'>• {`${info?.duration[0] / 60 < 1 ? info?.duration[0] + ' min' : Math.floor(info?.duration[0]/60) + ' hr ' + (info?.duration[0]%60) + ' min'}`}</p>
-                        <p className='mr-2 text-neutral-400'>• {info.num_songs} songs</p>
+                        <p className='mr-2 text-neutral-400'>• {info?.num_songs ?? 0} songs</p>
                     </div>
                 </div>
             </div>  
@@ -63,16 +63,16 @@ const PlaylistInfoBlock = (props : {playlist_name:string, playlist_desc:string, 
 
 
             <div className='flex flex-col sm:pb-4 overflow-y-scroll max-h-[360px]'>
-                {songs.length > 0 && songs.map((song, index:number) => {
+                {(songs?.length ?? 0) > 0 && songs.map((song, index:number) => {
                     return <div className={`flex my-1 px-0 py-2 sm:px-2 sm:py-2 bg-neutral-900 justify-between items-center rounded-lg hover:bg-neutral-800 duration-300`} key={index} onClick={() => {/*selectSong(index)*/}}>
                         {/*${selectSong(index) ? ' bg-gradient-to-r from-neutral-900 to-green-950' : 'bg-neutral-900'}*/}
                         <div className='flex justify-start items-center'>
                             <div className='w-[48px] aspect-square relative'>
-                                <Image className='rounded-lg' src={song.song_icon_url} alt='' layout={'fill'} objectFit={'contain'}/>
+                                <Image className='rounded-lg' src={song?.song_icon_url ?? ''} alt='' layout={'fill'} objectFit={'contain'}/>
                             </div>
                             <div className='flex flex-col items-start justify-center'>
-                                <p className='ml-5 text-sm sm:text-lg font-semibold'>{song.song_name}</p>
-                                <p className='ml-5 text-xs sm:text-md font-light'>{song.artist_name}</p>
+                                <p className='ml-5 text-sm sm:text-lg font-semibold'>{song?.song_name ?? ''}</p>
+                                <p className='ml-5 text-xs sm:text-md font-light'>{song?.artist_name ?? ''}</p>
                             </div>  
                         </div>
                         
