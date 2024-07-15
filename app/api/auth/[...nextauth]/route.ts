@@ -24,7 +24,6 @@ const handler = NextAuth({
       async session({session, token}) {
         if(session) {
           session = Object.assign({}, session, {access_token: token.access_token})
-          console.log(`session`);
         }
         return session
       }

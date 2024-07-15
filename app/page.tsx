@@ -11,9 +11,11 @@ import { FaSpotify } from "react-icons/fa";
 import { PlaylistCard } from './components/playlistCard';
 import { FaYoutube } from "react-icons/fa6";
 import Footer from './components/footer';
+import History from './components/history';
 import Playlist from './model/playlist';
 import PlaylistInfo from './model/playlistinfoInterface';
 import usePlaylistInfoStore from './store/playlistinfoStore';
+import HistoryData from './model/historyData';
 
 
 export default function Home() {
@@ -32,6 +34,7 @@ export default function Home() {
   const [playlistList, setPlaylistList] = useState<Playlist[] | null>(null);
 
   const setCustomSelect = usePlaylistInfoStore((state) => state.setCustomSelect);
+  const [historyDataList, SetHistoryDataList] = useState<HistoryData[]|null>(null)
 
   const handleOnSubmit = (event:any) => {
     event.preventDefault();
@@ -109,10 +112,12 @@ export default function Home() {
     try{
       if(session){
         const result = await axios.post('http://localhost:5000/history', {'email':session.user?.email}, { withCredentials: true });
-        console.log(result.data);
+        console.log(result.data['historyList']);
+        return result.data['historyList'];
       }
     } catch (err) {
       console.log(`error in fetchHistory: ${err}`)
+      return null;
     }
 
   }
@@ -128,8 +133,9 @@ export default function Home() {
             console.log("setPlaylistList ");
           }
 
-          await fetchHistory();
-          
+          const newHistoryDataList = await fetchHistory();
+          SetHistoryDataList(newHistoryDataList);
+
       })();
     }
   }, [session])
@@ -197,6 +203,11 @@ export default function Home() {
               </button>
             </div>}
           </div>
+        </div>
+
+        <div className='flex-1 w-[100%] bg-neutral-900 sm:bg-neutral-950 min-h-3'></div>
+        <div className='py-14 bg-gradient-to-b from-neutral-900 to-neutral-950'>
+          <History historyDataList={historyDataList}/>
         </div>
       </div>
 
