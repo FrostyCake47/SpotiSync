@@ -6,6 +6,7 @@ import axios from 'axios';
 import { FaYoutube } from "react-icons/fa6";
 import Link from 'next/link';
 import usePlaylistInfoStore from '../store/playlistinfoStore';
+import { useSession } from 'next-auth/react';
 
 const ConvertPlaylistInfo = (props : {playlist_name:string, playlist_desc:string, playlist_icon_url:string, songs:[{
     song_name: string;
@@ -27,6 +28,8 @@ const ConvertPlaylistInfo = (props : {playlist_name:string, playlist_desc:string
 
     const selectedSongs = usePlaylistInfoStore((state) => state.selectedSongs);
     const customSelect = usePlaylistInfoStore((state) => state.customSelect);
+
+    const { data: session } = useSession();
     
     let count = 0;
     let time = 0;
@@ -41,7 +44,7 @@ const ConvertPlaylistInfo = (props : {playlist_name:string, playlist_desc:string
         try{
             setConvertStatus("Conversion have started...")
             //const result = await axios.post("https://FrostyCake47.pythonanywhere.com/convert", null, {withCredentials:true})
-            const result = await axios.post("http://localhost:5000/convert", {selectedSongs: customSelect ? selectedSongs : null}, {withCredentials:true})
+            const result = await axios.post("http://localhost:5000/convert", {selectedSongs: customSelect ? selectedSongs : null, user:session?.user ?? null}, {withCredentials:true})
             if(result.data.message.youtubeurl){
                 setConvertStatus("Conversion has Finished");
                 setYoutubeurl(result.data.message.youtubeurl);

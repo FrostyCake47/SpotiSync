@@ -129,7 +129,11 @@ def convert():
     playlist_desc = session["playlist_desc"]
     oldsongs = session["songs"]
     credentials =  session['credentials']
+
     selectedSongs = data.get('selectedSongs')
+    user = data.get('user')
+    print("user", user, file=stderr)
+
     songs = []
 
     if(selectedSongs != None):
@@ -142,13 +146,15 @@ def convert():
     print("conversion songs")
     print(songs, file=stderr)
 
-    status, youtubeurl = youtubepy.main(playlist_name, playlist_desc, songs, credentials)
+    '''status, youtubeurl = youtubepy.main(playlist_name, playlist_desc, songs, credentials)
     session['youtubeurl'] = youtubeurl
 
     if status == 0:
         return jsonify({'message': {'status':status, 'youtubeurl':youtubeurl}})
     else:
-        return jsonify({'message': {'status':status, 'youtubeurl':""}})
+        return jsonify({'message': {'status':status, 'youtubeurl':""}})'''
+    
+    return jsonify({'message':user})
 
 
 

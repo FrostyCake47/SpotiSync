@@ -8,7 +8,7 @@ const handler = NextAuth({
         Spotify({
             clientId: process.env.NEXT_PUBLIC_SPOTIFY_CLIENT_ID ?? '',
             clientSecret: process.env.NEXT_PUBLIC_SPOTIFY_SECRET ?? "",
-            authorization: {params: {scope: "playlist-read-private"}},
+            authorization: {params: {scope: "playlist-read-private user-read-email"}},
             
         },)
     ],
@@ -16,6 +16,7 @@ const handler = NextAuth({
     callbacks: {
       async jwt({token, account}) {
         if (account) {
+          //console.log(account);
           token = Object.assign({}, token, { access_token: account.access_token });
         }
         return token
@@ -23,7 +24,7 @@ const handler = NextAuth({
       async session({session, token}) {
         if(session) {
           session = Object.assign({}, session, {access_token: token.access_token})
-          console.log(session);
+          console.log(`session`);
         }
         return session
       }
