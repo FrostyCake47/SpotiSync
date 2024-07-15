@@ -105,6 +105,18 @@ export default function Home() {
     }
   }
 
+  const fetchHistory = async () => {
+    try{
+      if(session){
+        const result = await axios.post('http://localhost:5000/history', {'email':session.user?.email}, { withCredentials: true });
+        console.log(result.data);
+      }
+    } catch (err) {
+      console.log(`error in fetchHistory: ${err}`)
+    }
+
+  }
+
 
   useEffect(() => {
     if(session){
@@ -115,6 +127,8 @@ export default function Home() {
             setPlaylistList(newplaylistList);
             console.log("setPlaylistList ");
           }
+
+          await fetchHistory();
           
       })();
     }

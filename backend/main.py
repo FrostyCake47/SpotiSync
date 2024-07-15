@@ -58,6 +58,9 @@ class Users(db.Model):
         self.spotify_url = spotify_url
         self.youtube_url = youtube_url
 
+    def printemail(self):
+        print(self.email, file=stderr)
+
 
 
 @app.route('/playlisturl', methods=['POST'])
@@ -190,6 +193,24 @@ def convert():
         return jsonify({'message': {'status':status, 'youtubeurl':""}})
     
     return jsonify({'message':user})
+
+@app.route('/history', methods=['POST'])
+@cross_origin(supports_credentials=True)
+def history():
+    try:
+        data = request.json  # Assuming data is sent as JSON
+        email = data.get('email')
+        print(email, file=stderr)
+
+        historyList = []
+        result = Users.query.filter_by(email=email).all()
+        for i in result:
+            historyList.append({'email': i.email, 'playlist_name': i.playlist_name, 'playlist_author': i.playlist_author, 'no_songs': i.no_songs, 'spotify_url': i.spotify_url, 'youtube_url': i.youtube_url})
+        
+        return jsonify({'message':True, 'historyList':historyList})
+    
+    except Exception(e):
+        return jsonify({'message':False})
 
 
 with app.app_context():
