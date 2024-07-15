@@ -40,4 +40,4 @@ next-env.d.ts
 /backend/old/client_secrets.json
 
 /backend/flask_session/
-/backend/_pycache_/
+/backend/__pycache__/
