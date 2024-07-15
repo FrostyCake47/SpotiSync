@@ -57,7 +57,7 @@ const ConvertPlaylistInfo = (props : {playlist_name:string, playlist_desc:string
     }
 
     return (
-        <div className='flex flex-col md:flex-row mx-8 items-center md:items-start justify-between w-screen'>
+        <div className='flex flex-col md:flex-row mx-8 md:mb-24 items-center md:items-start justify-between w-screen'>
             <div className='flex flex-col flex-1'>
                 <div className='flex mb-6 w-100 justify-between md:justify-start'>
                     <div className='w-[204px] md:w-[200px] aspect-square relative'>

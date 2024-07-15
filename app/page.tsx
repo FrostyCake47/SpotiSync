@@ -105,16 +105,6 @@ export default function Home() {
     }
   }
 
-  /*const selectSong = (index:number) => {
-    const newSelectedSongsIndex =  [...selectedSongsIndex]
-    newSelectedSongsIndex[index] = !selectedSongsIndex[index]
-    setSelectedSongsIndex(newSelectedSongsIndex);
-  }*/
-
-  /*const selectDeselectAll = (length:number, select:boolean) => {
-    const array = Array.from({ length: length }, () => select);
-    setSelectedSongsIndex(array);
-  }*/
 
   useEffect(() => {
     if(session){
@@ -143,7 +133,9 @@ export default function Home() {
           </div>
         </div>
         <div className="sm:px-10">
-          <button className="rounded-lg text-[15px] px-4 py-2 my-8 mx-5 bg-amber-500 transition-colors duration-300 ease-in-out hover:bg-amber-600">Get Started</button>
+          <div className="rounded-lg text-[15px] px-4 py-2 my-8 mx-5 bg-amber-500 transition-colors duration-300 ease-in-out hover:bg-amber-600">
+            <a  href='#playlistblock'>Get Started</a>
+          </div>
         </div>
       </div>
 
@@ -151,7 +143,7 @@ export default function Home() {
       <div className="bg-neutral-950 min-h-[10px]"></div>
 
       <div className="bg-neutral-900">
-        <div className="flex flex-col md:flex-row mx-0 sm:mx-10 pb-6 sm:my-10 px-5 sm:rounded-lg bg-gradient-to-b from-neutral-800 to-neutral-950">
+        <div id='playlistblock' className="flex flex-col md:flex-row mx-0 sm:mx-10 pb-6 sm:my-10 px-5 sm:rounded-lg bg-gradient-to-b from-neutral-800 to-neutral-950">
           <div className="flex flex-col my-4 sm:min-w-[40%]">
             {!session && <button onClick={handleSpotifyLogin} className="bg-green-500 rounded-lg my-2 py-3 flex items-center justify-center hover:bg-green-600 duration-300">
               <FaSpotify size={30}/>
@@ -196,7 +188,9 @@ export default function Home() {
 
 
       <div className='flex-1 w-[100%] bg-neutral-900 sm:bg-neutral-950 min-h-1'></div>
-      <Footer/>
+      <div id='contacts'>
+        <Footer/>
+      </div>
     </main>
   );
 }
