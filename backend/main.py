@@ -41,7 +41,7 @@ def after_request(response):
   return response
 '''
 
-class Users(db.Model):
+class History(db.Model):
     _id = db.Column("id", db.Integer, primary_key=True)
     email = db.Column(db.String(100))
     playlist_name = db.Column(db.String(100))
@@ -49,14 +49,16 @@ class Users(db.Model):
     no_songs = db.Column(db.Integer)
     spotify_url = db.Column(db.String(100))
     youtube_url = db.Column(db.String(100))
+    playlist_icon = db.Column(db.String(100))
 
-    def __init__(self, email, playlist_name, playlist_author, no_songs, spotify_url, youtube_url):
+    def __init__(self, email, playlist_name, playlist_author, no_songs, spotify_url, youtube_url, playlist_icon):
         self.email = email
         self.playlist_name = playlist_name
         self.playlist_author = playlist_author
         self.no_songs = no_songs
         self.spotify_url = spotify_url
         self.youtube_url = youtube_url
+        self.playlist_icon = playlist_icon
 
     def printemail(self):
         print(self.email, file=stderr)
@@ -183,7 +185,7 @@ def convert():
     session['youtubeurl'] = youtubeurl
 
     if status == 0:
-        usr = Users(user['email'], playlist_name, info['user_name'], len(songs), session['url'], youtubeurl)
+        usr = History(user['email'], playlist_name, info['user_name'], len(songs), session['url'], youtubeurl, session['playlist_icon_url'])
         db.session.add(usr)
         db.session.commit()
         print("added entry to db", file=stderr)
@@ -203,18 +205,19 @@ def history():
         print(email, file=stderr)
 
         historyList = []
-        result = Users.query.filter_by(email=email).all()
+        result = History.query.filter_by(email=email).all()
         for i in result:
-            historyList.append({'email': i.email, 'playlist_name': i.playlist_name, 'playlist_author': i.playlist_author, 'no_songs': i.no_songs, 'spotify_url': i.spotify_url, 'youtube_url': i.youtube_url})
+           historyList.append({'email': i.email, 'playlist_name': i.playlist_name, 'playlist_author': i.playlist_author, 'no_songs': i.no_songs, 'spotify_url': i.spotify_url, 'youtube_url': i.youtube_url, 'playlist_icon':i.playlist_icon})
         
         return jsonify({'message':True, 'historyList':historyList})
     
-    except Exception(e):
+    except Exception:
         return jsonify({'message':False})
 
 
 with app.app_context():
     db.create_all()
+    
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
