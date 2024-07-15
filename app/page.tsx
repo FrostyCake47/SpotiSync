@@ -206,7 +206,7 @@ export default function Home() {
         </div>
 
         <div className='flex-1 w-[100%] bg-neutral-900 sm:bg-neutral-950 min-h-3'></div>
-        <div className='py-14 bg-gradient-to-b from-neutral-900 to-neutral-950'>
+        <div className='mx-0 sm:mx-10 pb-6 sm:my-10 px-5 sm:rounded-lg bg-gradient-to-b from-neutral-900 to-neutral-950'>
           <History historyDataList={historyDataList}/>
         </div>
       </div>
