@@ -123,9 +123,7 @@ export default function Home() {
       console.log(`error in fetchHistory: ${err}`)
       return null;
     }
-
   }
-
 
   useEffect(() => {
     if(session){
@@ -144,7 +142,6 @@ export default function Home() {
     }
   }, [session])
 
-  
   return (
     <main className="flex flex-col h-screen">
       <Navbar/>
@@ -214,7 +211,6 @@ export default function Home() {
           <History historyDataList={historyDataList}/>
         </div>
       </div>
-
 
       <div className='flex-1 w-[100%] bg-neutral-900 sm:bg-neutral-950 min-h-1'></div>
       <div id='contacts'>
