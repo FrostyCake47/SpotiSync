@@ -20,8 +20,8 @@ interface Playlist{
     };
 }
 
-export const PlaylistCard = (props : {playlistList : Playlist[], sendPlaylistNew: Function}) => {
-    const {playlistList, sendPlaylistNew} = props;
+export const PlaylistCard = (props : {playlistList : Playlist[], sendPlaylistNew: Function, playlistIndex: number}) => {
+    const {playlistList, sendPlaylistNew, playlistIndex} = props;
     return (
             <div className='w-[100%]'>
             <div className='flex justify-between my-2'>
@@ -31,7 +31,7 @@ export const PlaylistCard = (props : {playlistList : Playlist[], sendPlaylistNew
             <div className='flex flex-col overflow-y-scroll max-h-[505px] w-[100%] '>
                 {playlistList.map((playlist, index) => {
                     if (playlist.owner.display_name === "Spotify") return;
-                    return <div key={index} className='flex my-1 px-0 py-2 sm:px-2 sm:py-2 bg-neutral-900 justify-between items-center rounded-lg hover:bg-neutral-800 duration-300' onClick={() => {sendPlaylistNew(playlist.href)}}>
+                    return <div key={index} className={`flex my-1 px-0 py-2 sm:px-2 sm:py-2 ${index == playlistIndex ? 'bg-neutral-800' : 'bg-neutral-900'} justify-between items-center rounded-lg hover:bg-neutral-800 duration-300`} onClick={() => {sendPlaylistNew(playlist.href, index)}}>
                         <div className='flex justify- items-center'>
                             <div className='w-[48px] min-w-[48px] aspect-square'>
                                 <Image className='rounded-lg w-[48px] min-w-[48px]' src={playlist.images[0].url} alt='' width={10} height={10}/>

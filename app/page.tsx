@@ -29,6 +29,7 @@ export default function Home() {
 
   const [playlistFetched, setPlayListFetched] = useState(false);
   const [error, setError] = useState(false);
+  const [playlistIndex, setPlaylistIndex] = useState(-1);
 
   const [selectedMethod, setSelectedMethod] = useState("");
   const [playlistList, setPlaylistList] = useState<Playlist[] | null>(null);
@@ -38,7 +39,7 @@ export default function Home() {
 
   const handleOnSubmit = (event:any) => {
     event.preventDefault();
-    sendPlaylistNew(url);
+    sendPlaylistNew(url, -1);
   }
 
   const handleSpotifyLogin = async (event:any) => {
@@ -50,9 +51,10 @@ export default function Home() {
     } 
   }
 
-  const sendPlaylistNew = async (url:String) => {
+  const sendPlaylistNew = async (url:String, index:number) => {
     try {
       console.log("sending palylist")
+      setPlaylistIndex(index);
       //const result = await axios.post('https://FrostyCake47.pythonanywhere.com/playlisturl', {data:url}, { withCredentials: true });
       const result = await axios.post('http://localhost:5000/playlisturl', {data:url}, { withCredentials: true });
       console.log('Response:', result.data);
@@ -134,7 +136,7 @@ export default function Home() {
           }
 
           const newHistoryDataList = await fetchHistory();
-          SetHistoryDataList(newHistoryDataList);
+          SetHistoryDataList(newHistoryDataList.reverse());
 
       })();
     }
@@ -183,7 +185,7 @@ export default function Home() {
             </form>}
             <div className={`flex justify-center ${session ? 'item-start my-4' : 'items-center'} h-[100%]`}>
               {!session && <p className={`hidden text-center text-md text-amber-500 ${playlistInfo ? 'sm:block' : 'hidden'}`}>Login with your spotify to<br/>directly access your personal playlists</p>}
-              {session && playlistList && <PlaylistCard playlistList={playlistList} sendPlaylistNew={sendPlaylistNew}/>}
+              {session && playlistList && <PlaylistCard playlistList={playlistList} sendPlaylistNew={sendPlaylistNew} playlistIndex={playlistIndex}/>}
             </div>
           </div>
 

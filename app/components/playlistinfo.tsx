@@ -64,7 +64,7 @@ const PlaylistInfoBlock = (props : {playlist_name:string, playlist_desc:string, 
 
             <div className='grid-cols-3 sm:pb-4 overflow-y-scroll max-h-[360px]'>
                 {(songs?.length ?? 0) > 0 && songs.map((song, index:number) => {
-                    return <div className={`flex my-1 px-0 py-2 sm:px-2 sm:py-2 min-w-[100vw] sm:min-w-0 bg-neutral-900 justify-between items-center rounded-lg hover:bg-neutral-800 duration-300`} key={index} onClick={() => {if(customSelect){handleSelectSong(index); console.log("does this work?");}}}>
+                    return <div className={`flex my-1 px-0 py-2 sm:px-2 sm:py-2 min-w-[100vw] sm:min-w-0 ${selectedSongs[index] ? 'bg-neutral-800' : 'bg-neutral-900'} justify-between items-center rounded-lg hover:bg-neutral-800 duration-300`} key={index} onClick={() => {if(customSelect){handleSelectSong(index); console.log("does this work?");}}}>
                         {/*${selectSong(index) ? ' bg-gradient-to-r from-neutral-900 to-green-950' : 'bg-neutral-900'}*/}
                         <div className='flex min-w-[40vw] lg:min-w-[20vw] justify-start items-center'>
                             <div className='w-[32px] min-w-[32px] sm:w-[48px] sm:min-w-[48px] aspect-square relative'>
