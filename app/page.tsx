@@ -19,6 +19,8 @@ import HistoryData from './model/historyData';
 
 
 export default function Home() {
+  const BACKEND_URI = 'https://FrostyCake47.pythonanywhere.com'
+  //const BACKEND_URI = 'http://localhost:5000'
   const { data: session } = useSession();
 
   const [url, setUrl] = useState("");
@@ -55,8 +57,8 @@ export default function Home() {
     try {
       console.log("sending palylist")
       setPlaylistIndex(index);
-      //const result = await axios.post('https://FrostyCake47.pythonanywhere.com/playlisturl', {data:url}, { withCredentials: true });
-      const result = await axios.post('http://localhost:5000/playlisturl', {data:url}, { withCredentials: true });
+      const result = await axios.post( BACKEND_URI + '/playlisturl', {data:url}, { withCredentials: true });
+      //const result = await axios.post('http://localhost:5000/playlisturl', {data:url}, { withCredentials: true });
       console.log('Response:', result.data);
 
       
@@ -77,8 +79,8 @@ export default function Home() {
   const newAuth = async () => {
       try{
         //const result = await axios.post('https://FrostyCake47.pythonanywhere.com/getauthurl', {data:playlistInfo}, { withCredentials: true });
-        const result = await axios.post('http://localhost:5000/getauthurl', {data:playlistInfo}, { withCredentials: true });
-        if(result.data.status) window.location.href = 'http://localhost:5000/convert'
+        const result = await axios.post(BACKEND_URI + '/getauthurl', {data:playlistInfo}, { withCredentials: true });
+        if(result.data.status) window.location.href = BACKEND_URI+'/convert'
         else {
           const authorization_url = result.data.url;
           window.location.href = authorization_url;
@@ -113,7 +115,7 @@ export default function Home() {
   const fetchHistory = async () => {
     try{
       if(session){
-        const result = await axios.post('http://localhost:5000/history', {'email':session.user?.email}, { withCredentials: true });
+        const result = await axios.post(BACKEND_URI + '/history', {'email':session.user?.email}, { withCredentials: true });
         console.log(result.data['historyList']);
         return result.data['historyList'];
       }
