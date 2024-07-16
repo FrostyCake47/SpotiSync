@@ -64,7 +64,7 @@ const PlaylistInfoBlock = (props : {playlist_name:string, playlist_desc:string, 
 
             <div className='grid-cols-3 sm:pb-4 overflow-y-scroll max-h-[360px]'>
                 {(songs?.length ?? 0) > 0 && songs.map((song, index:number) => {
-                    return <div className={`flex my-1 px-0 py-2 sm:px-2 sm:py-2  bg-neutral-900 justify-between items-center rounded-lg hover:bg-neutral-800 duration-300`} key={index} onClick={() => {/*selectSong(index)*/}}>
+                    return <div className={`flex my-1 px-0 py-2 sm:px-2 sm:py-2 min-w-[100vw] sm:min-w-0 bg-neutral-900 justify-between items-center rounded-lg hover:bg-neutral-800 duration-300`} key={index} onClick={() => {if(customSelect){handleSelectSong(index); console.log("does this work?");}}}>
                         {/*${selectSong(index) ? ' bg-gradient-to-r from-neutral-900 to-green-950' : 'bg-neutral-900'}*/}
                         <div className='flex min-w-[40vw] lg:min-w-[20vw] justify-start items-center'>
                             <div className='w-[32px] min-w-[32px] sm:w-[48px] sm:min-w-[48px] aspect-square relative'>
@@ -80,7 +80,7 @@ const PlaylistInfoBlock = (props : {playlist_name:string, playlist_desc:string, 
                         <div className='flex'>
                             <p className='px-6 text-sm'>{song.duration[0] + ":" + (song.duration[1].toString().length == 1 ? "0" : '') + song.duration[1]}</p>
                             {customSelect && <div>
-                                <input type="checkbox" onChange={() => handleSelectSong(index)} className="shrink-0 mt-0.5 border-gray-200 rounded text-blue-600 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800" id="hs-default-checkbox"/>  
+                                <input type="checkbox" checked={selectedSongs[index]} onChange={() => handleSelectSong(index)} className="shrink-0 mt-0.5 border-gray-200 rounded text-blue-600 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800" id="hs-default-checkbox"/>  
                             </div>}
                         </div>
                     </div>;
