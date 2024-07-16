@@ -163,7 +163,7 @@ export default function Home() {
       <div className="bg-neutral-950 min-h-[10px]"></div>
 
       <div className="bg-neutral-900">
-        <div id='playlistblock' className="flex flex-col md:flex-row mx-0 sm:mx-10 pb-6 sm:my-10 px-5 sm:rounded-lg bg-gradient-to-b from-neutral-800 to-neutral-950">
+        <div id='playlistblock' className="flex flex-col lg:flex-row mx-0 sm:mx-10 pb-6 sm:my-10 px-5 sm:rounded-lg bg-gradient-to-b from-neutral-800 to-neutral-950">
           <div className="flex flex-col my-4 sm:min-w-[40%]">
             {!session && <button onClick={handleSpotifyLogin} className="bg-green-500 rounded-lg my-2 py-3 flex items-center justify-center hover:bg-green-600 duration-300">
               <FaSpotify size={30}/>
