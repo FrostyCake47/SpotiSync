@@ -56,12 +56,8 @@ export default function Home() {
   const sendPlaylistNew = async (url:String, index:number) => {
     try {
       console.log("sending palylist")
-<<<<<<< HEAD
-      const result = await axios.post('https://FrostyCake47.pythonanywhere.com/playlisturl', {data:url}, { withCredentials: true });
-=======
       setPlaylistIndex(index);
       const result = await axios.post( BACKEND_URI + '/playlisturl', {data:url}, { withCredentials: true });
->>>>>>> 3bb11c27db96887f26c321a94f6f01fa52a04436
       //const result = await axios.post('http://localhost:5000/playlisturl', {data:url}, { withCredentials: true });
       console.log('Response:', result.data);
 
@@ -82,15 +78,9 @@ export default function Home() {
 
   const newAuth = async () => {
       try{
-<<<<<<< HEAD
-        const result = await axios.post('https://FrostyCake47.pythonanywhere.com/getauthurl', {data:playlistInfo}, { withCredentials: true });
-        //const result = await axios.post('http://localhost:5000/getauthurl', {data:playlistInfo}, { withCredentials: true });
-        if(result.data.status) window.location.href = 'http://localhost:5000/convert'
-=======
         //const result = await axios.post('https://FrostyCake47.pythonanywhere.com/getauthurl', {data:playlistInfo}, { withCredentials: true });
         const result = await axios.post(BACKEND_URI + '/getauthurl', {data:playlistInfo}, { withCredentials: true });
         if(result.data.status) window.location.href = BACKEND_URI+'/convert'
->>>>>>> 3bb11c27db96887f26c321a94f6f01fa52a04436
         else {
           const authorization_url = result.data.url;
           window.location.href = authorization_url;
