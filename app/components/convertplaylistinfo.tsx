@@ -6,6 +6,7 @@ import axios from 'axios';
 import { FaYoutube } from "react-icons/fa6";
 import Link from 'next/link';
 import usePlaylistInfoStore from '../store/playlistinfoStore';
+import { useSession } from 'next-auth/react';
 
 const ConvertPlaylistInfo = (props : {playlist_name:string, playlist_desc:string, playlist_icon_url:string, songs:[{
     song_name: string;
@@ -21,12 +22,17 @@ const ConvertPlaylistInfo = (props : {playlist_name:string, playlist_desc:string
     duration: number[];
   }, 
 }) => {
+    const BACKEND_URI = 'https://FrostyCake47.pythonanywhere.com'
+    //const BACKEND_URI = 'http://localhost:5000'
+
     const {playlist_name, playlist_desc, songs, playlist_icon_url, info} = props;
     const [youtubeurl, setYoutubeurl] = useState("");
     const [convertStatus, setConvertStatus] = useState("Conversion is not started");
 
     const selectedSongs = usePlaylistInfoStore((state) => state.selectedSongs);
     const customSelect = usePlaylistInfoStore((state) => state.customSelect);
+
+    const { data: session } = useSession();
     
     let count = 0;
     let time = 0;
@@ -40,14 +46,17 @@ const ConvertPlaylistInfo = (props : {playlist_name:string, playlist_desc:string
     const convertToYoutube = async () => {
         try{
             setConvertStatus("Conversion have started...")
+<<<<<<< HEAD
             const result = await axios.post("https://FrostyCake47.pythonanywhere.com/convert", {selectedSongs: customSelect ? selectedSongs : null}, {withCredentials:true})
             //const result = await axios.post("http://localhost:5000/convert", {selectedSongs: customSelect ? selectedSongs : null}, {withCredentials:true})
+=======
+            const result = await axios.post(BACKEND_URI+"/convert", {selectedSongs: customSelect ? selectedSongs : null, user:session?.user ?? null}, {withCredentials:true})
+>>>>>>> 3bb11c27db96887f26c321a94f6f01fa52a04436
             if(result.data.message.youtubeurl){
                 setConvertStatus("Conversion has Finished");
                 setYoutubeurl(result.data.message.youtubeurl);
             }
             else {
-
                 setConvertStatus("Error in conversion. Try again?");
             }
             
@@ -57,7 +66,7 @@ const ConvertPlaylistInfo = (props : {playlist_name:string, playlist_desc:string
     }
 
     return (
-        <div className='flex flex-col md:flex-row mx-8 items-center md:items-start justify-between w-screen'>
+        <div className='flex flex-col md:flex-row mx-8 md:mb-24 items-center md:items-start justify-between w-screen'>
             <div className='flex flex-col flex-1'>
                 <div className='flex mb-6 w-100 justify-between md:justify-start'>
                     <div className='w-[204px] md:w-[200px] aspect-square relative'>

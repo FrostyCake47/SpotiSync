@@ -11,12 +11,16 @@ import { FaSpotify } from "react-icons/fa";
 import { PlaylistCard } from './components/playlistCard';
 import { FaYoutube } from "react-icons/fa6";
 import Footer from './components/footer';
+import History from './components/history';
 import Playlist from './model/playlist';
 import PlaylistInfo from './model/playlistinfoInterface';
 import usePlaylistInfoStore from './store/playlistinfoStore';
+import HistoryData from './model/historyData';
 
 
 export default function Home() {
+  const BACKEND_URI = 'https://FrostyCake47.pythonanywhere.com'
+  //const BACKEND_URI = 'http://localhost:5000'
   const { data: session } = useSession();
 
   const [url, setUrl] = useState("");
@@ -27,15 +31,17 @@ export default function Home() {
 
   const [playlistFetched, setPlayListFetched] = useState(false);
   const [error, setError] = useState(false);
+  const [playlistIndex, setPlaylistIndex] = useState(-1);
 
   const [selectedMethod, setSelectedMethod] = useState("");
   const [playlistList, setPlaylistList] = useState<Playlist[] | null>(null);
 
   const setCustomSelect = usePlaylistInfoStore((state) => state.setCustomSelect);
+  const [historyDataList, SetHistoryDataList] = useState<HistoryData[]|null>(null)
 
   const handleOnSubmit = (event:any) => {
     event.preventDefault();
-    sendPlaylistNew(url);
+    sendPlaylistNew(url, -1);
   }
 
   const handleSpotifyLogin = async (event:any) => {
@@ -47,10 +53,15 @@ export default function Home() {
     } 
   }
 
-  const sendPlaylistNew = async (url:String) => {
+  const sendPlaylistNew = async (url:String, index:number) => {
     try {
       console.log("sending palylist")
+<<<<<<< HEAD
       const result = await axios.post('https://FrostyCake47.pythonanywhere.com/playlisturl', {data:url}, { withCredentials: true });
+=======
+      setPlaylistIndex(index);
+      const result = await axios.post( BACKEND_URI + '/playlisturl', {data:url}, { withCredentials: true });
+>>>>>>> 3bb11c27db96887f26c321a94f6f01fa52a04436
       //const result = await axios.post('http://localhost:5000/playlisturl', {data:url}, { withCredentials: true });
       console.log('Response:', result.data);
 
@@ -71,9 +82,15 @@ export default function Home() {
 
   const newAuth = async () => {
       try{
+<<<<<<< HEAD
         const result = await axios.post('https://FrostyCake47.pythonanywhere.com/getauthurl', {data:playlistInfo}, { withCredentials: true });
         //const result = await axios.post('http://localhost:5000/getauthurl', {data:playlistInfo}, { withCredentials: true });
         if(result.data.status) window.location.href = 'http://localhost:5000/convert'
+=======
+        //const result = await axios.post('https://FrostyCake47.pythonanywhere.com/getauthurl', {data:playlistInfo}, { withCredentials: true });
+        const result = await axios.post(BACKEND_URI + '/getauthurl', {data:playlistInfo}, { withCredentials: true });
+        if(result.data.status) window.location.href = BACKEND_URI+'/convert'
+>>>>>>> 3bb11c27db96887f26c321a94f6f01fa52a04436
         else {
           const authorization_url = result.data.url;
           window.location.href = authorization_url;
@@ -105,16 +122,20 @@ export default function Home() {
     }
   }
 
-  /*const selectSong = (index:number) => {
-    const newSelectedSongsIndex =  [...selectedSongsIndex]
-    newSelectedSongsIndex[index] = !selectedSongsIndex[index]
-    setSelectedSongsIndex(newSelectedSongsIndex);
-  }*/
+  const fetchHistory = async () => {
+    try{
+      if(session){
+        const result = await axios.post(BACKEND_URI + '/history', {'email':session.user?.email}, { withCredentials: true });
+        console.log(result.data['historyList']);
+        return result.data['historyList'];
+      }
+    } catch (err) {
+      console.log(`error in fetchHistory: ${err}`)
+      return null;
+    }
 
-  /*const selectDeselectAll = (length:number, select:boolean) => {
-    const array = Array.from({ length: length }, () => select);
-    setSelectedSongsIndex(array);
-  }*/
+  }
+
 
   useEffect(() => {
     if(session){
@@ -125,7 +146,10 @@ export default function Home() {
             setPlaylistList(newplaylistList);
             console.log("setPlaylistList ");
           }
-          
+
+          const newHistoryDataList = await fetchHistory();
+          SetHistoryDataList(newHistoryDataList.reverse());
+
       })();
     }
   }, [session])
@@ -143,7 +167,9 @@ export default function Home() {
           </div>
         </div>
         <div className="sm:px-10">
-          <button className="rounded-lg text-[15px] px-4 py-2 my-8 mx-5 bg-amber-500 transition-colors duration-300 ease-in-out hover:bg-amber-600">Get Started</button>
+          <div className="rounded-lg text-[15px] px-4 py-2 my-8 mx-5 bg-amber-500 transition-colors duration-300 ease-in-out hover:bg-amber-600">
+            <a  href='#playlistblock'>Get Started</a>
+          </div>
         </div>
       </div>
 
@@ -151,7 +177,7 @@ export default function Home() {
       <div className="bg-neutral-950 min-h-[10px]"></div>
 
       <div className="bg-neutral-900">
-        <div className="flex flex-col md:flex-row mx-0 sm:mx-10 pb-6 sm:my-10 px-5 sm:rounded-lg bg-gradient-to-b from-neutral-800 to-neutral-950">
+        <div id='playlistblock' className="flex flex-col lg:flex-row mx-0 sm:mx-10 pb-6 sm:my-10 px-5 sm:rounded-lg bg-gradient-to-b from-neutral-800 to-neutral-950">
           <div className="flex flex-col my-4 sm:min-w-[40%]">
             {!session && <button onClick={handleSpotifyLogin} className="bg-green-500 rounded-lg my-2 py-3 flex items-center justify-center hover:bg-green-600 duration-300">
               <FaSpotify size={30}/>
@@ -171,7 +197,7 @@ export default function Home() {
             </form>}
             <div className={`flex justify-center ${session ? 'item-start my-4' : 'items-center'} h-[100%]`}>
               {!session && <p className={`hidden text-center text-md text-amber-500 ${playlistInfo ? 'sm:block' : 'hidden'}`}>Login with your spotify to<br/>directly access your personal playlists</p>}
-              {session && playlistList && <PlaylistCard playlistList={playlistList} sendPlaylistNew={sendPlaylistNew}/>}
+              {session && playlistList && <PlaylistCard playlistList={playlistList} sendPlaylistNew={sendPlaylistNew} playlistIndex={playlistIndex}/>}
             </div>
           </div>
 
@@ -192,11 +218,18 @@ export default function Home() {
             </div>}
           </div>
         </div>
+
+        <div className='flex-1 w-[100%] bg-neutral-900 sm:bg-neutral-950 min-h-3'></div>
+        <div className='mx-0 sm:mx-10 pb-6 sm:my-10 px-5 sm:rounded-lg bg-gradient-to-b from-neutral-900 to-neutral-950'>
+          <History historyDataList={historyDataList}/>
+        </div>
       </div>
 
 
       <div className='flex-1 w-[100%] bg-neutral-900 sm:bg-neutral-950 min-h-1'></div>
-      <Footer/>
+      <div id='contacts'>
+        <Footer/>
+      </div>
     </main>
   );
 }
