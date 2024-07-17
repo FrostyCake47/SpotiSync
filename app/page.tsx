@@ -19,8 +19,8 @@ import HistoryData from './model/historyData';
 
 
 export default function Home() {
-  const BACKEND_URI = 'https://FrostyCake47.pythonanywhere.com'
-  //const BACKEND_URI = 'http://localhost:5000'
+  //const BACKEND_URI = 'https://FrostyCake47.pythonanywhere.com'
+  const BACKEND_URI = 'http://localhost:5000'
   const { data: session } = useSession();
 
   const [url, setUrl] = useState("");
@@ -207,9 +207,9 @@ export default function Home() {
         </div>
 
         <div className='flex-1 w-[100%] bg-neutral-900 sm:bg-neutral-950 min-h-3'></div>
-        <div className='mx-0 sm:mx-10 pb-6 sm:my-10 px-5 sm:rounded-lg bg-gradient-to-b from-neutral-900 to-neutral-950'>
+        {session && <div className='mx-0 sm:mx-10 pb-6 sm:my-10 px-5 sm:rounded-lg bg-gradient-to-b from-neutral-900 to-neutral-950'>
           <History historyDataList={historyDataList}/>
-        </div>
+        </div>}
       </div>
 
       <div className='flex-1 w-[100%] bg-neutral-900 sm:bg-neutral-950 min-h-1'></div>

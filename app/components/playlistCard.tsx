@@ -34,7 +34,7 @@ export const PlaylistCard = (props : {playlistList : Playlist[], sendPlaylistNew
                     return <div key={index} className={`flex my-1 px-0 py-2 sm:px-2 sm:py-2 ${index == playlistIndex ? 'bg-neutral-800' : 'bg-neutral-900'} justify-between items-center rounded-lg hover:bg-neutral-800 duration-300`} onClick={() => {sendPlaylistNew(playlist.href, index)}}>
                         <div className='flex justify- items-center'>
                             <div className='w-[48px] min-w-[48px] aspect-square'>
-                                <Image className='rounded-lg w-[48px] min-w-[48px]' src={playlist.images[0].url} alt='' width={10} height={10}/>
+                                <Image className='rounded-lg w-[48px] min-w-[48px]' src={playlist.images[0].url} alt='' width={48} height={48}/>
                             </div>
                             <p className='px-5'>{playlist.name}</p>
                         </div>

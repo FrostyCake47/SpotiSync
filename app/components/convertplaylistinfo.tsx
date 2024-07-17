@@ -22,8 +22,8 @@ const ConvertPlaylistInfo = (props : {playlist_name:string, playlist_desc:string
     duration: number[];
   }, 
 }) => {
-    const BACKEND_URI = 'https://FrostyCake47.pythonanywhere.com'
-    //const BACKEND_URI = 'http://localhost:5000'
+    //const BACKEND_URI = 'https://FrostyCake47.pythonanywhere.com'
+    const BACKEND_URI = 'http://localhost:5000'
 
     const {playlist_name, playlist_desc, songs, playlist_icon_url, info} = props;
     const [youtubeurl, setYoutubeurl] = useState("");
@@ -96,9 +96,9 @@ const ConvertPlaylistInfo = (props : {playlist_name:string, playlist_desc:string
 
             <div className='flex flex-col md:pb-0 w-[100%] md:w-[70%] overflow-y-scroll max-h-[360px] my-5 md:my-0'>
                 {songs.length > 0 && songs.map((song, index) => {
-                    return ((!customSelect) || (customSelect && selectedSongs[index])) && <div className='flex my-1 px-2 py-2 bg-neutral-900 justify-between items-center rounded-lg hover:bg-neutral-800 duration-300' key={index}>
-                        <div className='flex justify-end items-between'>
-                            <div className='w-[48px] aspect-square relative'>
+                    return ((!customSelect) || (customSelect && selectedSongs[index])) && <div className='grid grid-cols-3 my-1 px-2 py-2 bg-neutral-900 items-center rounded-lg hover:bg-neutral-800 duration-300' key={index}>
+                        <div className='flex'>
+                            <div className='w-[48px] min-w-[48px] aspect-square relative'>
                                 <Image className='rounded-lg' src={song.song_icon_url} alt='' layout={'fill'} objectFit={'contain'}/>
                             </div>
                             <div className='flex flex-col items-start justify-center'>
@@ -106,8 +106,10 @@ const ConvertPlaylistInfo = (props : {playlist_name:string, playlist_desc:string
                                 <p className='ml-5 text-xs md:text-md font-light'>{song.artist_name}</p>
                             </div> 
                         </div>
-                        <p className='mx-10 text-sm font-light text-neutral-400'>{song.album_name}</p>
-                        <p className='px-6 text-sm'>{song.duration[0] + ":" + (song.duration[1].toString().length == 1 ? "0" : '') + song.duration[1]}</p>
+                        <p className='mx-10 text-sm text-center font-light text-neutral-400'>{song.album_name}</p>
+                        <div className='flex items-center justify-end'>
+                            <p className='px-6 text-sm'>{song.duration[0] + ":" + (song.duration[1].toString().length == 1 ? "0" : '') + song.duration[1]}</p>
+                        </div>
                     </div>;
                 })}
             </div>
