@@ -19,8 +19,8 @@ import HistoryData from './model/historyData';
 
 
 export default function Home() {
-  //const BACKEND_URI = 'https://FrostyCake47.pythonanywhere.com'
-  const BACKEND_URI = 'http://localhost:5000'
+  const BACKEND_URI = 'https://FrostyCake47.pythonanywhere.com'
+  //const BACKEND_URI = 'http://localhost:5000'
   const { data: session } = useSession();
 
   const [url, setUrl] = useState("");

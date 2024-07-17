@@ -22,8 +22,8 @@ const ConvertPlaylistInfo = (props : {playlist_name:string, playlist_desc:string
     duration: number[];
   }, 
 }) => {
-    //const BACKEND_URI = 'https://FrostyCake47.pythonanywhere.com'
-    const BACKEND_URI = 'http://localhost:5000'
+    const BACKEND_URI = 'https://FrostyCake47.pythonanywhere.com'
+    //const BACKEND_URI = 'http://localhost:5000'
 
     const {playlist_name, playlist_desc, songs, playlist_icon_url, info} = props;
     const [youtubeurl, setYoutubeurl] = useState("");
