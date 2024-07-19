@@ -155,9 +155,15 @@ export default function Home() {
         </div>
         <div className="sm:px-10">
           <div className="rounded-lg text-[15px] px-4 py-2 my-8 mx-5 bg-amber-500 transition-colors duration-300 ease-in-out hover:bg-amber-600">
-            <a  href='#playlistblock'>Get Started</a>
+            <a href='#playlistblock'>Get Started</a>
           </div>
         </div>
+        <div className='px-4 sm:px-16'>
+            <p className='text-amber-500 font-semibold'>Notice</p>
+            <p className='text-amber-500'>Since the app is still in development phase. you'll need to provide your Email to access the Spotify and Youtube APIs</p>
+            <p className='text-amber-500 inline-block'>Please provide them</p>
+            <a href="mailto:akashp4769@gmail.com?Subject=For accessing Spotisync&body=Here's my Email of Spotify and Youtube: "> here</a>
+          </div>
       </div>
 
       <div className="bg-gradient-to-b from-neutral-800 to-neutral-900 min-h-[20px] sm:min-h-[100px]"></div>
