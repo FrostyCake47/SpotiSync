@@ -8,6 +8,8 @@ Spotysync is your ultimate tool for seamlessly converting Spotify playlists to y
 You'll probably need access given to your email before you would able to access the features.
 Mail me at [akashp4769@gmail.com](mailto:akashp4769@gmail.com) if you wanna give it a go
 
+## Video Demo - [Youtube](https://www.youtube.com/watch?v=MAAYuEXlM0c)
+
 ## Features
 * Spotify auth enables you to access private playlist directly
 * Provides accessibility to directly publish them in your personal youtube account
