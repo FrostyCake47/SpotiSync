@@ -16,6 +16,8 @@ import Playlist from './model/playlist';
 import PlaylistInfo from './model/playlistinfoInterface';
 import usePlaylistInfoStore from './store/playlistinfoStore';
 import HistoryData from './model/historyData';
+import SpotisyncAccordian from './components/spoti-accordian';
+
 
 
 export default function Home() {
@@ -136,7 +138,7 @@ export default function Home() {
           }
 
           const newHistoryDataList = await fetchHistory();
-          SetHistoryDataList(newHistoryDataList.length > 0 ? newHistoryDataList.reverse() : newHistoryDataList);
+          SetHistoryDataList(newHistoryDataList != null ? newHistoryDataList.reverse() : newHistoryDataList);
 
       })();
     }
@@ -216,8 +218,12 @@ export default function Home() {
         {session && <div className='mx-0 sm:mx-10 pb-6 sm:my-10 px-5 sm:rounded-lg bg-gradient-to-b from-neutral-900 to-neutral-950'>
           <History historyDataList={historyDataList}/>
         </div>}
+        
+        <div className='flex-1 w-[100%] bg-neutral-900 sm:bg-neutral-950 min-h-3'></div>
+        <SpotisyncAccordian/>
       </div>
 
+      <div className='flex-1 w-[100%] bg-neutral-900 sm:bg-neutral-950 min-h-1'></div>
       <div className='flex-1 w-[100%] bg-neutral-900 sm:bg-neutral-950 min-h-1'></div>
       <div id='contacts'>
         <Footer/>
