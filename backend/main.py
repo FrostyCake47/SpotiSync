@@ -126,7 +126,7 @@ def callback():
         redirect_url = 'http://localhost:3000'
         
         code = request.args.get('code')
-        if(session['isLoggedin']):
+        if 'isLoggedin' in session:
             print("already logged in", file=stderr)
             return f'<script>window.location.href = "{redirect_url}/convert";</script>'
         

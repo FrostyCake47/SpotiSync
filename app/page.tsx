@@ -219,7 +219,7 @@ export default function Home() {
           <History historyDataList={historyDataList}/>
         </div>}
         
-        <div className='flex-1 w-[100%] bg-neutral-900 sm:bg-neutral-950 min-h-3'></div>
+        <div id='FAQ' className='flex-1 w-[100%] bg-neutral-900 sm:bg-neutral-950 min-h-3'></div>
         <SpotisyncAccordian/>
       </div>
 
