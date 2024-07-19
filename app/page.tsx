@@ -136,7 +136,7 @@ export default function Home() {
           }
 
           const newHistoryDataList = await fetchHistory();
-          SetHistoryDataList(newHistoryDataList.reverse());
+          SetHistoryDataList(newHistoryDataList.length > 0 ? newHistoryDataList.reverse() : newHistoryDataList);
 
       })();
     }
