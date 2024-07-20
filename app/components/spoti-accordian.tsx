@@ -4,7 +4,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '..
 const SpotisyncAccordian = () => {
   return (
     <div>
-          <div className='flex justify-center items-center text-amber-500 mb-10 text-2xl py-0 sm:py-4'>
+          <div className='flex px-4 justify-center items-center text-center text-amber-500 mb-10 text-2xl py-0 sm:py-4'>
             <p>Frequently Asked Questions (FAQs)</p>
           </div>
           <div className='mx-4 px-4 my-6 bg-neutral-900'>
